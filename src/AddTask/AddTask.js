@@ -7,7 +7,7 @@ function AddTask(props) {
         <div className="card-header container-fluid rounded add-task">
           <div className="row">
             
-            <div className="col-11">
+            <div className="col-10">
               <form>
                 <div className="form-group">
                   <label for="task-name">Add new task</label>
@@ -17,10 +17,12 @@ function AddTask(props) {
               </form>
             </div>
             
-            <div className="col-1">
+            <div className="col-2">
+              <div className="float-right">
                 <ButtonItem type="submit">
                   <AddIcon squareHeight="1.5em"/>
                 </ButtonItem>
+            </div>
             </div>
           
           </div>

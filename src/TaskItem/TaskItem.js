@@ -6,15 +6,15 @@ function TaskItem(props) {
   return (
     <div className="card-header container-fluid rounded task-item">
       <div className="row">
-        <div className="col-10">
+        <div className="col-8">
           <h3>{props.name}</h3>
         </div>
-        <div className="col-2">
-          <div className="btn-group">
-          <ButtonItem>
+        <div className="col-4">
+          <div className="btn-group float-right">
+          <ButtonItem  hoverText="Mark as complete">
             <CheckboxIcon squareHeight="1.5em" />
           </ButtonItem>
-          <ButtonItem>
+          <ButtonItem  hoverText="Delete">
             <DeleteIcon squareHeight="1.3em" />
           </ButtonItem>
           </div>
