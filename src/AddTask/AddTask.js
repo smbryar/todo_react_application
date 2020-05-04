@@ -1,10 +1,25 @@
 import React from 'react';
-import ButtonItem, { AddIcon } from '../ButtonItem/ButtonItem'
+import ButtonItem, { AddIcon } from '../ButtonItem/ButtonItem';
+import Collapse from 'react-bootstrap/Collapse';
+import Card from 'react-bootstrap/Card';
 import './AddTask.css';
 
 function AddTask(props) {
+  const [open, setOpen] = React.useState(false);
   return (
-        <div className="card-header container-fluid rounded add-task">
+    <Card className="add-task">
+    <Card.Header
+      as="h5"
+      onClick={() => setOpen(!open)}
+      aria-controls="add-task-contents"
+      aria-expanded={open}
+    >
+      Click to Add Task
+    </Card.Header>
+
+    <Collapse in={open}>
+          <Card.Body>
+          <div id="add-task-contents">
           <div className="row">
             
             <div className="col-10">
@@ -19,8 +34,8 @@ function AddTask(props) {
             
             <div className="col-2">
               <div className="float-right">
-                <ButtonItem type="submit">
-                  <AddIcon squareHeight="1.5em"/>
+                <ButtonItem type="submit" hoverText="Add Task">
+                  <AddIcon squareHeight="2em"/>
                 </ButtonItem>
             </div>
             </div>
@@ -46,8 +61,11 @@ function AddTask(props) {
               </form>
             </div>
           </div>
-        
         </div>
+          </Card.Body>
+        
+      </Collapse>
+    </Card>
   );
 }
 
