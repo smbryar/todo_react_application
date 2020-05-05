@@ -10,7 +10,7 @@ function TaskItem(props) {
   const [open, setOpen] = React.useState(false);
   return (
     <Card className="task-item" 
-    style={{backgroundColor: props.completed ? 'rgba(130, 138, 146, 0.74)' : 'lightblue',
+    style={{backgroundColor: props.completed ? 'rgba(130, 138, 146, 0.74)' : '#BADEC6',
             color: props.completed ? 'rgba(0, 0, 0, 0.25)' : 'black'}}
     >
       <Card.Header
