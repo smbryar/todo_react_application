@@ -1,8 +1,6 @@
 import React from 'react';
 import ButtonItem, { AddIcon } from '../ButtonItem/ButtonItem';
-import Collapse from 'react-bootstrap/Collapse';
-import Card from 'react-bootstrap/Card';
-import Form from 'react-bootstrap/Form';
+import { Card, Collapse, Form, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import './AddTask.css';
 
 function AddTask(props) {
@@ -21,9 +19,11 @@ function AddTask(props) {
           </div>
           <div className="col-2">
             <div className="float-right">
-              <ButtonItem type="submit" hoverText="Add Task">
+            <OverlayTrigger placement="left" overlay={<Tooltip>Add task</Tooltip>}>
+              <ButtonItem type="submit">
                 <AddIcon squareHeight="2em" />
               </ButtonItem>
+              </OverlayTrigger>
             </div>
           </div>
         </div>

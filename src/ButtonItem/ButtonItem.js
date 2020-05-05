@@ -1,13 +1,11 @@
 import React from 'react';
 import './ButtonItem.css';
 
-function ButtonItem(props) {
+function ButtonItem (props) {
   return (
-    <div className="button-item">
-      <button type={props.type} className="btn" title={props.hoverText}>{props.children}</button>
-    </div>
-  );
-}
+    <button {...props} className="btn">{props.children}</button>
+  )
+} 
 
 export function CheckboxIcon(props) {
   return (
