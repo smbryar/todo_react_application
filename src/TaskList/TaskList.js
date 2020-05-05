@@ -5,11 +5,39 @@ import Intro from '../Intro/Intro';
 import './TaskList.css';
 
 function TaskList() {
-    let tasks = [{ name: "Tidying", taskDetails: "Sort through paperwork", startDate: "03/06/2020", endDate: "10/06/2020", percentageCompletion: 60, completed: false }, { name: "Cleaning", taskDetails:"Clean bathrooms", startDate: "03/06/2020", endDate: "10/06/2020", percentageCompletion: 80, completed: false }, { name: "Hoovering", taskDetails:"Downstairs", startDate: "03/06/2020", endDate: "10/06/2020", percentageCompletion: 80, completed: true }];
+    let tasks = [
+        {
+            name: "Tidying",
+            taskDetails: "Sort through paperwork",
+            startDate: "03/06/2020",
+            endDate: "10/06/2020",
+            percentageCompletion: 60,
+            completed: false,
+            repeats: false
+        },
+        {
+            name: "Cleaning",
+            taskDetails: "Clean bathrooms",
+            startDate: "03/06/2020",
+            endDate: "10/06/2020",
+            percentageCompletion: 80,
+            completed: false,
+            repeats: true
+        },
+        {
+            name: "Hoovering",
+            taskDetails: "Downstairs",
+            startDate: "03/06/2020",
+            endDate: "10/06/2020",
+            percentageCompletion: 80,
+            completed: true,
+            repeats: false
+        }];
+
     return (
         <div className="col-12 col-lg-6">
             <div className="mx-2">
-                
+
                 <div className="row my-2">
                     <Intro />
                 </div>

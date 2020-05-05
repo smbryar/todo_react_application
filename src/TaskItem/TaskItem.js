@@ -1,5 +1,5 @@
 import React from 'react';
-import ButtonItem, { CheckboxIcon, DeleteIcon } from '../ButtonItem/ButtonItem';
+import ButtonItem, { CheckboxIcon, DeleteIcon, RepeatIcon } from '../ButtonItem/ButtonItem';
 import Collapse from 'react-bootstrap/Collapse';
 import Card from 'react-bootstrap/Card';
 import TaskProgressBar from '../TaskProgressBar/TaskProgressBar';
@@ -17,7 +17,7 @@ function TaskItem(props) {
       >
         <div className="row">
           <div className="col-8">
-            {props.name}
+            {props.repeats && <RepeatIcon squareHeight="1.2em"/>} {props.name}
           </div>
           <div className="col-4">
             <div className="btn-group float-right">
