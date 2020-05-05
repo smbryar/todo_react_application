@@ -32,7 +32,7 @@ function TaskItem(props) {
         </div>
         <div className="row">
           <div className="col">
-            <TaskProgressBar />
+            <TaskProgressBar percentageCompletion={props.percentageCompletion}/>
           </div>
         </div>
       </Card.Header>
@@ -40,16 +40,16 @@ function TaskItem(props) {
     <Collapse in={open}>
       <Card.Body>
         <div className="row">
-          <div class="col">
-            <h5>Task details</h5>
+          <div class="col-6">
+            <h5>Start: {props.startDate}</h5>
+          </div>
+          <div class="col-6 text-right">
+            <h5>Due: {props.endDate}</h5>
           </div>
         </div>
         <div className="row">
-          <div class="col-6">
-            <h5>{props.startDate}</h5>
-          </div>
-          <div class="col-6 text-right">
-            <h5>{props.endDate}</h5>
+          <div class="col">
+            <h6>{props.taskDetails}</h6>
           </div>
         </div>
       </Card.Body>

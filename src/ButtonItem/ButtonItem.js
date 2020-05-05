@@ -4,7 +4,7 @@ import './ButtonItem.css';
 function ButtonItem(props) {
   return (
     <div className="button-item">
-      <button type="button" className="btn" title={props.hoverText}>{props.children}</button>
+      <button type={props.type} className="btn" title={props.hoverText}>{props.children}</button>
     </div>
   );
 }

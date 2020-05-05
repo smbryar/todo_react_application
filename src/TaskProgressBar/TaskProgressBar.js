@@ -4,7 +4,11 @@ import './TaskProgressBar.css';
 
 function TaskProgressBar(props) {
   return (
-    <ProgressBar now={60} />
+    <ProgressBar 
+    // min={props.startDate.getTime()} 
+    // max = {props.endDate.getTime()} 
+    // now={Date.now()}
+    now={props.percentageCompletion} />
   )
 }
 
