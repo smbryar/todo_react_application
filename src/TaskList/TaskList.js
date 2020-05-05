@@ -11,7 +11,7 @@ function TaskList() {
             taskDetails: "Sort through paperwork",
             startDate: "03/06/2020",
             endDate: "10/06/2020",
-            percentageCompletion: 60,
+            percentageCompletion: 20,
             completed: false,
             repeats: false
         },
@@ -20,7 +20,7 @@ function TaskList() {
             taskDetails: "Clean bathrooms",
             startDate: "03/06/2020",
             endDate: "10/06/2020",
-            percentageCompletion: 80,
+            percentageCompletion: 60,
             completed: false,
             repeats: true
         },
@@ -38,7 +38,7 @@ function TaskList() {
         <div className="col-12 col-lg-6">
             <div className="mx-2">
 
-                <div className="row my-2">
+                <div className="row my-2 d-lg-none">
                     <Intro />
                 </div>
 

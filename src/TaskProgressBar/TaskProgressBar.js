@@ -8,7 +8,9 @@ function TaskProgressBar(props) {
     // min={props.startDate.getTime()} 
     // max = {props.endDate.getTime()} 
     // now={Date.now()}
-    now={props.percentageCompletion} />
+    now={props.percentageCompletion}
+    // style={{backgroundColor:"yellow"}} 
+    />
   )
 }
 

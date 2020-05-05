@@ -52,6 +52,13 @@ function TaskItem(props) {
             <h6>{props.taskDetails}</h6>
           </div>
         </div>
+        {props.repeats &&
+        <div className="row">
+          <div class="col">
+            <h6>This task repeats every...</h6>
+          </div>
+        </div>        
+        }
       </Card.Body>
     </Collapse>
     </Card >
