@@ -31,6 +31,7 @@ function TaskList() {
             endDate: "10/06/2020",
             percentageCompletion: 80,
             completed: true,
+            completeDate: "06/04/2020",
             repeats: false
         }];
 
