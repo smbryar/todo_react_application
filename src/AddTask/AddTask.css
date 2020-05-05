@@ -2,3 +2,11 @@
     width: 100%;
     background-color: lightpink;
 }
+
+.customRow {
+    margin-top: 5px;
+}
+
+.noBottonMargin {
+    margin-bottom: 0;
+}
