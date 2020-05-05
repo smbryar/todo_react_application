@@ -9,12 +9,12 @@ function AddTask(props) {
   return (
     <Card className="add-task">
     <Card.Header
-      as="h5"
+      as="h4"
       onClick={() => setOpen(!open)}
       aria-controls="add-task-contents"
       aria-expanded={open}
     >
-      Click to Add Task
+      Add Task
     </Card.Header>
 
     <Collapse in={open}>
