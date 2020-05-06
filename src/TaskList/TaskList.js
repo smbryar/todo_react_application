@@ -7,6 +7,7 @@ import './TaskList.css';
 function TaskList() {
     let tasks = [
         {
+            key: 1,
             name: "Tidying",
             taskDetails: "Sort through paperwork",
             startDate: "03/06/2020",
@@ -16,6 +17,7 @@ function TaskList() {
             repeats: false
         },
         {
+            key: 2,
             name: "Cleaning",
             taskDetails: "Clean bathrooms",
             startDate: "03/06/2020",
@@ -25,6 +27,7 @@ function TaskList() {
             repeats: true
         },
         {
+            key: 3,
             name: "Hoovering",
             taskDetails: "Downstairs",
             startDate: "03/06/2020",
@@ -49,7 +52,7 @@ function TaskList() {
 
 
                 {tasks.map(task => (
-                    <div className="row my-2">
+                    <div key={task.key} className="row my-2">
                         <TaskItem {...task} />
                     </div>
                 ))}

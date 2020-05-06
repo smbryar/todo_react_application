@@ -29,7 +29,7 @@ function TaskItem(props) {
 
               {!props.completed &&
                 <OverlayTrigger placement="top" overlay={<Tooltip>Mark as complete</Tooltip>}>
-                  <ButtonItem hoverText="Mark as complete">
+                  <ButtonItem>
                     <CheckboxIcon squareHeight="1.5em" />
                   </ButtonItem>
                 </OverlayTrigger>}
@@ -51,14 +51,7 @@ function TaskItem(props) {
 
       <Collapse in={open}>
         <Card.Body>
-          <TaskBody
-            startDate={props.startDate}
-            endDate={props.endDate}
-            taskDetails={props.taskDetails}
-            repeats={props.repeats}
-            completed={props.completed}
-            completeDate={props.completeDate}
-          />
+          <TaskBody {...props}/>
         </Card.Body>
       </Collapse>
     </Card >

@@ -102,10 +102,8 @@ function AddTask(props) {
             </div>
             <div className="col-12 col-md-6 align-self-center">
               <div className="row">
-                {["M", "T", "W", "T", "F", "S", "S"].map(day => (
-                  <div key="inline-checkbox">
-                    <Form.Check inline label={day} />
-                  </div>
+                {["M", "T", "W", "T", "F", "S", "S"].map((day,i) => (                 
+                    <Form.Check key={i} inline label={day} />                  
                 ))}
               </div>
             </div>
