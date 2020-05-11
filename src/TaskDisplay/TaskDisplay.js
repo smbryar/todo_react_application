@@ -3,12 +3,12 @@ import './TaskDisplay.css';
 import TaskList from '../TaskList/TaskList';
 import DetailDisplay from '../DetailDisplay/DetailDisplay';
 
-function TaskDisplay() {
+function TaskDisplay(props) {
   return (
     <main className="container-fluid">
         <div className="row">
-            <TaskList/>
-            <DetailDisplay/>
+            <TaskList tasks = {props.tasks}/>
+            <DetailDisplay tasks = {props.tasks}/>
         </div>
     </main>
   );
