@@ -10,7 +10,7 @@ function TaskList(props) {
             <div className="mx-2">
 
                 <div className="row my-2 d-lg-none">
-                    <Intro count = {props.tasks.length}/>
+                    <Intro tasks = {props.tasks}/>
                 </div>
 
                 <div className="row my-2">

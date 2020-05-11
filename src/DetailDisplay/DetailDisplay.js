@@ -7,7 +7,7 @@ function DetailDisplay(props) {
         <div className="d-none d-lg-block col-lg-6 ">
             <div className="mx-2">
             <div className="row my-2">
-                    <Intro count = {props.tasks.length}/>
+                    <Intro tasks = {props.tasks}/>
                 </div>                
                 <div className="row my-2">
                     <div className="card-header rounded detail-display">

@@ -20,8 +20,8 @@ function App() {
         key: 2,
         name: "Cleaning",
         taskDetails: "Clean bathrooms",
-        startDate: "2020-06-03",
-        endDate: "2020-10-01",
+        startDate: "2020-03-03",
+        endDate: "2020-05-11",
         percentageCompletion: 60,
         completed: false,
         repeats: true
