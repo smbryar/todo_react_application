@@ -1,4 +1,5 @@
 import React from 'react';
+import moment from 'moment';
 import TaskItem from '../TaskItem/TaskItem';
 import AddTask from '../AddTask/AddTask';
 import Intro from '../Intro/Intro';
@@ -6,9 +7,8 @@ import './TaskList.css';
 
 function TaskList(props) {
     function compare(a, b) {
-        if (a.completed === true) return 1;
-        if (a.endDate < b.endDate) return -1;
-        if (a.endDate > b.endDate) return 1;
+        if (a.completed === true || a.startDate > moment().format("YYYY-MM-DD") || a.endDate > b.endDate) return 1;
+        if (a.endDate < b.endDate || a.startDate < b.startDate) return -1;
         return 0;
     }
 

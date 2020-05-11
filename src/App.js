@@ -10,8 +10,8 @@ function App() {
         key: 1,
         name: "Tidying",
         taskDetails: "Sort through paperwork",
-        startDate: "2020-06-03",
-        endDate: "2020-10-01",
+        startDate: "2020-05-06",
+        endDate: "2020-08-11",
         percentageCompletion: 20,
         completed: false,
         repeats: false
@@ -20,8 +20,8 @@ function App() {
         key: 2,
         name: "Cleaning",
         taskDetails: "Clean bathrooms",
-        startDate: "2020-0-03",
-        endDate: "2020-05-11",
+        startDate: "2020-05-05",
+        endDate: "2020-08-11",
         percentageCompletion: 60,
         completed: false,
         repeats: true
