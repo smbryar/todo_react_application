@@ -30,11 +30,11 @@ function App() {
         key: 3,
         name: "Hoovering",
         taskDetails: "Downstairs",
-        startDate: "2020-06-03",
-        endDate: "2020-10-01",
+        startDate: "2020-04-03",
+        endDate: "2020-05-01",
         percentageCompletion: 80,
         completed: true,
-        completeDate: "2020-07-01",
+        completeDate: "2020-04-26",
         repeats: false
     }
   ]); 
