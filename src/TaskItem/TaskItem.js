@@ -51,7 +51,8 @@ function TaskItem(props) {
       </Card.Header>
 
       <Collapse in={open}>
-        <Card.Body>
+        <Card.Body 
+        tabindex="0">
           <TaskBody {...props}/>
         </Card.Body>
       </Collapse>

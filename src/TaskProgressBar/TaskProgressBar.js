@@ -24,7 +24,7 @@ function TaskProgressBar(props) {
 
   return (
     <div className="progress">
-      <div className="progress-bar" role="progressbar" style={{ backgroundImage: `linear-gradient(to right,${colourRange})`, width: `${width}%` }} aria-valuenow={props.percentageCompletion} aria-valuemin="0" aria-valuemax="100"></div>
+      <div className="progress-bar" role="progressbar" style={{ backgroundImage: `linear-gradient(to right,${colourRange})`, width: `${width}%` }} aria-valuenow={props.percentageCompletion} aria-valuemin="0" aria-valuemax="100" aria-label="Percentage of way through time allocated for task"></div>
     </div>
   )
 }
