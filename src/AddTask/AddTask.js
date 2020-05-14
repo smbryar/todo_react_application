@@ -8,8 +8,10 @@ function AddTask(props) {
   return (
     <Card className="add-task">
       <Card.Header
+        tabindex="0"  
         as="h4"
         onClick={() => setOpen(!open)}
+        onKeyPress={(target) => target.charCode === 13 ? setOpen(!open) : null}
         aria-controls="add-task-contents"
         aria-expanded={open}
       >
@@ -20,7 +22,7 @@ function AddTask(props) {
           <div className="col-2">
             <div className="float-right">
             <OverlayTrigger placement="left" overlay={<Tooltip>Add task</Tooltip>}>
-              <ButtonItem type="submit">
+              <ButtonItem type="submit" aria-label="Add task">
                 <AddIcon squareHeight="2em" />
               </ButtonItem>
               </OverlayTrigger>

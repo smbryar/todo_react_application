@@ -10,18 +10,19 @@ function TaskItem(props) {
   return (
     <Card className="task-item"
       style={{
-        backgroundColor: props.completed ? 'rgba(130, 138, 146, 0.74)' : '#BADEC6',
-        color: props.completed ? 'rgba(0, 0, 0, 0.25)' : 'black'
+        backgroundColor: props.completed ? 'rgba(130, 138, 146, 0.74)' : '#BADEC6'
       }}
     >
       <Card.Header
+        tabindex="0"
         className="h4"
         onClick={() => setOpen(!open)}
+        onKeyPress={(target) => target.charCode === 13 ? setOpen(!open) : null}
         aria-controls="task-item-contents"
         aria-expanded={open}
       >
         <div className="row">
-          <div className="col-8">
+          <div className="col-8" style={{textDecoration: props.completed ? 'line-through' : ''}}>
             {props.repeats && <RepeatIcon squareHeight="1.2em" />} {props.name}
           </div>
           <div className="col-4">
@@ -29,13 +30,13 @@ function TaskItem(props) {
 
               {!props.completed &&
                 <OverlayTrigger placement="top" overlay={<Tooltip>Mark as complete</Tooltip>}>
-                  <ButtonItem>
+                  <ButtonItem aria-label="Mark as complete">
                     <CheckboxIcon squareHeight="1.5em" />
                   </ButtonItem>
                 </OverlayTrigger>}
 
               <OverlayTrigger placement="top" overlay={<Tooltip>Delete</Tooltip>}>
-                <ButtonItem>
+                <ButtonItem aria-label="Delete">
                   <DeleteIcon squareHeight="1.3em" />
                 </ButtonItem>
               </OverlayTrigger>
