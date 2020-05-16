@@ -7,7 +7,7 @@ function TaskDisplay(props) {
   return (
     <main className="container-fluid">
         <div className="row">
-            <TaskList tasks = {props.tasks}/>
+            <TaskList completeTask = {props.completeTask} deleteTask={props.deleteTask} tasks = {props.tasks}/>
             <DetailDisplay tasks = {props.tasks}/>
         </div>
     </main>

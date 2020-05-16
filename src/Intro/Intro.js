@@ -8,7 +8,7 @@ function Intro(props) {
 
     return (
         <div className="card-header rounded intro" 
-        tabindex="0">
+        tabIndex="0">
             <h4>You have {tasksDueToday} task{tasksDueToday === 1? "":"s"} to complete today out of {tasksNotCompleted} unfinished task{tasksNotCompleted === 1? "":"s"}.</h4>
         </div>
     );

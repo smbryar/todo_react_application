@@ -7,12 +7,17 @@ import './TaskItem.css';
 
 function TaskItem(props) {
   const [open, setOpen] = React.useState(false);
+
+  function handleDeleteClick() {
+    props.deleteTask(props.id)
+  }
+
+  function handleCompleteClick() {    
+    props.completeTask(props.id)
+  }
+
   return (
-    <Card className="task-item"
-      style={{
-        backgroundColor: props.completed ? 'rgba(130, 138, 146, 0.74)' : '#BADEC6'
-      }}
-    >
+    <Card className="task-item" style={{backgroundColor: props.completed ? 'rgba(130, 138, 146, 0.74)' : '#BADEC6'}}>
       <Card.Header
         tabindex="0"
         className="h4"
@@ -30,13 +35,13 @@ function TaskItem(props) {
 
               {!props.completed &&
                 <OverlayTrigger placement="top" overlay={<Tooltip>Mark as complete</Tooltip>}>
-                  <ButtonItem aria-label="Mark as complete">
+                  <ButtonItem onClick={ handleCompleteClick } aria-label="Mark as complete">
                     <CheckboxIcon squareHeight="1.5em" />
                   </ButtonItem>
                 </OverlayTrigger>}
 
               <OverlayTrigger placement="top" overlay={<Tooltip>Delete</Tooltip>}>
-                <ButtonItem aria-label="Delete">
+                <ButtonItem onClick={ handleDeleteClick } aria-label="Delete">
                   <DeleteIcon squareHeight="1.3em" />
                 </ButtonItem>
               </OverlayTrigger>

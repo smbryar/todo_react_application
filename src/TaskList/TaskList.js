@@ -26,8 +26,8 @@ function TaskList(props) {
 
 
                 {props.tasks.sort(compare).map(task => (
-                    <div key={task.key} className="row my-2">
-                        <TaskItem {...task} />
+                    <div key={task.id} className="row my-2">
+                        <TaskItem completeTask = {props.completeTask} deleteTask={props.deleteTask} {...task} />
                     </div>
                 ))}
 
