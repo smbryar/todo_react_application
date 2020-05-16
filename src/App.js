@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import moment from 'moment';
 import { v4 as uuidv4 } from 'uuid';
 
 import Header from './Header/Header';
@@ -28,7 +29,8 @@ function App() {
       percentageCompletion: 60,
       completed: false,
       repeats: true,
-      repeatsAfterDays: 7
+      repeatFrequency: 7,
+      repeatFrequencyType: "days"
     },
     {
       id: uuidv4(),
@@ -46,20 +48,47 @@ function App() {
   function deleteTask(id) {
     const updatedTasks = tasks.filter(task => task.id !== id);
     setTasks(updatedTasks);
-  }
+  };
+
+  function addTask(name, taskDetails, startDate, endDate, completed, repeats, repeatFrequency, repeatFrequencyType) {
+    const newTask = {
+      id: uuidv4(),
+      name,
+      taskDetails,
+      startDate,
+      endDate,
+      completed: false,
+      repeats,
+      repeatFrequency,
+      repeatFrequencyType
+    };
+    const updatedTasks = [...tasks, newTask];
+    setTasks(updatedTasks);
+  };
 
   function completeTask(id) {
     const updatedTasks = tasks.map(task => {
-      if(task.id === id) task.completed = true
+      if(task.id === id) {
+        if(task.repeats === false) {
+          task.completed = true
+          task.completeDate = moment().format("YYYY-MM-DD");
+        }
+        else if(task.repeats === true){
+          task.endDate = moment(task.endDate).add(task.repeatFrequency,task.repeatFrequencyType).format("YYYY-MM-DD");
+          task.startDate = moment().format("YYYY-MM-DD");
+        }
+      }
       return task;
     });
     setTasks(updatedTasks);
   }
 
+
+
   return (
     <div className="App">
       <Header />
-      <TaskDisplay completeTask = {completeTask} deleteTask={deleteTask} tasks={tasks} />
+      <TaskDisplay addTask = {addTask} completeTask = {completeTask} deleteTask={deleteTask} tasks={tasks} />
       <Footer />
     </div>
   );

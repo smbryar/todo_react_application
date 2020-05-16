@@ -1,14 +1,30 @@
-import React from 'react';
+import React, {useState} from 'react';
+import moment from 'moment';
+
 import ButtonItem, { AddIcon } from '../ButtonItem/ButtonItem';
 import { Card, Collapse, Form, OverlayTrigger, Tooltip } from 'react-bootstrap';
+
 import './AddTask.css';
 
 function AddTask(props) {
   const [open, setOpen] = React.useState(false);
+  
+  const [name, setName] = useState("");
+  const [taskDetails, setTaskDetails] = useState("");
+  const [startDate, setStartDate] = useState(moment().format("YYYY-MM-DD"));
+  const [endDate, setEndDate] = useState(moment().format("YYYY-MM-DD"));  
+  const [repeats, setRepeats] = useState(false);
+  const [repeatFrequency, setRepeatFrequency] = useState(0);
+  const [repeatFrequencyType, setRepeatFrequencyType] = useState("");
+
+  function handleAddTaskClick() {
+    props.addTask(name,taskDetails,startDate,endDate,repeats,repeatFrequency,repeatFrequencyType);
+  }
+
   return (
     <Card className="add-task">
       <Card.Header
-        tabindex="0"  
+        tabIndex="0"  
         as="h4"
         onClick={() => setOpen(!open)}
         onKeyPress={(target) => target.charCode === 13 ? setOpen(!open) : null}
@@ -22,7 +38,7 @@ function AddTask(props) {
           <div className="col-2">
             <div className="float-right">
             <OverlayTrigger placement="left" overlay={<Tooltip>Add task</Tooltip>}>
-              <ButtonItem type="submit" aria-label="Add task">
+              <ButtonItem type="submit" aria-label="Add task" onClick = {handleAddTaskClick}>
                 <AddIcon squareHeight="2em" />
               </ButtonItem>
               </OverlayTrigger>
@@ -36,7 +52,13 @@ function AddTask(props) {
           <div id="add-task-contents">
             <Form>
               <Form.Group controlId="formTaskName">
-                <Form.Control type="text" placeholder="Name your next task" />
+                <Form.Control type="text" placeholder="Name your next task" onChange = {e => setName(e.target.value)}/>
+              </Form.Group>
+            </Form>
+
+            <Form>
+              <Form.Group controlId="formTaskDetails">
+                <Form.Control type="text" placeholder="Enter details about your task" onChange = {e => setTaskDetails(e.target.value)}/>
               </Form.Group>
             </Form>
 
@@ -45,7 +67,7 @@ function AddTask(props) {
               <Form>
                 <Form.Group controlId="formStartDate">
                   <Form.Label>Start date</Form.Label>
-                  <Form.Control type="date" />
+                  <Form.Control type="date" onChange = {e => setStartDate(e.target.value)}/>
                 </Form.Group>
               </Form>
             </div>
@@ -53,7 +75,7 @@ function AddTask(props) {
               <Form>
                 <Form.Group controlId="formEndDate">
                   <Form.Label>End date</Form.Label>
-                  <Form.Control type="date" />
+                  <Form.Control type="date" onChange = {e => setEndDate(e.target.value)}/>
                 </Form.Group>
               </Form>
             </div>
@@ -62,23 +84,23 @@ function AddTask(props) {
 
         <Form>
           <Form.Row className="customRow">
-            <Form.Check type="radio" name="repeatChoice" className="align-self-center" />
+            <Form.Check type="radio" name="repeatChoice" className="align-self-center" onChange = {e => setRepeats(false)}/>
             <div className="col align-self-center">
               <Form.Label className="noBottonMargin">Does not repeat</Form.Label>
             </div>
           </Form.Row>
 
           <Form.Row className="customRow">
-            <Form.Check type="radio" name="repeatChoice" className="align-self-center" />
+            <Form.Check type="radio" name="repeatChoice" className="align-self-center" onChange = {e => setRepeats(true)}/>
             <div className="col-4 col-md-2 align-self-center">
               <Form.Label className="noBottonMargin">Repeats every</Form.Label>
             </div>
 
             <div className="col-3 col-md-1">
-              <Form.Control type="number" />
+              <Form.Control type="number" onChange = {e => setRepeatFrequency(e.target.value)}/>
             </div>
             <div className="col-4 col-md-2">
-              <Form.Control as="select" custom>
+              <Form.Control as="select" custom onChange = {e => setRepeatFrequencyType(e.target.value)}>
                 <option>days</option>
                 <option>weeks</option>
                 <option>months</option>
@@ -92,7 +114,7 @@ function AddTask(props) {
 
           </Form.Row>
           <Form.Row className="customRow">
-            <Form.Check type="radio" name="repeatChoice" className="align-self-center" />
+            <Form.Check type="radio" name="repeatChoice" className="align-self-center" onChange = {e => setRepeats(true)}/>
             <div className="col-4 col-md-2 align-self-center">
               <Form.Label className="noBottonMargin">Repeats every</Form.Label>
             </div>

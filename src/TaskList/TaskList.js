@@ -21,7 +21,7 @@ function TaskList(props) {
                 </div>
 
                 <div className="row my-2">
-                    <AddTask />
+                    <AddTask addTask = {props.addTask} tasks = {props.tasks}/>
                 </div>
 
 

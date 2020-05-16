@@ -19,7 +19,7 @@ function TaskItem(props) {
   return (
     <Card className="task-item" style={{backgroundColor: props.completed ? 'rgba(130, 138, 146, 0.74)' : '#BADEC6'}}>
       <Card.Header
-        tabindex="0"
+        tabIndex="0"
         className="h4"
         onClick={() => setOpen(!open)}
         onKeyPress={(target) => target.charCode === 13 ? setOpen(!open) : null}
@@ -57,7 +57,7 @@ function TaskItem(props) {
 
       <Collapse in={open}>
         <Card.Body 
-        tabindex="0">
+        tabIndex="0">
           <TaskBody {...props}/>
         </Card.Body>
       </Collapse>
