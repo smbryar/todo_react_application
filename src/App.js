@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
+import { v4 as uuidv4 } from 'uuid';
+
 import Header from './Header/Header';
 import TaskDisplay from './TaskDisplay/TaskDisplay';
 import Footer from './Footer/Footer';
+
 import './App.css';
 
 function App() {
   const [tasks, setTasks] = useState([
     {
-      id: 1,
+      id: uuidv4(),
       name: "Tidying",
       taskDetails: "Sort through paperwork",
       startDate: "2020-05-06",
@@ -17,7 +20,7 @@ function App() {
       repeats: false
     },
     {
-      id: 2,
+      id: uuidv4(),
       name: "Cleaning",
       taskDetails: "Clean bathrooms",
       startDate: "2020-05-05",
@@ -28,7 +31,7 @@ function App() {
       repeatsAfterDays: 7
     },
     {
-      id: 3,
+      id: uuidv4(),
       name: "Hoovering",
       taskDetails: "Downstairs",
       startDate: "2020-04-03",
