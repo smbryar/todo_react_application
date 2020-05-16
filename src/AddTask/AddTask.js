@@ -14,11 +14,11 @@ function AddTask(props) {
   const [startDate, setStartDate] = useState(moment().format("YYYY-MM-DD"));
   const [endDate, setEndDate] = useState(moment().format("YYYY-MM-DD"));  
   const [repeats, setRepeats] = useState(false);
-  // const [repeatFrequency, setRepeatFrequency] = useState(0);
-  // const [repeatFrequencyType, setRepeatFrequencyType] = useState("");
+  const [repeatFrequency, setRepeatFrequency] = useState(0);
+  const [repeatFrequencyType, setRepeatFrequencyType] = useState("");
 
   function handleAddTaskClick() {
-    props.addTask(name,taskDetails,startDate,endDate,repeats);
+    props.addTask(name,taskDetails,startDate,endDate,repeats,repeatFrequency,repeatFrequencyType);
   }
 
   function handleRadioButton(event) {
@@ -106,10 +106,10 @@ function AddTask(props) {
             </div>
 
             <div className="col-3 col-md-1">
-              <Form.Control type="number"/>
+              <Form.Control type="number" onChange = {e => setRepeatFrequency(e.target.value)}/>
             </div>
             <div className="col-4 col-md-2">
-              <Form.Control as="select" custom>
+              <Form.Control as="select" custom onChange = {e => setRepeatFrequencyType(e.target.value)}>
                 <option>days</option>
                 <option>weeks</option>
                 <option>months</option>

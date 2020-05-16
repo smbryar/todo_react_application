@@ -50,15 +50,17 @@ function App() {
     setTasks(updatedTasks);
   };
 
-  function addTask(name, taskDetails, startDate, endDate, completed, repeats, repeatFrequency, repeatFrequencyType) {
+  function addTask(name, taskDetails, startDate, endDate, repeats, repeatFrequency, repeatFrequencyType) {
     const newTask = {
       id: uuidv4(),
       name,
       taskDetails,
       startDate,
       endDate,
+      repeats,
+      repeatFrequency,
+      repeatFrequencyType,
       completed: false,
-      repeats
     };
     const updatedTasks = [...tasks, newTask];
     setTasks(updatedTasks);
