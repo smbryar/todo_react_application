@@ -58,9 +58,7 @@ function App() {
       startDate,
       endDate,
       completed: false,
-      repeats,
-      repeatFrequency,
-      repeatFrequencyType
+      repeats
     };
     const updatedTasks = [...tasks, newTask];
     setTasks(updatedTasks);

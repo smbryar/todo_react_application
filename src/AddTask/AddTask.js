@@ -14,11 +14,20 @@ function AddTask(props) {
   const [startDate, setStartDate] = useState(moment().format("YYYY-MM-DD"));
   const [endDate, setEndDate] = useState(moment().format("YYYY-MM-DD"));  
   const [repeats, setRepeats] = useState(false);
-  const [repeatFrequency, setRepeatFrequency] = useState(0);
-  const [repeatFrequencyType, setRepeatFrequencyType] = useState("");
+  // const [repeatFrequency, setRepeatFrequency] = useState(0);
+  // const [repeatFrequencyType, setRepeatFrequencyType] = useState("");
 
   function handleAddTaskClick() {
-    props.addTask(name,taskDetails,startDate,endDate,repeats,repeatFrequency,repeatFrequencyType);
+    props.addTask(name,taskDetails,startDate,endDate,repeats);
+  }
+
+  function handleRadioButton(event) {
+    if (event.target.value === "doesRepeat") {
+      setRepeats(true);
+    }
+    else if (event.target.value === "doesNotRepeat") {
+      setRepeats(false)
+    };
   }
 
   return (
@@ -84,23 +93,23 @@ function AddTask(props) {
 
         <Form>
           <Form.Row className="customRow">
-            <Form.Check type="radio" name="repeatChoice" className="align-self-center" onChange = {e => setRepeats(false)}/>
+            <Form.Check type="radio" name="repeatChoice" className="align-self-center" value="doesNotRepeat" onChange = { handleRadioButton }/>
             <div className="col align-self-center">
               <Form.Label className="noBottonMargin">Does not repeat</Form.Label>
             </div>
           </Form.Row>
 
           <Form.Row className="customRow">
-            <Form.Check type="radio" name="repeatChoice" className="align-self-center" onChange = {e => setRepeats(true)}/>
+            <Form.Check type="radio" name="repeatChoice" className="align-self-center" value="doesRepeat" onChange = { handleRadioButton }/>
             <div className="col-4 col-md-2 align-self-center">
               <Form.Label className="noBottonMargin">Repeats every</Form.Label>
             </div>
 
             <div className="col-3 col-md-1">
-              <Form.Control type="number" onChange = {e => setRepeatFrequency(e.target.value)}/>
+              <Form.Control type="number"/>
             </div>
             <div className="col-4 col-md-2">
-              <Form.Control as="select" custom onChange = {e => setRepeatFrequencyType(e.target.value)}>
+              <Form.Control as="select" custom>
                 <option>days</option>
                 <option>weeks</option>
                 <option>months</option>
@@ -113,8 +122,8 @@ function AddTask(props) {
             </div>
 
           </Form.Row>
-          <Form.Row className="customRow">
-            <Form.Check type="radio" name="repeatChoice" className="align-self-center" onChange = {e => setRepeats(true)}/>
+          {/* <Form.Row className="customRow">
+            <Form.Check type="radio" name="repeatChoice" className="align-self-center"/>
             <div className="col-4 col-md-2 align-self-center">
               <Form.Label className="noBottonMargin">Repeats every</Form.Label>
             </div>
@@ -131,7 +140,7 @@ function AddTask(props) {
                 ))}
               </div>
             </div>
-          </Form.Row>
+          </Form.Row> */}
         </Form>
         </Card.Body>
       </Collapse>
