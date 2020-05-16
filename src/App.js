@@ -51,6 +51,10 @@ function App() {
   };
 
   function addTask(name, taskDetails, startDate, endDate, repeats, repeatFrequency, repeatFrequencyType) {
+    let now = moment().valueOf();
+    let start = moment(startDate, "YYYY-MM-DD").valueOf();
+    let end = moment(endDate, "YYYY-MM-DD").valueOf();
+
     const newTask = {
       id: uuidv4(),
       name,
@@ -61,6 +65,7 @@ function App() {
       repeatFrequency,
       repeatFrequencyType,
       completed: false,
+      percentageCompletion: ((now-start)/(end-start))*100
     };
     const updatedTasks = [...tasks, newTask];
     setTasks(updatedTasks);
@@ -74,7 +79,7 @@ function App() {
           task.completeDate = moment().format("YYYY-MM-DD");
         }
         else if(task.repeats === true){
-          task.endDate = moment(task.endDate).add(task.repeatFrequency,task.repeatFrequencyType).format("YYYY-MM-DD");
+          task.endDate = moment(task.endDate,"YYYY-MM-DD").add(task.repeatFrequency,task.repeatFrequencyType).format("YYYY-MM-DD");
           task.startDate = moment().format("YYYY-MM-DD");
         }
       }
