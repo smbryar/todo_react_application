@@ -35,13 +35,13 @@ function AddTask(props) {
       <Card.Header
         tabIndex="0"  
         as="h4"
-        onClick={() => setOpen(!open)}
-        onKeyPress={(target) => target.charCode === 13 ? setOpen(!open) : null}
         aria-controls="add-task-contents"
         aria-expanded={open}
       >
         <div className="row">
-          <div className="col-10 align-self-center">
+          <div className="col-10 align-self-center" 
+            onClick={() => setOpen(!open)}
+            onKeyPress={(target) => target.charCode === 13 ? setOpen(!open) : null}>
             Add Task
           </div>
           <div className="col-2">

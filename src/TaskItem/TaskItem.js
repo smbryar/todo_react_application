@@ -21,13 +21,14 @@ function TaskItem(props) {
       <Card.Header
         tabIndex="0"
         className="h4"
-        onClick={() => setOpen(!open)}
-        onKeyPress={(target) => target.charCode === 13 ? setOpen(!open) : null}
         aria-controls="task-item-contents"
         aria-expanded={open}
       >
         <div className="row">
-          <div className="col-8" style={{textDecoration: props.completed ? 'line-through' : ''}}>
+          <div className="col-8" 
+            style={{textDecoration: props.completed ? 'line-through' : ''}} 
+            onClick={() => setOpen(!open)} 
+            onKeyPress={(target) => target.charCode === 13 ? setOpen(!open) : null}>
             {props.repeats && <RepeatIcon squareHeight="1.2em" />} {props.name}
           </div>
           <div className="col-4">
