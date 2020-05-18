@@ -3,6 +3,8 @@ import { Form } from 'react-bootstrap';
 
 import '../AddTask.css';
 
+// This feature is currently not functional
+
 function RepeatsRegularDaysField(props) {
   return (
     <Form.Row className="customRow">

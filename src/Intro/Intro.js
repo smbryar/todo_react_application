@@ -1,5 +1,7 @@
 import React from 'react';
 import moment from 'moment';
+import { Card } from 'react-bootstrap';
+
 import './Intro.css';
 
 function Intro(props) {
@@ -7,10 +9,9 @@ function Intro(props) {
     const tasksNotCompleted = props.tasks.filter(t=>t.completed === false).length;
 
     return (
-        <div className="card-header rounded intro" 
-        tabIndex="0">
-            <h4>You have {tasksDueToday} task{tasksDueToday === 1? "":"s"} to complete today out of {tasksNotCompleted} unfinished task{tasksNotCompleted === 1? "":"s"}.</h4>
-        </div>
+        <Card.Header className="intro" tabIndex="0">
+            <h4>You have {tasksDueToday} task{tasksDueToday === 1? "":"s"} to complete today out of {tasksNotCompleted} unfinished task{tasksNotCompleted === 1? "":"s"}</h4>
+        </Card.Header>
     );
 }
 

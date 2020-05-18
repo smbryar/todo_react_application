@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import moment from 'moment';
 import { v4 as uuidv4 } from 'uuid';
+import {Container} from 'react-bootstrap';
 
 import Header from './Header/Header';
 import TaskList from './TaskList/TaskList';
@@ -97,14 +98,12 @@ function App() {
     setTasks(updatedTasks);
   }
 
-
-
   return (
     <div className="App">
       <Header />
-      <main className="container">
+      <Container fluid="lg">
         <TaskList addTask={addTask} completeTask={completeTask} deleteTask={deleteTask} tasks={tasks} />
-      </main>
+      </Container>
       <Footer />
     </div>
   );
