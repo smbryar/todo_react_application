@@ -50,7 +50,8 @@ function App() {
     setTasks(updatedTasks);
   };
 
-  function addTask(name, taskDetails, startDate, endDate, repeats, repeatFrequency, repeatFrequencyType) {
+  function addTask(name, taskDetails, startDate, endDate, repeats, repeatType, repeatAfterCompletionFrequency,
+    repeatAfterCompletionFrequencyType,repeatRegularDaysFrequency,repeatRegularDaysArrayDays) {
     let now = moment().valueOf();
     let start = moment(startDate, "YYYY-MM-DD").valueOf();
     let end = moment(endDate, "YYYY-MM-DD").valueOf();
@@ -62,8 +63,11 @@ function App() {
       startDate,
       endDate,
       repeats,
-      repeatFrequency,
-      repeatFrequencyType,
+      repeatType,
+      repeatAfterCompletionFrequency,
+      repeatAfterCompletionFrequencyType,
+      repeatRegularDaysFrequency,
+      repeatRegularDaysArrayDays,
       completed: false,
       percentageCompletion: ((now-start)/(end-start))*100
     };
@@ -79,7 +83,7 @@ function App() {
           task.completeDate = moment().format("YYYY-MM-DD");
         }
         else if(task.repeats === true){
-          task.endDate = moment(task.endDate,"YYYY-MM-DD").add(task.repeatFrequency,task.repeatFrequencyType).format("YYYY-MM-DD");
+          task.endDate = moment().add(task.repeatFrequency,task.repeatFrequencyType).format("YYYY-MM-DD");
           task.startDate = moment().format("YYYY-MM-DD");
         }
       }
