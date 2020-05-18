@@ -8,20 +8,6 @@ import './AddTask.css';
 
 function AddTask(props) {
   const [open, setOpen] = React.useState(false);
-
-  // const clearFormState = {
-  //   name: "",
-  //   taskDetails: "",
-  //   startDate: moment().format("YYYY-MM-DD"),
-  //   endDate: moment().format("YYYY-MM-DD"),
-  //   repeats: false,
-  //   repeatType: null,
-  //   repeatAfterCompletionFrequency: null,
-  //   repeatAfterCompletionFrequencyType: null,
-  //   repeatRegularDaysFrequency: null,
-  //   repeatRegularDaysArrayDays: [false, false, false, false, false, false, false]
-  // };
-
   const [name, setName] = useState("");
   const [taskDetails, setTaskDetails] = useState("");
   const [startDate, setStartDate] = useState(moment().format("YYYY-MM-DD"));
@@ -29,7 +15,7 @@ function AddTask(props) {
   const [repeats, setRepeats] = useState(false);
   const [repeatType, setRepeatType] = useState(null);
   const [repeatAfterCompletionFrequency, setRepeatAfterCompletionFrequency] = useState(null);
-  const [repeatAfterCompletionFrequencyType, setRepeatAfterCompletionFrequencyType] = useState(null);
+  const [repeatAfterCompletionFrequencyType, setRepeatAfterCompletionFrequencyType] = useState("days");
   const [repeatRegularDaysFrequency, setRepeatRegularDaysFrequency] = useState(null);
   const [repeatRegularDaysArrayDays, setRepeatRegularDaysArrayDays] = useState([false, false, false, false, false, false, false]);
 
@@ -153,7 +139,7 @@ function AddTask(props) {
               </div>
 
             </Form.Row>
-            <Form.Row className="customRow">
+            {/* <Form.Row className="customRow">
               <Form.Check type="radio" name="repeatChoice" className="align-self-center" value="repeatsRegularDays" onChange={handleRadioButton} />
               <div className="col-4 col-md-2 align-self-center">
                 <Form.Label className="noBottonMargin">Repeats every</Form.Label>
@@ -171,7 +157,7 @@ function AddTask(props) {
                   ))}
                 </div>
               </div>
-            </Form.Row>
+            </Form.Row> */}
           </Form>
         </Card.Body>
       </Collapse>

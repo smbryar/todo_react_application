@@ -50,12 +50,15 @@ function App() {
     setTasks(updatedTasks);
   };
 
+  function calculatePercentageCompletion(startDate,endDate) {
+    const now = moment().valueOf();
+    const start = moment(startDate, "YYYY-MM-DD").valueOf();
+    const end = moment(endDate, "YYYY-MM-DD").valueOf();
+    return ((now-start)/(end-start))*100;
+  }
+
   function addTask(name, taskDetails, startDate, endDate, repeats, repeatType, repeatAfterCompletionFrequency,
     repeatAfterCompletionFrequencyType,repeatRegularDaysFrequency,repeatRegularDaysArrayDays) {
-    let now = moment().valueOf();
-    let start = moment(startDate, "YYYY-MM-DD").valueOf();
-    let end = moment(endDate, "YYYY-MM-DD").valueOf();
-
     const newTask = {
       id: uuidv4(),
       name,
@@ -69,7 +72,7 @@ function App() {
       repeatRegularDaysFrequency,
       repeatRegularDaysArrayDays,
       completed: false,
-      percentageCompletion: ((now-start)/(end-start))*100
+      percentageCompletion: calculatePercentageCompletion(startDate,endDate)
     };
     const updatedTasks = [...tasks, newTask];
     setTasks(updatedTasks);
@@ -82,8 +85,8 @@ function App() {
           task.completed = true
           task.completeDate = moment().format("YYYY-MM-DD");
         }
-        else if(task.repeats === true){
-          task.endDate = moment().add(task.repeatFrequency,task.repeatFrequencyType).format("YYYY-MM-DD");
+        else if(task.repeatType === "repeatsAfterCompletion"){
+          task.endDate = moment().add(task.repeatAfterCompletionFrequency,task.repeatAfterCompletionFrequencyType).format("YYYY-MM-DD");
           task.startDate = moment().format("YYYY-MM-DD");
         }
       }
