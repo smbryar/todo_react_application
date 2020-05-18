@@ -55,7 +55,8 @@ function App() {
     const now = moment().valueOf();
     const start = moment(startDate, "YYYY-MM-DD").valueOf();
     const end = moment(endDate, "YYYY-MM-DD").valueOf();
-    return ((now - start) / (end - start)) * 100;
+    const percentageCompletion = ((now - start) / (end - start)) * 100;
+    return isFinite(percentageCompletion) ? percentageCompletion : 100;
   }
 
   function addTask(name, taskDetails, startDate, endDate, repeats, repeatType, repeatAfterCompletionFrequency,

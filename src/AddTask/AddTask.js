@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import moment from 'moment';
 
-import ButtonItem, { AddIcon } from '../ButtonItem/ButtonItem';
-import { Card, Collapse, Form, OverlayTrigger, Tooltip } from 'react-bootstrap';
+import { AddIcon } from '../ButtonItem/ButtonItem';
+import { Card, Collapse, Form} from 'react-bootstrap';
 
 import './AddTask.css';
 
@@ -12,23 +12,38 @@ function AddTask(props) {
   const [taskDetails, setTaskDetails] = useState("");
   const [startDate, setStartDate] = useState(moment().format("YYYY-MM-DD"));
   const [endDate, setEndDate] = useState(moment().format("YYYY-MM-DD"));
-  const [repeats, setRepeats] = useState(false);
+  const [repeats, setRepeats] = useState(null);
   const [repeatType, setRepeatType] = useState(null);
   const [repeatAfterCompletionFrequency, setRepeatAfterCompletionFrequency] = useState(null);
   const [repeatAfterCompletionFrequencyType, setRepeatAfterCompletionFrequencyType] = useState("days");
   const [repeatRegularDaysFrequency, setRepeatRegularDaysFrequency] = useState(null);
   const [repeatRegularDaysArrayDays, setRepeatRegularDaysArrayDays] = useState([false, false, false, false, false, false, false]);
+  const [errors, setErrors] = useState({name:false,repeats:false,repeatAfterCompletionFrequency:false});
 
   function handleAddTaskClick() {
-    props.addTask(name, taskDetails, startDate, endDate, repeats, repeatType,
-      repeatAfterCompletionFrequency,
-      repeatAfterCompletionFrequencyType,
-      repeatRegularDaysFrequency,
-      repeatRegularDaysArrayDays);
+    if (name === "" || repeats === null || (repeatType === "repeatsAfterCompletion" && repeatAfterCompletionFrequency === null)) {      
+      const updatedErrors = Object.assign({},errors);
+      if (name === "") {
+        updatedErrors.name = true;
+      }
+      if (repeats === null) {
+        updatedErrors.repeats = true;
+      }
+      if (repeatType === "repeatsAfterCompletion" && repeatAfterCompletionFrequency === null) {
+        updatedErrors.repeatAfterCompletionFrequency = true;
+      }    
+      setErrors(updatedErrors);
+    }    
+    else {
+      props.addTask(name, taskDetails, startDate, endDate, repeats, repeatType,
+        repeatAfterCompletionFrequency,
+        repeatAfterCompletionFrequencyType,
+        repeatRegularDaysFrequency,
+        repeatRegularDaysArrayDays);
+    }   
   }
 
   function handleRadioButton(event) {
-    console.log(event.target);
     if (event.target.value === "repeatsAfterCompletion") {
       setRepeats(true);
       setRepeatType("repeatsAfterCompletion");
@@ -74,7 +89,8 @@ function AddTask(props) {
           <div id="add-task-contents">
             <Form>
               <Form.Group controlId="formTaskName">
-                <Form.Control type="text" placeholder="Name your next task" onChange={e => setName(e.target.value)} />
+                <Form.Control type="text" style={{colour:"red"}}placeholder="Name your next task" onChange={e => setName(e.target.value)} />
+                {errors.name && <span className="error">Input a name for your task</span>}
               </Form.Group>
             </Form>
 
@@ -88,7 +104,7 @@ function AddTask(props) {
               <div className="col-6">
                 <Form>
                   <Form.Group controlId="formStartDate">
-                    <Form.Label>Start date</Form.Label>
+                    <Form.Label>When should you start this task?</Form.Label>
                     <Form.Control type="date" onChange={e => setStartDate(e.target.value)} />
                   </Form.Group>
                 </Form>
@@ -96,7 +112,7 @@ function AddTask(props) {
               <div className="col-6">
                 <Form>
                   <Form.Group controlId="formEndDate">
-                    <Form.Label>End date</Form.Label>
+                    <Form.Label>When do you need to finish this task?</Form.Label>
                     <Form.Control type="date" onChange={e => setEndDate(e.target.value)} />
                   </Form.Group>
                 </Form>
@@ -105,6 +121,8 @@ function AddTask(props) {
           </div>
 
           <Form>
+            
+          {errors.repeats && <span className="error">Select whether this task repeats</span>}
             <Form.Row className="customRow">
               <Form.Check type="radio" name="repeatChoice" className="align-self-center" value="doesNotRepeat" onChange={handleRadioButton} />
               <div className="col align-self-center">
@@ -133,6 +151,7 @@ function AddTask(props) {
               <div className="col-12 col-md-6 align-self-center">
                 <Form.Label className="noBottonMargin">after the task has been completed</Form.Label>
               </div>
+              {errors.repeatAfterCompletionFrequency && <span className="error">Select the frequency the task repeats at</span>}
 
             </Form.Row>
             {/* <Form.Row className="customRow">
@@ -156,6 +175,7 @@ function AddTask(props) {
             </Form.Row> */}
           </Form>
           <button type="submit" className = "btn btn-light btn-outline-secondary btn-block mt-3" onClick={handleAddTaskClick}>Submit task</button>
+          
         </Card.Body>
       </Collapse>
     </Card >
