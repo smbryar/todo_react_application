@@ -28,6 +28,14 @@ function TaskBody(props) {
                     </div>
                 </div>
             }
+            <div className="row">
+                {!props.completed && <div className="col-6">
+                    <button type="button" className = "btn btn-light btn-outline-secondary btn-block mt-3" onClick={props.handleCompleteClick}>Complete task</button>
+                </div>}
+                <div className="col">
+                    <button type="button" className = "btn btn-light btn-outline-secondary btn-block mt-3" onClick={props.handleDeleteClick}>Delete task</button>
+                </div>
+            </div>
         </div>
     );
 }

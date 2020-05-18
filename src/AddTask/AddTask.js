@@ -54,20 +54,16 @@ function AddTask(props) {
         as="h4"
         aria-controls="add-task-contents"
         aria-expanded={open}
+        onClick={() => setOpen(!open)}
       >
         <div className="row">
           <div className="col-10 align-self-center"
-            onClick={() => setOpen(!open)}
             onKeyPress={(target) => target.charCode === 13 ? setOpen(!open) : null}>
             Add Task
           </div>
           <div className="col-2">
             <div className="float-right">
-              <OverlayTrigger placement="left" overlay={<Tooltip>Add task</Tooltip>}>
-                <ButtonItem type="submit" aria-label="Add task" onClick={handleAddTaskClick}>
-                  <AddIcon squareHeight="2em" />
-                </ButtonItem>
-              </OverlayTrigger>
+              <AddIcon squareHeight="1.2em" />
             </div>
           </div>
         </div>
@@ -159,6 +155,7 @@ function AddTask(props) {
               </div>
             </Form.Row> */}
           </Form>
+          <button type="submit" className = "btn btn-light btn-outline-secondary btn-block mt-3" onClick={handleAddTaskClick}>Submit task</button>
         </Card.Body>
       </Collapse>
     </Card >

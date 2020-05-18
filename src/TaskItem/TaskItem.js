@@ -59,7 +59,7 @@ function TaskItem(props) {
       <Collapse in={open}>
         <Card.Body 
         tabIndex="0">
-          <TaskBody {...props}/>
+          <TaskBody {...props} handleDeleteClick = {handleDeleteClick} handleCompleteClick = {handleCompleteClick}/>
         </Card.Body>
       </Collapse>
     </Card >
