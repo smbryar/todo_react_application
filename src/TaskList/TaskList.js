@@ -26,10 +26,10 @@ function TaskList(props) {
         }
 
     return (
-        <div className="col-12 col-lg-8">
+        <div className="col">
             <div className="mx-2">
 
-                <div className="row my-2 d-lg-none">
+                <div className="row my-2">
                     <Intro tasks={props.tasks} />
                 </div>
 
