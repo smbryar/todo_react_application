@@ -12,7 +12,12 @@ function RepeatsAfterCompletionField(props) {
       </div>
 
       <div className="col-3 col-md-1">
-        <Form.Control type="number" onChange={e => props.setRepeatAfterCompletionFrequency(e.target.value)} />
+        <Form.Control 
+          type="number" 
+          onChange={e => props.setRepeatAfterCompletionFrequency(e.target.value)} 
+          placeholder={props.errors.repeatAfterCompletionFrequency ? "?": null}
+          style={props.errors.repeatAfterCompletionFrequency ? {backgroundColor:"yellow"} : null}
+        />
       </div>
       <div className="col-4 col-md-2">
         <Form.Control as="select" custom onChange={e => props.setRepeatAfterCompletionFrequencyType(e.target.value)}>
@@ -26,8 +31,6 @@ function RepeatsAfterCompletionField(props) {
       <div className="col-12 col-md-6 align-self-center">
         <Form.Label className="noBottonMargin">after the task has been completed</Form.Label>
       </div>
-      {props.errors.repeatAfterCompletionFrequency && <span className="error">Select the frequency the task repeats at</span>}
-
     </Form.Row>
 
   )
