@@ -13,7 +13,7 @@ import RepeatsAfterCompletionField from './FormComponents/RepeatsAfterCompletion
 import './AddTask.css';
 
 function AddTask(props) {
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = React.useState(false);
   const [name, setName] = useState("");
   const [taskDetails, setTaskDetails] = useState("");
   const [startDate, setStartDate] = useState(moment().format("YYYY-MM-DD"));
@@ -29,12 +29,8 @@ function AddTask(props) {
   function handleAddTaskClick() {
     if (name === "" || repeats === null || (repeatType === "repeatsAfterCompletion" && repeatAfterCompletionFrequency === null)) {
       const updatedErrors = Object.assign({}, errors);
-      if (name === "") {
-        updatedErrors.name = true;
-      }
-      if (repeatType === "repeatsAfterCompletion" && repeatAfterCompletionFrequency === null) {
-        updatedErrors.repeatAfterCompletionFrequency = true;
-      }
+      name === "" ? updatedErrors.name = true : updatedErrors.name = false;
+      repeatType === "repeatsAfterCompletion" && repeatAfterCompletionFrequency === null ? updatedErrors.repeatAfterCompletionFrequency = true : updatedErrors.repeatAfterCompletionFrequency = false;
       setErrors(updatedErrors);
     }
     else {

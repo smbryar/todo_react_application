@@ -24,7 +24,7 @@ function TaskBody(props) {
                 {props.repeats &&
                     <Row>
                         <Col>
-                            <h6>This task repeats every {props.repeatAfterCompletionFrequency} {props.repeatAfterCompletionFrequencyType}.</h6>
+                            <h6>This task repeats {props.repeatAfterCompletionFrequency} {props.repeatAfterCompletionFrequencyType} after being completed.</h6>
                         </Col>
                     </Row>
                 }
