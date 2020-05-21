@@ -6,6 +6,7 @@ import {Container} from 'react-bootstrap';
 import Header from './Header/Header';
 import TaskList from './TaskList/TaskList';
 import Footer from './Footer/Footer';
+import TaskGraph from './TaskGraph/TaskGraph';
 
 import './App.css';
 
@@ -15,8 +16,8 @@ function App() {
       id: uuidv4(),
       name: "Tidying",
       taskDetails: "Sort through paperwork",
-      startDate: "2020-05-06",
-      endDate: "2020-08-11",
+      startDate: "2020-06-06",
+      endDate: "2020-06-11",
       percentageCompletion: 20,
       completed: false,
       repeats: false
@@ -25,8 +26,8 @@ function App() {
       id: uuidv4(),
       name: "Cleaning",
       taskDetails: "Clean bathrooms",
-      startDate: "2020-05-05",
-      endDate: "2020-08-11",
+      startDate: "2020-06-05",
+      endDate: "2020-06-10",
       percentageCompletion: 60,
       completed: false,
       repeats: true,
@@ -38,14 +39,16 @@ function App() {
       id: uuidv4(),
       name: "Hoovering",
       taskDetails: "Downstairs",
-      startDate: "2020-04-03",
-      endDate: "2020-05-01",
+      startDate: "2020-06-03",
+      endDate: "2020-06-04",
       percentageCompletion: 80,
       completed: true,
       completeDate: "2020-04-26",
       repeats: false
     }
   ]);
+
+  const [open, setOpen] = useState(false);
 
   function deleteTask(id) {
     const updatedTasks = tasks.filter(task => task.id !== id);
@@ -101,9 +104,16 @@ function App() {
   return (
     <div className="App">
       <Header />
+      <button className="btn" onClick={() => setOpen(!open)}>Switch screens</button>
+      {open && 
       <Container fluid="lg">
         <TaskList addTask={addTask} completeTask={completeTask} deleteTask={deleteTask} tasks={tasks} />
       </Container>
+      }
+      {!open &&
+      <Container fluid="lg" style={{height:"500px"}}>
+      <TaskGraph tasks={tasks}></TaskGraph>
+    </Container>}
       <Footer />
     </div>
   );
