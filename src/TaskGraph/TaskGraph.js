@@ -6,6 +6,7 @@ import CustomSliceTooltip from './CustomSliceTooltip';
 import './TaskGraph.css';
 
 function TaskGraph(props) {
+  
   const theme = {
       fontSize: "1em",
       fontFamily: "Verdana, Arial, sans-serif"
@@ -41,8 +42,7 @@ function TaskGraph(props) {
       axisLeft={{
         orient: 'left',
         tickPadding: 15,
-        tickRotation: 0,
-
+        tickRotation: 0
       }}
       axisBottom={{
         format: "%b %d",
@@ -52,7 +52,7 @@ function TaskGraph(props) {
       theme={theme}
       colors={{ scheme: "accent" }}
       lineWidth={20}
-      pointSize={0}
+      enablePoints={false}
       enableGridX={true}
       enableGridY={true}
       enableSlices="y"
