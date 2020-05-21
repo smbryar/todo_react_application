@@ -5,46 +5,24 @@ import CustomSliceTooltip from './CustomSliceTooltip';
 
 import './TaskGraph.css';
 
-function getStartDate(tasks, taskName) {
-  return tasks.find(task => task.name === taskName).startDate;
-}
-
-function getEndDate(tasks, taskName) {
-  return tasks.find(task => task.name === taskName).endDate;
-}
-
 function TaskGraph(props) {
-  const lineGraphSettings = {
-    theme: {
+  const theme = {
       fontSize: "1em",
       fontFamily: "Verdana, Arial, sans-serif"
-    },
   };
 
-  const data = 
-    [
-    {
-      id: "Tidying",
-      data: [
-        { x: `${getStartDate(props.tasks, "Tidying")}`, y: "Tidying" },
-        { x: `${getEndDate(props.tasks, "Tidying")}`, y: "Tidying" }
-      ]
-    },
-    {
-      id: "Cleaning",
-      data: [
-        { x: `${getStartDate(props.tasks, "Cleaning")}`, y: "Cleaning" },
-        { x: `${getEndDate(props.tasks, "Cleaning")}`, y: "Cleaning" }
-      ]
-    },
-    {
-      id: "Hoovering",
-      data: [
-        { x: `${getStartDate(props.tasks, "Hoovering")}`, y: "Hoovering" },
-        { x: `${getEndDate(props.tasks, "Hoovering")}`, y: "Hoovering" }
-      ]
-    }
-  ]
+  const data = props.tasks.map(task => {
+    let newTask = {};
+    newTask.id = task.name;
+    let startData = {};
+    startData.x = task.startDate;
+    startData.y = task.name;
+    let endData = {};
+    endData.x = task.endDate;
+    endData.y = task.name;
+    newTask.data = [startData,endData];
+    return newTask;
+  })
 
   return (
     <ResponsiveLine className="graph"
@@ -71,7 +49,7 @@ function TaskGraph(props) {
         tickRotation: -45,
         tickPadding: 15
       }}
-      theme={lineGraphSettings.theme}
+      theme={theme}
       colors={{ scheme: "accent" }}
       lineWidth={20}
       pointSize={0}
