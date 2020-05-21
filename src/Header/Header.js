@@ -1,30 +1,20 @@
 import React from 'react';
-// import ButtonItem, { SettingsIcon } from '../ButtonItem/ButtonItem';
+import { Navbar, Nav } from 'react-bootstrap';
 import './Header.css';
 
-function Header() {
-  return (
-    <nav className="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
-        {/* <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
-            aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
-            <span className="navbar-toggler-icon"></span>
-        </button> */}
-        {/* <div class="collapse navbar-collapse" id="navbarCollapse" style>
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Link 1</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Link 2</a>
-                </li>
-            </ul>
-        </div> */}
-        <h1 className="navbar-brand title">My Tasks</h1>
-        {/* <ButtonItem>
-            <SettingsIcon squareHeight="1.5em"/>
-        </ButtonItem>   */}
-    </nav>
-  );
+function Header(props) {
+    return (
+        <Navbar className="navbar--my-tasks-app" expand="sm" fixed="top">
+            <Navbar.Brand className="brand--my-tasks-app">My Tasks App</Navbar.Brand>
+            <Navbar.Toggle aria-controls="basic-navbar-nav" />
+            <Navbar.Collapse id="basic-navbar-nav">
+                <Nav>
+                    <Nav.Link className="px-3 navlink--my-tasks-app" href="#" onClick={() => props.setPage("Tasks")}>Tasks</Nav.Link>
+                    <Nav.Link className="px-3 navlink--my-tasks-app" href="#" onClick={() => props.setPage("Graph")}>Graph</Nav.Link>
+                </Nav>
+            </Navbar.Collapse>
+        </Navbar>
+    );
 }
 
 export default Header;

@@ -48,7 +48,7 @@ function App() {
     }
   ]);
 
-  const [open, setOpen] = useState(false);
+  const [page, setPage] = useState("Tasks");
 
   function deleteTask(id) {
     const updatedTasks = tasks.filter(task => task.id !== id);
@@ -103,15 +103,14 @@ function App() {
 
   return (
     <div className="App">
-      <Header />
-      <button className="btn" onClick={() => setOpen(!open)}>Switch screens</button>
-      {open && 
+      <Header setPage={setPage}/>
+      {page ==="Tasks" && 
       <Container fluid="lg">
         <TaskList addTask={addTask} completeTask={completeTask} deleteTask={deleteTask} tasks={tasks} />
       </Container>
       }
-      {!open &&
-      <Container fluid="lg" style={{height:"500px"}}>
+      {page === "Graph" &&
+      <Container fluid="lg" style={{height: window.innerHeight-125 < 700 ? window.innerHeight-125 : 700}}>
       <TaskGraph tasks={tasks}></TaskGraph>
     </Container>}
       <Footer />

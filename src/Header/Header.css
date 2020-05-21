@@ -1,7 +1,11 @@
-.title {
-    font-size: 2em;
+.brand--my-tasks-app {
+    font-size: 1.8em;
 }
 
-.navbar {
-    height: 70px;
+.navbar--my-tasks-app {
+    background-color: #BADEC6;
+}
+
+.navlink--my-tasks-app {
+    font-size: 1.1em;
 }
