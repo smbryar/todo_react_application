@@ -1,7 +1,7 @@
 import React from 'react';
 import { ResponsiveLine } from '@nivo/line';
 
-import CustomSliceTooltip from './CustomSliceTooltip';
+import CustomTooltip from './CustomTooltip';
 
 import './TaskGraph.css';
 
@@ -14,7 +14,7 @@ function TaskGraph(props) {
 
   const data = props.tasks.filter(task => task.completed === false).map(task => {
     let newTask = {};
-    newTask.id = task.name;
+    newTask.id = task.id;
     let startData = {};
     startData.x = task.startDate;
     startData.y = task.name;
@@ -24,6 +24,11 @@ function TaskGraph(props) {
     newTask.data = [startData,endData];
     return newTask;
   })
+
+  function handleGraphClick (Point) {
+    const id = Point.id.slice(0,-2);
+    props.setPage("Tasks");
+  }
 
   // Using code from tylercrosse https://github.com/plouc/nivo/issues/353
   const HorizontalTick = ({ textAnchor, textBaseline, value, x, y }) => {
@@ -87,8 +92,10 @@ function TaskGraph(props) {
       enablePoints={false}
       enableGridX={true}
       enableGridY={true}
-      enableSlices="y"
-      sliceTooltip={CustomSliceTooltip}
+      tooltip={CustomTooltip}
+      useMesh={true}
+      debugMesh={true}
+      onClick={handleGraphClick}
     />
   );
 }

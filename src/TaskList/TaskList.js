@@ -12,6 +12,20 @@ import './TaskList.css';
 function TaskList(props) {
     const [addTaskKey, setAddTaskKey] = useState(uuidv4());
 
+    const openTasks = props.tasks.map(task=> {
+        return {id : task.id, open : false}
+    })
+
+    const [open, setOpen] = useState(openTasks);
+
+    function openTaskCard(id) {
+        const newOpen = open.map(task => {
+            if (task.id === id) {task.open = !task.open}
+            return task
+          })
+        setOpen(newOpen);
+    }
+
     function compare(a, b) {
         if (a.completed === true || a.startDate > moment().format("YYYY-MM-DD") || a.endDate > b.endDate) return 1;
         if (a.endDate < b.endDate || a.startDate < b.startDate) return -1;
@@ -39,7 +53,7 @@ function TaskList(props) {
 
             {props.tasks.sort(compare).map(task => (
                 <Row key={task.id} className="my-2">
-                    <TaskItem completeTask={props.completeTask} deleteTask={props.deleteTask} {...task} />
+                    <TaskItem completeTask={props.completeTask} deleteTask={props.deleteTask} open={open} setOpen={setOpen} openTaskCard = {openTaskCard} {...task} />
                 </Row>
             ))}
 

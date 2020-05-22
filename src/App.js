@@ -24,7 +24,7 @@ function App() {
     },
     {
       id: uuidv4(),
-      name: "Clean the shower upstairs and downstairs",
+      name: "Cleaning",
       taskDetails: "Clean bathrooms",
       startDate: "2020-06-05",
       endDate: "2020-06-10",
@@ -112,7 +112,7 @@ function App() {
       }
       {page === "Graph" &&
       <Container fluid="lg" style={{height: window.innerHeight-125 < 600 ? window.innerHeight-125 : 600}}>
-      <TaskGraph tasks={tasks}></TaskGraph>
+      <TaskGraph tasks={tasks} setPage={setPage}></TaskGraph>
     </Container>}
       <Footer />
     </div>

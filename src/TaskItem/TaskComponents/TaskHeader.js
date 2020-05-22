@@ -4,6 +4,7 @@ import { Card, OverlayTrigger, Tooltip, Row, Col, ButtonGroup } from 'react-boot
 import ButtonItem, { CheckboxIcon, DeleteIcon, RepeatIcon } from '../../ButtonItem/ButtonItem';
 import TaskProgressBar from './TaskProgressBar';
 
+
 function TaskHeader(props) {
   return (
       <Card.Header
@@ -15,7 +16,7 @@ function TaskHeader(props) {
         <Row>
           <Col xs={8} 
             style={{textDecoration: props.completed ? 'line-through' : ''}} 
-            onClick={() => props.setOpen(!props.open)} 
+            onClick={props.handleHeaderClick} 
             onKeyPress={(target) => target.charCode === 13 ? props.setOpen(!props.open) : null}>
             {props.repeats && <RepeatIcon squareHeight="1.2em" />} {props.name}
           </Col>

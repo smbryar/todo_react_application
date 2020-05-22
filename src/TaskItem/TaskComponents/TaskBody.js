@@ -6,7 +6,7 @@ import SimpleButton from '../../ButtonItem/SimpleButton';
 
 function TaskBody(props) {
     return (
-        <Collapse in={props.open}>
+        <Collapse in={props.open.find(task => task.id === props.id).open}>
             <Card.Body tabIndex="0">
                 {!props.completed &&
                     <Row>
