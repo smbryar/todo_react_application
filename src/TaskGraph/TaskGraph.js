@@ -90,7 +90,7 @@ function TaskGraph(props) {
       theme={theme}
       colors={{ scheme: "accent" }}
       lineWidth={20}
-      enablePoints={false}
+      pointSize={20}
       enableGridX={true}
       enableGridY={true}
       tooltip={CustomTooltip}

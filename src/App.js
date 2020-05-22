@@ -69,6 +69,16 @@ function App() {
       completed: false,
       repeats: false,
       cardOpen: false
+    },
+    {
+      id: uuidv4(),
+      name: "Today's Task",
+      startDate: moment().format("YYYY-MM-DD"),
+      endDate: moment().format("YYYY-MM-DD"),
+      percentageCompletion: 100,
+      completed: false,
+      repeats: false,
+      cardOpen: false
     }
   ]);
 
