@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import moment from 'moment';
 import { v4 as uuidv4 } from 'uuid';
 import { Container } from 'react-bootstrap';
-import { BrowserRouter as Router, Link, Switch, Route} from 'react-router-dom';
+import { BrowserRouter as Router, Link, Switch, Route } from 'react-router-dom';
 
 import Header from './Header/Header';
 import TaskList from './TaskList/TaskList';
@@ -105,25 +105,13 @@ function App() {
 
   return (
     <Router>
-      <div>
-        <nav>
-          <ul>
-            <li>
-              <Link to="/">Tasks</Link>
-            </li>
-            <li>
-              <Link to="/graph">Graph</Link>
-            </li>
-          </ul>
-        </nav>
-
-        {/* A <Switch> looks through its children <Route>s and
-            renders the first one that matches the current URL. */}
-        <Switch>          
+      <div className="App">
+        <Header />
+        <Switch>
           <Route path="/graph">
-          <Container fluid="lg" style={{ height: window.innerHeight - 125 < 600 ? window.innerHeight - 125 : 600 }}>
-      <TaskGraph tasks={tasks} setPage={setPage}></TaskGraph>
-    </Container>}
+            <Container fluid="lg" style={{ height: window.innerHeight - 125 < 600 ? window.innerHeight - 125 : 600 }}>
+              <TaskGraph tasks={tasks} setPage={setPage}></TaskGraph>
+            </Container>
           </Route>
           <Route path="/">
             <Container fluid="lg">
@@ -135,20 +123,5 @@ function App() {
     </Router>
   );
 }
-
-
-{/* <div className="App">
-  <Header setPage={setPage} />
-  {page === "Tasks" &&
-    <Container fluid="lg">
-      <TaskList addTask={addTask} completeTask={completeTask} deleteTask={deleteTask} tasks={tasks} />
-    </Container>
-  }
-  {page === "Graph" &&
-    <Container fluid="lg" style={{ height: window.innerHeight - 125 < 600 ? window.innerHeight - 125 : 600 }}>
-      <TaskGraph tasks={tasks} setPage={setPage}></TaskGraph>
-    </Container>}
-  <Footer />
-</div> */}
 
 export default App;
