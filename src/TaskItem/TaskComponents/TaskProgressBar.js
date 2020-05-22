@@ -25,9 +25,19 @@ function TaskProgressBar(props) {
     return colourRange;
   }
 
+  function produceStyle(width) {
+    const style = {}
+    if (width < 5) {
+      width = 5;      
+    }
+    style.backgroundImage = `linear-gradient(to right,${calculateColourRange(width)})`;
+    style.width = `${width}%` 
+    return style;
+  }
+
   return (
     <div className="progress">
-      <div className="progress-bar" role="progressbar" style={{ backgroundImage: `linear-gradient(to right,${calculateColourRange(width)})`, width: `${width}%` }} aria-valuenow={props.percentageCompletion} aria-valuemin="0" aria-valuemax="100" aria-label="Percentage of way through time allocated for task"></div>
+      <div className="progress-bar" role="progressbar" style={produceStyle(width)} aria-valuenow={props.percentageCompletion} aria-valuemin="0" aria-valuemax="100" aria-label="Percentage of way through time allocated for task"></div>
     </div>
   )
 }

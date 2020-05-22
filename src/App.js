@@ -12,6 +12,18 @@ import TaskGraph from './TaskGraph/TaskGraph';
 import './App.css';
 
 function App() {
+  // listen for use of mouse
+  document.body.addEventListener('mousedown', function() {
+    document.body.classList.add('using-mouse');
+  });
+
+  // listen for use of tab
+  document.body.addEventListener('keydown', function(event) {
+    if (event.keyCode === 9) {
+      document.body.classList.remove('using-mouse');   
+    }
+  });
+
   const [tasks, setTasks] = useState([
     {
       id: uuidv4(),
@@ -21,7 +33,8 @@ function App() {
       endDate: "2020-06-11",
       percentageCompletion: 20,
       completed: false,
-      repeats: false
+      repeats: false,
+      cardOpen: false
     },
     {
       id: uuidv4(),
@@ -34,7 +47,8 @@ function App() {
       repeats: true,
       repeatType: "repeatsAfterCompletion",
       repeatAfterCompletionFrequency: 7,
-      repeatAfterCompletionFrequencyType: "days"
+      repeatAfterCompletionFrequencyType: "days",
+      cardOpen: false
     },
     {
       id: uuidv4(),
@@ -45,7 +59,39 @@ function App() {
       percentageCompletion: 80,
       completed: true,
       completeDate: "2020-04-26",
-      repeats: false
+      repeats: false,
+      cardOpen: false
+    },
+    {
+      id: uuidv4(),
+      name: "Post Letter",
+      taskDetails: "Return to sender",
+      startDate: "2020-06-03",
+      endDate: "2020-06-10",
+      percentageCompletion: 30,
+      completed: false,
+      repeats: false,
+      cardOpen: false
+    },
+    {
+      id: uuidv4(),
+      name: "Tesco Order",
+      startDate: "2020-06-01",
+      endDate: "2020-06-03",
+      percentageCompletion: 0,
+      completed: false,
+      repeats: false,
+      cardOpen: false
+    },
+    {
+      id: uuidv4(),
+      name: "Today's Task",
+      startDate: moment().format("YYYY-MM-DD"),
+      endDate: moment().format("YYYY-MM-DD"),
+      percentageCompletion: 100,
+      completed: false,
+      repeats: false,
+      cardOpen: false
     }
   ]);
 
@@ -80,7 +126,8 @@ function App() {
       repeatRegularDaysFrequency,
       repeatRegularDaysArrayDays,
       completed: false,
-      percentageCompletion: calculatePercentageCompletion(startDate, endDate)
+      percentageCompletion: calculatePercentageCompletion(startDate, endDate),
+      cardOpen: false
     };
     const updatedTasks = [...tasks, newTask];
     setTasks(updatedTasks);
@@ -103,6 +150,23 @@ function App() {
     setTasks(updatedTasks);
   }
 
+  function openTaskCard(id) {
+    const updatedTasks = tasks.map(task => {
+      if (task.id === id) {task.cardOpen = !task.cardOpen}
+      return task
+    })
+    setTasks(updatedTasks)
+  }
+
+  function openFromGraphId(id) {
+    const updatedTasks = tasks.map(task => {
+      if (task.id === id) {task.cardOpen = true}
+      else {task.cardOpen = false}
+      return task
+    })
+    setTasks(updatedTasks)
+  }
+
   return (
     <Router>
       <div className="App">
@@ -110,12 +174,12 @@ function App() {
         <Switch>
           <Route path="/graph">
             <Container fluid="lg" style={{ height: window.innerHeight - 125 < 600 ? window.innerHeight - 125 : 600 }}>
-              <TaskGraph tasks={tasks} setPage={setPage}></TaskGraph>
+              <TaskGraph tasks={tasks} setPage={setPage} openFromGraphId={openFromGraphId}></TaskGraph>
             </Container>
           </Route>
           <Route path="/">
             <Container fluid="lg">
-              <TaskList addTask={addTask} completeTask={completeTask} deleteTask={deleteTask} tasks={tasks} />
+              <TaskList addTask={addTask} completeTask={completeTask} deleteTask={deleteTask} tasks={tasks} openFromGraphId={openFromGraphId} openTaskCard={openTaskCard}/>
             </Container>
           </Route>
         </Switch>

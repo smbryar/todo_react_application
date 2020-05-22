@@ -12,3 +12,10 @@ body {
   margin-bottom: 40px;
 }
 
+*:focus {
+  outline: black auto 2px;
+}
+
+body.using-mouse *:focus {
+  outline: none;
+}

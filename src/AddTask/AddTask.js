@@ -14,7 +14,7 @@ import SimpleButton from '../ButtonItem/SimpleButton';
 import './AddTask.css';
 
 function AddTask(props) {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
   const [name, setName] = useState("");
   const [taskDetails, setTaskDetails] = useState("");
   const [startDate, setStartDate] = useState(moment().format("YYYY-MM-DD"));

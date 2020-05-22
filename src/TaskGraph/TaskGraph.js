@@ -6,10 +6,10 @@ import CustomTooltip from './CustomTooltip';
 import './TaskGraph.css';
 
 function TaskGraph(props) {
-  
+
   const theme = {
-      fontSize: 14,
-      fontFamily: "Verdana, Arial, sans-serif"
+    fontSize: 14,
+    fontFamily: "Verdana, Arial, sans-serif"
   };
 
   const data = props.tasks.filter(task => task.completed === false).map(task => {
@@ -21,13 +21,14 @@ function TaskGraph(props) {
     let endData = {};
     endData.x = task.endDate;
     endData.y = task.name;
-    newTask.data = [startData,endData];
+    newTask.data = [startData, endData];
     return newTask;
   })
 
-  function handleGraphClick (Point) {
-    const id = Point.id.slice(0,-2);
+  function handleGraphClick(Point) {
+    const id = Point.id.slice(0, -2);
     props.setPage("Tasks");
+    props.openFromGraphId(id);
   }
 
   // Using code from tylercrosse https://github.com/plouc/nivo/issues/353
@@ -49,7 +50,7 @@ function TaskGraph(props) {
         <tspan
           key={val}
           dy={16 * i}
-          x={-10}
+          x={-15}
           style={{ fontFamily: "Verdana, Arial, sans-serif", fontSize: "14px" }}
         >
           {val}
@@ -65,9 +66,9 @@ function TaskGraph(props) {
   };
 
   return (
-    <ResponsiveLine className="graph"
+    <ResponsiveLine className="graph" style={{cursor:"crosshair"}}
       data={data}
-      margin={{ top: 20, right: 20, bottom: 70, left: 150 }}
+      margin={{ top: 70, right: 20, bottom: 70, left: 150 }}
       xScale={{
         type: "time",
         format: "%Y-%m-%d"
@@ -89,13 +90,13 @@ function TaskGraph(props) {
       theme={theme}
       colors={{ scheme: "accent" }}
       lineWidth={20}
-      enablePoints={false}
+      pointSize={20}
       enableGridX={true}
       enableGridY={true}
       tooltip={CustomTooltip}
       useMesh={true}
-      debugMesh={true}
       onClick={handleGraphClick}
+      enableCrosshair={false}
     />
   );
 }
