@@ -10,25 +10,7 @@ import Intro from '../Intro/Intro';
 import './TaskList.css';
 
 function TaskList(props) {
-    const [addTaskKey, setAddTaskKey] = useState(uuidv4());
-
-    const openTasks = props.tasks.map(task  => {
-        if (task.id === props.openFromGraphId) {
-            return {id : task.id, open : true}
-        }
-        else 
-            {return {id : task.id, open : false}}
-    })
-
-    const [open, setOpen] = useState(openTasks);
-
-    function openTaskCard(id) {
-        const newOpen = open.map(task => {
-            if (task.id === id) {task.open = !task.open}
-            return task
-          })
-        setOpen(newOpen);
-    }
+    const [addTaskKey, setAddTaskKey] = useState(uuidv4());  
 
     function compare(a, b) {
         if (a.completed === true || a.startDate > moment().format("YYYY-MM-DD") || a.endDate > b.endDate) return 1;
@@ -52,12 +34,12 @@ function TaskList(props) {
             </Row>
 
             <Row className="my-2">
-                <AddTask key={addTaskKey} addTask={addTask} tasks={props.tasks} />
+                <AddTask key={addTaskKey} addTask={addTask} tasks={props.tasks}/>
                 </Row>
 
             {props.tasks.sort(compare).map(task => (
                 <Row key={task.id} className="my-2">
-                    <TaskItem completeTask={props.completeTask} deleteTask={props.deleteTask} open={open} setOpen={setOpen} openTaskCard = {openTaskCard} {...task} />
+                    <TaskItem completeTask={props.completeTask} deleteTask={props.deleteTask} openTaskCard={props.openTaskCard} {...task} />
                 </Row>
             ))}
 

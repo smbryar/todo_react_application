@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import moment from 'moment';
 import { v4 as uuidv4 } from 'uuid';
-import {Container} from 'react-bootstrap';
+import { Container } from 'react-bootstrap';
 
 import Header from './Header/Header';
 import TaskList from './TaskList/TaskList';
@@ -20,7 +20,8 @@ function App() {
       endDate: "2020-06-11",
       percentageCompletion: 20,
       completed: false,
-      repeats: false
+      repeats: false,
+      cardOpen: false
     },
     {
       id: uuidv4(),
@@ -33,7 +34,8 @@ function App() {
       repeats: true,
       repeatType: "repeatsAfterCompletion",
       repeatAfterCompletionFrequency: 7,
-      repeatAfterCompletionFrequencyType: "days"
+      repeatAfterCompletionFrequencyType: "days",
+      cardOpen: false
     },
     {
       id: uuidv4(),
@@ -44,13 +46,12 @@ function App() {
       percentageCompletion: 80,
       completed: true,
       completeDate: "2020-04-26",
-      repeats: false
+      repeats: false,
+      cardOpen: false
     }
   ]);
 
   const [page, setPage] = useState("Tasks");
-
-  const [openFromGraphId, setOpenFromGraphId] = useState(null);
 
   function deleteTask(id) {
     const updatedTasks = tasks.filter(task => task.id !== id);
@@ -81,7 +82,8 @@ function App() {
       repeatRegularDaysFrequency,
       repeatRegularDaysArrayDays,
       completed: false,
-      percentageCompletion: calculatePercentageCompletion(startDate, endDate)
+      percentageCompletion: calculatePercentageCompletion(startDate, endDate),
+      cardOpen: false
     };
     const updatedTasks = [...tasks, newTask];
     setTasks(updatedTasks);
@@ -104,18 +106,34 @@ function App() {
     setTasks(updatedTasks);
   }
 
+  function openTaskCard(id) {
+    const updatedTasks = tasks.map(task => {
+      if (task.id === id) {task.cardOpen = !task.cardOpen}
+      return task
+    })
+    setTasks(updatedTasks)
+  }
+
+  function openFromGraphId(id) {
+    const updatedTasks = tasks.map(task => {
+      if (task.id === id) {task.cardOpen = true}
+      return task
+    })
+    setTasks(updatedTasks)
+  }
+
   return (
     <div className="App">
-      <Header setPage={setPage}/>
-      {page ==="Tasks" && 
-      <Container fluid="lg">
-        <TaskList addTask={addTask} completeTask={completeTask} deleteTask={deleteTask} tasks={tasks} openFromGraphId={openFromGraphId}/>
-      </Container>
+      <Header setPage={setPage} />
+      {page === "Tasks" &&
+        <Container fluid="lg">
+          <TaskList addTask={addTask} completeTask={completeTask} deleteTask={deleteTask} tasks={tasks} openFromGraphId={openFromGraphId} openTaskCard={openTaskCard}/>
+        </Container>
       }
       {page === "Graph" &&
-      <Container fluid="lg" style={{height: window.innerHeight-125 < 600 ? window.innerHeight-125 : 600}}>
-      <TaskGraph tasks={tasks} setPage={setPage} setOpenFromGraphId={setOpenFromGraphId}></TaskGraph>
-    </Container>}
+        <Container fluid="lg" style={{ height: window.innerHeight - 125 < 600 ? window.innerHeight - 125 : 600 }}>
+          <TaskGraph tasks={tasks} setPage={setPage} openFromGraphId={openFromGraphId}></TaskGraph>
+        </Container>}
       <Footer />
     </div>
   );
