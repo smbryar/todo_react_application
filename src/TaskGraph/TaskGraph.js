@@ -50,7 +50,7 @@ function TaskGraph(props) {
         <tspan
           key={val}
           dy={16 * i}
-          x={-10}
+          x={-15}
           style={{ fontFamily: "Verdana, Arial, sans-serif", fontSize: "14px" }}
         >
           {val}
