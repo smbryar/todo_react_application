@@ -66,7 +66,7 @@ function TaskGraph(props) {
   };
 
   return (
-    <ResponsiveLine className="graph"
+    <ResponsiveLine className="graph" style={{cursor:"crosshair"}}
       data={data}
       margin={{ top: 70, right: 20, bottom: 70, left: 150 }}
       xScale={{
@@ -96,6 +96,7 @@ function TaskGraph(props) {
       tooltip={CustomTooltip}
       useMesh={true}
       onClick={handleGraphClick}
+      enableCrosshair={false}
     />
   );
 }

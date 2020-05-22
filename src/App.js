@@ -48,6 +48,27 @@ function App() {
       completeDate: "2020-04-26",
       repeats: false,
       cardOpen: false
+    },
+    {
+      id: uuidv4(),
+      name: "Post Letter",
+      taskDetails: "Return to sender",
+      startDate: "2020-06-03",
+      endDate: "2020-06-10",
+      percentageCompletion: 30,
+      completed: false,
+      repeats: false,
+      cardOpen: false
+    },
+    {
+      id: uuidv4(),
+      name: "Tesco Order",
+      startDate: "2020-06-01",
+      endDate: "2020-06-03",
+      percentageCompletion: 0,
+      completed: false,
+      repeats: false,
+      cardOpen: false
     }
   ]);
 
@@ -117,6 +138,7 @@ function App() {
   function openFromGraphId(id) {
     const updatedTasks = tasks.map(task => {
       if (task.id === id) {task.cardOpen = true}
+      else {task.cardOpen = false}
       return task
     })
     setTasks(updatedTasks)
@@ -131,7 +153,7 @@ function App() {
         </Container>
       }
       {page === "Graph" &&
-        <Container fluid="lg" style={{ height: window.innerHeight - 125 < 600 ? window.innerHeight - 125 : 600 }}>
+        <Container fluid="lg" style={{ height: window.innerHeight - 125 < 600 ? window.innerHeight - 125 : 600}}>
           <TaskGraph tasks={tasks} setPage={setPage} openFromGraphId={openFromGraphId}></TaskGraph>
         </Container>}
       <Footer />
