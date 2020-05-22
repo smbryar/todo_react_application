@@ -12,8 +12,12 @@ import './TaskList.css';
 function TaskList(props) {
     const [addTaskKey, setAddTaskKey] = useState(uuidv4());
 
-    const openTasks = props.tasks.map(task=> {
-        return {id : task.id, open : false}
+    const openTasks = props.tasks.map(task  => {
+        if (task.id === props.openFromGraphId) {
+            return {id : task.id, open : true}
+        }
+        else 
+            {return {id : task.id, open : false}}
     })
 
     const [open, setOpen] = useState(openTasks);

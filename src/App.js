@@ -50,6 +50,8 @@ function App() {
 
   const [page, setPage] = useState("Tasks");
 
+  const [openFromGraphId, setOpenFromGraphId] = useState(null);
+
   function deleteTask(id) {
     const updatedTasks = tasks.filter(task => task.id !== id);
     setTasks(updatedTasks);
@@ -107,12 +109,12 @@ function App() {
       <Header setPage={setPage}/>
       {page ==="Tasks" && 
       <Container fluid="lg">
-        <TaskList addTask={addTask} completeTask={completeTask} deleteTask={deleteTask} tasks={tasks} />
+        <TaskList addTask={addTask} completeTask={completeTask} deleteTask={deleteTask} tasks={tasks} openFromGraphId={openFromGraphId}/>
       </Container>
       }
       {page === "Graph" &&
       <Container fluid="lg" style={{height: window.innerHeight-125 < 600 ? window.innerHeight-125 : 600}}>
-      <TaskGraph tasks={tasks} setPage={setPage}></TaskGraph>
+      <TaskGraph tasks={tasks} setPage={setPage} setOpenFromGraphId={setOpenFromGraphId}></TaskGraph>
     </Container>}
       <Footer />
     </div>

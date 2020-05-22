@@ -28,6 +28,7 @@ function TaskGraph(props) {
   function handleGraphClick (Point) {
     const id = Point.id.slice(0,-2);
     props.setPage("Tasks");
+    props.setOpenFromGraphId(id);
   }
 
   // Using code from tylercrosse https://github.com/plouc/nivo/issues/353
@@ -67,7 +68,7 @@ function TaskGraph(props) {
   return (
     <ResponsiveLine className="graph"
       data={data}
-      margin={{ top: 20, right: 20, bottom: 70, left: 150 }}
+      margin={{ top: 70, right: 20, bottom: 70, left: 150 }}
       xScale={{
         type: "time",
         format: "%Y-%m-%d"
@@ -94,7 +95,6 @@ function TaskGraph(props) {
       enableGridY={true}
       tooltip={CustomTooltip}
       useMesh={true}
-      debugMesh={true}
       onClick={handleGraphClick}
     />
   );
