@@ -2,7 +2,7 @@ import React from 'react';
 import './Footer.css';
 
 function Footer() {
-    const copy = "\u00A9";
+    // const copy = "\u00A9";
   return (
       <footer className="block-quote footer">
           <div className="container">
