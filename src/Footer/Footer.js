@@ -7,7 +7,7 @@ function Footer() {
       <footer className="block-quote footer">
           <div className="container">
               <span>
-                  {copy} <cite>Saoirse Bryar, 2020</cite>
+                  <cite>Saoirse Bryar, 2020</cite>
               </span>
               
           </div>

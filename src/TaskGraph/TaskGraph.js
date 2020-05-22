@@ -8,11 +8,11 @@ import './TaskGraph.css';
 function TaskGraph(props) {
   
   const theme = {
-      fontSize: "1em",
+      fontSize: 14,
       fontFamily: "Verdana, Arial, sans-serif"
   };
 
-  const data = props.tasks.map(task => {
+  const data = props.tasks.filter(task => task.completed === false).map(task => {
     let newTask = {};
     newTask.id = task.name;
     let startData = {};
@@ -25,10 +25,44 @@ function TaskGraph(props) {
     return newTask;
   })
 
+  // Using code from tylercrosse https://github.com/plouc/nivo/issues/353
+  const HorizontalTick = ({ textAnchor, textBaseline, value, x, y }) => {
+    const MAX_LINE_LENGTH = 16;
+    const MAX_LINES = 2;
+    const LENGTH_OF_ELLIPSIS = 3;
+    const TRIM_LENGTH = MAX_LINE_LENGTH * MAX_LINES - LENGTH_OF_ELLIPSIS;
+    const trimWordsOverLength = new RegExp(`^(.{${TRIM_LENGTH}}[^\\w]*).*`);
+    const groupWordsByLength = new RegExp(
+      `([^\\s].{0,${MAX_LINE_LENGTH}}(?=[\\s\\W]|$))`,
+      'gm',
+    );
+    const splitValues = value
+      .replace(trimWordsOverLength, '$1...')
+      .match(groupWordsByLength)
+      .slice(0, 2)
+      .map((val, i) => (
+        <tspan
+          key={val}
+          dy={16 * i}
+          x={-10}
+          style={{ fontFamily: "Verdana, Arial, sans-serif", fontSize: "14px" }}
+        >
+          {val}
+        </tspan>
+      ));
+    return (
+      <g transform={`translate(${x},${y})`}>
+        <text alignmentBaseline={textBaseline} textAnchor={textAnchor}>
+          {splitValues}
+        </text>
+      </g>
+    );
+  };
+
   return (
     <ResponsiveLine className="graph"
       data={data}
-      margin={{ top: 20, right: 20, bottom: 70, left: 100 }}
+      margin={{ top: 20, right: 20, bottom: 70, left: 150 }}
       xScale={{
         type: "time",
         format: "%Y-%m-%d"
@@ -40,9 +74,7 @@ function TaskGraph(props) {
       axisTop={null}
       axisRight={null}
       axisLeft={{
-        orient: 'left',
-        tickPadding: 15,
-        tickRotation: 0
+        renderTick: HorizontalTick
       }}
       axisBottom={{
         format: "%b %d",

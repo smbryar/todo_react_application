@@ -2,6 +2,8 @@ import React from 'react';
 import moment from 'moment';
 import { Card, Collapse, Row, Col } from 'react-bootstrap';
 
+import SimpleButton from '../../ButtonItem/SimpleButton';
+
 function TaskBody(props) {
     return (
         <Collapse in={props.open}>
@@ -30,10 +32,10 @@ function TaskBody(props) {
                 }
                 <Row>
                     {!props.completed && <Col xs={6}>
-                        <button type="button" className="btn btn-light btn-outline-secondary btn-block mt-3" onClick={props.handleCompleteClick}>Complete task</button>
+                        <SimpleButton onClick={props.handleCompleteClick} variant="complete">Complete task</SimpleButton>
                     </Col>}
                     <Col>
-                        <button type="button" className="btn btn-light btn-outline-secondary btn-block mt-3" onClick={props.handleDeleteClick}>Delete task</button>
+                        <SimpleButton onClick={props.handleDeleteClick} variant="delete">Delete task</SimpleButton>
                     </Col>
                 </Row>
             </Card.Body>

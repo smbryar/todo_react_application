@@ -8,6 +8,7 @@ import TaskDetailsField from './FormComponents/TaskDetailsField';
 import DatesField from './FormComponents/DatesField';
 import DoesNotRepeatField from './FormComponents/DoesNotRepeatField';
 import RepeatsAfterCompletionField from './FormComponents/RepeatsAfterCompletionField';
+import SimpleButton from '../ButtonItem/SimpleButton';
 // import RepeatsRegularDaysField from './FormComponents/RepeatsRegularDaysField';
 
 import './AddTask.css';
@@ -74,7 +75,7 @@ function AddTask(props) {
             <RepeatsAfterCompletionField errors={errors} handleRadioButton={handleRadioButton} setRepeatAfterCompletionFrequency={setRepeatAfterCompletionFrequency} setRepeatAfterCompletionFrequencyType={setRepeatAfterCompletionFrequencyType} />
             {/* <RepeatsRegularDaysField errors={errors} handleRadioButton={handleRadioButton} setRepeatRegularDaysFrequency={setRepeatRegularDaysFrequency} handleDayCheckboxes={handleDayCheckboxes} /> */}
           </Form>
-          <button className="btn btn-light btn-outline-secondary btn-block mt-3" onClick={handleAddTaskClick}>Submit task</button>
+          <SimpleButton variant="add-task" onClick={handleAddTaskClick}>Submit Task</SimpleButton> 
           </Card.Body>
       </Collapse>
     </Card >
