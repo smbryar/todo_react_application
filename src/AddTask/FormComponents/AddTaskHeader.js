@@ -12,6 +12,7 @@ function AddTaskHeader(props) {
             as="h4"
             aria-controls="add-task-contents"
             aria-expanded={props.open}
+            style={{cursor: "pointer"}}
             onClick={() => props.setOpen(!props.open)}
             onKeyPress={(target) => target.charCode === 13 ? props.setOpen(!props.open) : null}
         >
