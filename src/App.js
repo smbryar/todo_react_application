@@ -50,7 +50,6 @@ function App() {
 
   const [page, setPage] = useState("Tasks");
 
-
   function deleteTask(id) {
     const updatedTasks = tasks.filter(task => task.id !== id);
     setTasks(updatedTasks);
@@ -112,7 +111,7 @@ function App() {
       </Container>
       }
       {page === "Graph" &&
-      <Container fluid="lg" style={{height: window.innerHeight-150 < 600 ? window.innerHeight-150 : 600}}>
+      <Container fluid="lg" style={{height: window.innerHeight-125 < 600 ? window.innerHeight-125 : 600}}>
       <TaskGraph tasks={tasks} setPage={setPage}></TaskGraph>
     </Container>}
       <Footer />
