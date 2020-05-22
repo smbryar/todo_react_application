@@ -11,6 +11,18 @@ import TaskGraph from './TaskGraph/TaskGraph';
 import './App.css';
 
 function App() {
+  // listen for use of mouse
+  document.body.addEventListener('mousedown', function() {
+    document.body.classList.add('using-mouse');
+  });
+
+  // listen for use of tab
+  document.body.addEventListener('keydown', function(event) {
+    if (event.keyCode === 9) {
+      document.body.classList.remove('using-mouse');   
+    }
+  });
+
   const [tasks, setTasks] = useState([
     {
       id: uuidv4(),

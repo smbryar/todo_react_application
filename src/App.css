@@ -13,5 +13,9 @@ body {
 }
 
 *:focus {
-  outline: grey solid 1px;
+  outline: black auto 2px;
+}
+
+body.using-mouse *:focus {
+  outline: none;
 }
