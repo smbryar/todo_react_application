@@ -67,7 +67,7 @@ function TaskGraph(props) {
   return (
     <ResponsiveLine className="graph"
       data={data}
-      margin={{ top: 20, right: 20, bottom: 70, left: 150 }}
+      margin={{ top: 70, right: 20, bottom: 70, left: 150 }}
       xScale={{
         type: "time",
         format: "%Y-%m-%d"
