@@ -1,5 +1,6 @@
 import React from 'react';
 import { ResponsiveLine } from '@nivo/line';
+import { withRouter } from 'react-router-dom';
 
 import CustomTooltip from './CustomTooltip';
 
@@ -27,7 +28,7 @@ function TaskGraph(props) {
 
   function handleGraphClick(Point) {
     const id = Point.id.slice(0, -2);
-    props.setPage("Tasks");
+    props.history.push("/");
     props.openFromGraphId(id);
   }
 
@@ -101,6 +102,6 @@ function TaskGraph(props) {
   );
 }
 
-export default TaskGraph;
+export default withRouter(TaskGraph);
 
 
