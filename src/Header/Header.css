@@ -8,4 +8,16 @@
 
 .navlink--my-tasks-app {
     font-size: 1.1em;
+    color: black;
+}
+
+.navlink--my-tasks-app:hover {
+    color: slategray;
+    text-decoration: none;
+}
+
+.navlink--my-tasks-app:active {
+    color: slategray;
+    text-shadow: 1px 1px white;
+    text-decoration: none;
 }
