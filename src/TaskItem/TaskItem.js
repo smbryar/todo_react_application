@@ -7,7 +7,6 @@ import TaskHeader from './TaskComponents/TaskHeader';
 import './TaskItem.css';
 
 function TaskItem(props) {
-  // const [open, setOpen] = React.useState(false);
 
   function handleDeleteClick() {
     props.deleteTask(props.id)

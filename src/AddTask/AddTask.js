@@ -23,8 +23,8 @@ function AddTask(props) {
   const [repeatType, setRepeatType] = useState(null);
   const [repeatAfterCompletionFrequency, setRepeatAfterCompletionFrequency] = useState(null);
   const [repeatAfterCompletionFrequencyType, setRepeatAfterCompletionFrequencyType] = useState("days");
-  const [repeatRegularDaysFrequency, setRepeatRegularDaysFrequency] = useState(null);
-  const [repeatRegularDaysArrayDays, setRepeatRegularDaysArrayDays] = useState([false, false, false, false, false, false, false]);
+  // const [repeatRegularDaysFrequency, setRepeatRegularDaysFrequency] = useState(null);
+  // const [repeatRegularDaysArrayDays, setRepeatRegularDaysArrayDays] = useState([false, false, false, false, false, false, false]);
   const [errors, setErrors] = useState({ name: false, repeatAfterCompletionFrequency: false });
 
   function handleAddTaskClick() {
@@ -37,9 +37,7 @@ function AddTask(props) {
     else {
       props.addTask(name, taskDetails, startDate, endDate, repeats, repeatType,
         repeatAfterCompletionFrequency,
-        repeatAfterCompletionFrequencyType,
-        repeatRegularDaysFrequency,
-        repeatRegularDaysArrayDays);
+        repeatAfterCompletionFrequencyType);
       }
   }
 

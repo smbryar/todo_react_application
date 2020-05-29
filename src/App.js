@@ -2,11 +2,10 @@ import React, { useState } from 'react';
 import moment from 'moment';
 import { v4 as uuidv4 } from 'uuid';
 import { Container } from 'react-bootstrap';
-import { BrowserRouter as Router, Link, Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 import Header from './Header/Header';
 import TaskList from './TaskList/TaskList';
-import Footer from './Footer/Footer';
 import TaskGraph from './TaskGraph/TaskGraph';
 
 import './App.css';
@@ -95,8 +94,6 @@ function App() {
     }
   ]);
 
-  const [page, setPage] = useState("Tasks");
-
   function deleteTask(id) {
     const updatedTasks = tasks.filter(task => task.id !== id);
     setTasks(updatedTasks);
@@ -164,7 +161,8 @@ function App() {
       else {task.cardOpen = false}
       return task
     })
-    setTasks(updatedTasks)
+    setTasks(updatedTasks);
+    console.log(document.getElementById(id));
   }
 
   return (
@@ -174,7 +172,7 @@ function App() {
         <Switch>
           <Route path="/graph">
             <Container fluid="lg" style={{ height: window.innerHeight - 125 < 600 ? window.innerHeight - 125 : 600 }}>
-              <TaskGraph tasks={tasks} setPage={setPage} openFromGraphId={openFromGraphId}></TaskGraph>
+              <TaskGraph tasks={tasks} openFromGraphId={openFromGraphId}></TaskGraph>
             </Container>
           </Route>
           <Route path="/">
