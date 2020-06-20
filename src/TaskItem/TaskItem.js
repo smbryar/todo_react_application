@@ -9,11 +9,11 @@ import './TaskItem.css';
 function TaskItem(props) {
 
   function handleDeleteClick() {
-    props.deleteTask(props.id)
+    props.deleteTask(props.taskID)
   }
 
   function handleCompleteClick() {
-    props.completeTask(props.id)
+    props.completeTask(props.taskID)
   }
 
   return (
