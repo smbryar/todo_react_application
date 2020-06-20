@@ -92,20 +92,26 @@ function App() {
   };
 
   function completeTask(taskID) {
-    const updatedTasks = tasks.map(task => {
-      if (task.taskID === taskID) {
-        if (task.repeats === false) {
-          task.completed = true
-          task.completeDate = moment().format("YYYY-MM-DD");
-        }
-        else if (task.repeatType === "repeatsAfterCompletion") {
-          task.endDate = moment().add(task.repeatAfterCompletionFrequency, task.repeatAfterCompletionFrequencyType).format("YYYY-MM-DD");
-          task.startDate = moment().format("YYYY-MM-DD");
-        }
-      }
-      return task;
-    });
-    setTasks(updatedTasks);
+    const updatedTask = tasks.find(task => task.taskID === taskID);
+
+    if (!updatedTask.repeats) {
+      updatedTask.completed = true;
+      updatedTask.completeDate = moment().format("YYYY-MM-DD");
+    }
+    else if (updatedTask.repeatType === "repeatsAfterCompletion") {
+      updatedTask.endDate = moment().add(updatedTask.repeatAfterCompletionFrequency, updatedTask.repeatAfterCompletionFrequencyType).format("YYYY-MM-DD");
+      updatedTask.startDate = moment().format("YYYY-MM-DD");
+    }
+
+    axios
+      .put(`https://3f77y34kad.execute-api.eu-west-2.amazonaws.com/dev/tasks/${taskID}`, updatedTask)
+      .then(response => {
+        const updatedTasks = [...tasks].map(task => task.taskID === taskID ? updatedTask : task);
+        setTasks(updatedTasks);
+      })
+      .catch(error => {
+        console.log("Error fetching data", error);
+      })
   }
 
   function openTaskCard(taskID) {
