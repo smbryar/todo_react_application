@@ -16,19 +16,6 @@ function Header(props) {
                 </Nav>
             </Navbar.Collapse>
         </Navbar>
-
-
-
-// <nav>
-// <ul>
-//   <li>
-//     <Link to="/">Tasks</Link>
-//   </li>
-//   <li>
-//     <Link to="/graph">Graph</Link>
-//   </li>
-// </ul>
-// </nav>
     );
 }
 

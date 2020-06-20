@@ -120,8 +120,6 @@ function App() {
       repeatType,
       repeatAfterCompletionFrequency,
       repeatAfterCompletionFrequencyType,
-      repeatRegularDaysFrequency,
-      repeatRegularDaysArrayDays,
       completed: false,
       percentageCompletion: calculatePercentageCompletion(startDate, endDate),
       cardOpen: false
