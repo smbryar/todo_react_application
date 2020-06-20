@@ -5,8 +5,8 @@ import { Card } from 'react-bootstrap';
 import './Intro.css';
 
 function Intro(props) {
-    const tasksDueToday = props.tasks && props.tasks.filter(t=>t.endDate === moment().format("YYYY-MM-DD")).length;
-    const tasksNotCompleted = props.tasks && props.tasks.filter(t=>t.completed === false).length;
+    const tasksDueToday = props.tasks && props.tasks.filter(t=>t.endDate.substring(0,10) === moment().format("YYYY-MM-DD")).length;
+    const tasksNotCompleted = props.tasks && props.tasks.filter(t=>t.completed === 0).length;
 
     return (
         <Card.Header className="intro" tabIndex="0">
