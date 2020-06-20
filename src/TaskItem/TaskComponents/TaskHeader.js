@@ -8,7 +8,7 @@ import TaskProgressBar from './TaskProgressBar';
 function TaskHeader(props) {
 
   function handleHeaderClick() {
-    props.openTaskCard(props.id);
+    props.openTaskCard(props.taskID);
   }
   return (
     <Card.Header
@@ -22,8 +22,8 @@ function TaskHeader(props) {
           tabIndex="0"
           style={{cursor: "pointer"}}
           onClick={handleHeaderClick}
-          onKeyPress={(target) => target.charCode === 13 ? props.openTaskCard(props.id) : null}>
-          {props.repeats && <RepeatIcon squareHeight="1.2em" />} {props.name}
+          onKeyPress={(target) => target.charCode === 13 ? props.openTaskCard(props.taskID) : null}>
+          {props.repeats === 1 && <RepeatIcon squareHeight="1.2em" />} {props.name}
         </Col>
 
         <Col xs={4}>

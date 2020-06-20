@@ -15,7 +15,7 @@ function TaskGraph(props) {
 
   const data = props.tasks.filter(task => task.completed === false).map(task => {
     let newTask = {};
-    newTask.id = task.id;
+    newTask.id = task.taskID;
     let startData = {};
     startData.x = task.startDate;
     startData.y = task.name;

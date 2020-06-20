@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import moment from 'moment';
 import { v4 as uuidv4 } from 'uuid';
 import { Container } from 'react-bootstrap';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import axios from 'axios';
 
 import Header from './Header/Header';
 import TaskList from './TaskList/TaskList';
@@ -23,79 +24,97 @@ function App() {
     }
   });
 
-  const [tasks, setTasks] = useState([
-    {
-      id: uuidv4(),
-      name: "Tidying",
-      taskDetails: "Sort through paperwork",
-      startDate: "2020-06-06",
-      endDate: "2020-06-11",
-      percentageCompletion: 20,
-      completed: false,
-      repeats: false,
-      cardOpen: false
-    },
-    {
-      id: uuidv4(),
-      name: "Cleaning",
-      taskDetails: "Clean bathrooms",
-      startDate: "2020-06-05",
-      endDate: "2020-06-10",
-      percentageCompletion: 60,
-      completed: false,
-      repeats: true,
-      repeatType: "repeatsAfterCompletion",
-      repeatAfterCompletionFrequency: 7,
-      repeatAfterCompletionFrequencyType: "days",
-      cardOpen: false
-    },
-    {
-      id: uuidv4(),
-      name: "Hoovering",
-      taskDetails: "Downstairs",
-      startDate: "2020-06-03",
-      endDate: "2020-06-04",
-      percentageCompletion: 80,
-      completed: true,
-      completeDate: "2020-04-26",
-      repeats: false,
-      cardOpen: false
-    },
-    {
-      id: uuidv4(),
-      name: "Post Letter",
-      taskDetails: "Return to sender",
-      startDate: "2020-06-03",
-      endDate: "2020-06-10",
-      percentageCompletion: 30,
-      completed: false,
-      repeats: false,
-      cardOpen: false
-    },
-    {
-      id: uuidv4(),
-      name: "Tesco Order",
-      startDate: "2020-06-01",
-      endDate: "2020-06-03",
-      percentageCompletion: 0,
-      completed: false,
-      repeats: false,
-      cardOpen: false
-    },
-    {
-      id: uuidv4(),
-      name: "Today's Task",
-      startDate: moment().format("YYYY-MM-DD"),
-      endDate: moment().format("YYYY-MM-DD"),
-      percentageCompletion: 100,
-      completed: false,
-      repeats: false,
-      cardOpen: false
-    }
-  ]);
+  // const [tasks, setTasks] = useState([
+  //   {
+  //     id: uuidv4(),
+  //     name: "Tidying",
+  //     taskDetails: "Sort through paperwork",
+  //     startDate: "2020-06-06",
+  //     endDate: "2020-06-11",
+  //     percentageCompletion: 20,
+  //     completed: false,
+  //     repeats: false,
+  //     cardOpen: false
+  //   },
+  //   {
+  //     id: uuidv4(),
+  //     name: "Cleaning",
+  //     taskDetails: "Clean bathrooms",
+  //     startDate: "2020-06-05",
+  //     endDate: "2020-06-10",
+  //     percentageCompletion: 60,
+  //     completed: false,
+  //     repeats: true,
+  //     repeatType: "repeatsAfterCompletion",
+  //     repeatAfterCompletionFrequency: 7,
+  //     repeatAfterCompletionFrequencyType: "days",
+  //     cardOpen: false
+  //   },
+  //   {
+  //     id: uuidv4(),
+  //     name: "Hoovering",
+  //     taskDetails: "Downstairs",
+  //     startDate: "2020-06-03",
+  //     endDate: "2020-06-04",
+  //     percentageCompletion: 80,
+  //     completed: true,
+  //     completeDate: "2020-04-26",
+  //     repeats: false,
+  //     cardOpen: false
+  //   },
+  //   {
+  //     id: uuidv4(),
+  //     name: "Post Letter",
+  //     taskDetails: "Return to sender",
+  //     startDate: "2020-06-03",
+  //     endDate: "2020-06-10",
+  //     percentageCompletion: 30,
+  //     completed: false,
+  //     repeats: false,
+  //     cardOpen: false
+  //   },
+  //   {
+  //     id: uuidv4(),
+  //     name: "Tesco Order",
+  //     startDate: "2020-06-01",
+  //     endDate: "2020-06-03",
+  //     percentageCompletion: 0,
+  //     completed: false,
+  //     repeats: false,
+  //     cardOpen: false
+  //   },
+  //   {
+  //     id: uuidv4(),
+  //     name: "Today's Task",
+  //     startDate: moment().format("YYYY-MM-DD"),
+  //     endDate: moment().format("YYYY-MM-DD"),
+  //     percentageCompletion: 100,
+  //     completed: false,
+  //     repeats: false,
+  //     cardOpen: false
+  //   }
+  // ]);
 
-  function deleteTask(id) {
-    const updatedTasks = tasks.filter(task => task.id !== id);
+  const [tasks, setTasks] = useState();
+
+  useEffect(() => {
+    axios
+      .get("https://3f77y34kad.execute-api.eu-west-2.amazonaws.com/dev/tasks")
+      .then(response => {
+        let updatedTasks = response.data.tasks.map(task => {
+          task.percentageCompletion = calculatePercentageCompletion(task.startDate, task.endDate);
+          task.cardOpen = false;
+          return task;
+        })
+        setTasks(updatedTasks);
+      })
+      .catch(error => {
+        console.log("Error fetching data", error);
+      })
+  },[]);
+
+  function deleteTask(taskID) {
+    const updatedTasks = tasks.filter(task => task.taskID !== taskID);
     setTasks(updatedTasks);
   };
 
@@ -109,9 +128,9 @@ function App() {
   }
 
   function addTask(name, taskDetails, startDate, endDate, repeats, repeatType, repeatAfterCompletionFrequency,
-    repeatAfterCompletionFrequencyType, repeatRegularDaysFrequency, repeatRegularDaysArrayDays) {
+    repeatAfterCompletionFrequencyType) {
     const newTask = {
-      id: uuidv4(),
+      userID: 1,
       name,
       taskDetails,
       startDate,
@@ -124,13 +143,23 @@ function App() {
       percentageCompletion: calculatePercentageCompletion(startDate, endDate),
       cardOpen: false
     };
-    const updatedTasks = [...tasks, newTask];
-    setTasks(updatedTasks);
+
+    axios
+      .post("https://3f77y34kad.execute-api.eu-west-2.amazonaws.com/dev/tasks", newTask)
+      .then(response => {
+        newTask.taskID = response.data.newTask[0].taskID;
+        const updatedTasks = [...tasks, newTask];
+        setTasks(updatedTasks);
+      })
+      .catch(error => {
+        console.log("Error fetching data", error);
+      })
+    
   };
 
-  function completeTask(id) {
+  function completeTask(taskID) {
     const updatedTasks = tasks.map(task => {
-      if (task.id === id) {
+      if (task.taskID === taskID) {
         if (task.repeats === false) {
           task.completed = true
           task.completeDate = moment().format("YYYY-MM-DD");
@@ -145,22 +174,21 @@ function App() {
     setTasks(updatedTasks);
   }
 
-  function openTaskCard(id) {
+  function openTaskCard(taskID) {
     const updatedTasks = tasks.map(task => {
-      if (task.id === id) {task.cardOpen = !task.cardOpen}
+      if (task.taskID === taskID) {task.cardOpen = !task.cardOpen}
       return task
     })
     setTasks(updatedTasks)
   }
 
-  function openFromGraphId(id) {
+  function openFromGraphId(taskID) {
     const updatedTasks = tasks.map(task => {
-      if (task.id === id) {task.cardOpen = true}
+      if (task.taskID === taskID) {task.cardOpen = true}
       else {task.cardOpen = false}
       return task
     })
     setTasks(updatedTasks);
-    console.log(document.getElementById(id));
   }
 
   return (
