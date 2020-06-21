@@ -1,22 +1,23 @@
 {
   "files": {
-    "main.css": "/todo_react_application/static/css/main.9bdafe40.chunk.css",
-    "main.js": "/todo_react_application/static/js/main.9e8ceb3a.chunk.js",
-    "main.js.map": "/todo_react_application/static/js/main.9e8ceb3a.chunk.js.map",
+    "main.css": "/todo_react_application/static/css/main.eecc442c.chunk.css",
+    "main.js": "/todo_react_application/static/js/main.5253e7a2.chunk.js",
+    "main.js.map": "/todo_react_application/static/js/main.5253e7a2.chunk.js.map",
     "runtime-main.js": "/todo_react_application/static/js/runtime-main.606d0e57.js",
     "runtime-main.js.map": "/todo_react_application/static/js/runtime-main.606d0e57.js.map",
-    "static/js/2.c9da0f02.chunk.js": "/todo_react_application/static/js/2.c9da0f02.chunk.js",
-    "static/js/2.c9da0f02.chunk.js.map": "/todo_react_application/static/js/2.c9da0f02.chunk.js.map",
+    "static/js/2.fa8da9e4.chunk.js": "/todo_react_application/static/js/2.fa8da9e4.chunk.js",
+    "static/js/2.fa8da9e4.chunk.js.map": "/todo_react_application/static/js/2.fa8da9e4.chunk.js.map",
     "index.html": "/todo_react_application/index.html",
-    "precache-manifest.7be7f3faaa0d763d565904a7ddecfb87.js": "/todo_react_application/precache-manifest.7be7f3faaa0d763d565904a7ddecfb87.js",
+    "precache-manifest.cd6f4e66abb820e6ad7c7725d22b7918.js": "/todo_react_application/precache-manifest.cd6f4e66abb820e6ad7c7725d22b7918.js",
     "service-worker.js": "/todo_react_application/service-worker.js",
-    "static/css/main.9bdafe40.chunk.css.map": "/todo_react_application/static/css/main.9bdafe40.chunk.css.map",
-    "static/js/2.c9da0f02.chunk.js.LICENSE.txt": "/todo_react_application/static/js/2.c9da0f02.chunk.js.LICENSE.txt"
+    "static/css/main.eecc442c.chunk.css.map": "/todo_react_application/static/css/main.eecc442c.chunk.css.map",
+    "static/js/2.fa8da9e4.chunk.js.LICENSE.txt": "/todo_react_application/static/js/2.fa8da9e4.chunk.js.LICENSE.txt",
+    "static/media/Example_Task_Graph.jpg": "/todo_react_application/static/media/Example_Task_Graph.879d9a8f.jpg"
   },
   "entrypoints": [
     "static/js/runtime-main.606d0e57.js",
-    "static/js/2.c9da0f02.chunk.js",
-    "static/css/main.9bdafe40.chunk.css",
-    "static/js/main.9e8ceb3a.chunk.js"
+    "static/js/2.fa8da9e4.chunk.js",
+    "static/css/main.eecc442c.chunk.css",
+    "static/js/main.5253e7a2.chunk.js"
   ]
 }
