@@ -133,28 +133,13 @@ function App() {
     setTasks(updatedTasks);
   }
 
-  function TaskGraphShower() {
-    if (tasks) {
-      console.log("Seeing tasks")
-      return (
-        <Container fluid="lg" style={{ height: window.innerHeight - 125 < 600 ? window.innerHeight - 125 : 600 }}>
-          <TaskGraph tasks={tasks} openFromGraphId={openFromGraphId}></TaskGraph>
-        </Container>
-      )
-    }
-    else {
-      console.log("Not seeing tasks")
-      return(<NoTasksGraph/>)
-    }
-  }
-
   return (
     <Router>
       <div className="App">
         <Header />
         <Switch>
           <Route path="/graph">
-            <TaskGraphShower/>
+            {tasks ? <TaskGraph tasks={tasks} openFromGraphId={openFromGraphId}/> : <NoTasksGraph/>}
           </Route>
           <Route path="/">
             <Container fluid="lg">

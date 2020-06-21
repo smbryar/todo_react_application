@@ -2,13 +2,13 @@ import React from 'react';
 import { ResponsiveLine } from '@nivo/line';
 import { withRouter } from 'react-router-dom';
 import moment from 'moment';
+import { Container } from 'react-bootstrap';
 
 import CustomTooltip from './CustomTooltip';
 
 import './TaskGraph.css';
 
 function TaskGraph(props) {
-  console.log(props.tasks)
 
   const theme = {
     fontSize: 14,
@@ -27,8 +27,6 @@ function TaskGraph(props) {
     newTask.data = [startData, endData];
     return newTask;
   })
-
-  console.log(data)
 
   function handleGraphClick(Point) {
     const id = Point.id.slice(0, -2);
@@ -71,38 +69,40 @@ function TaskGraph(props) {
   };
 
   return (
-    <ResponsiveLine className="graph" style={{cursor:"crosshair"}}
-      data={data}
-      margin={{ top: 70, right: 20, bottom: 70, left: 150 }}
-      xScale={{
-        type: "time",
-        format: "%Y-%m-%d"
-      }}
-      xFormat="time:%Y-%m-%d"
-      yScale={{
-        type: "point"
-      }}
-      axisTop={null}
-      axisRight={null}
-      axisLeft={{
-        renderTick: HorizontalTick
-      }}
-      axisBottom={{
-        format: "%b %d",
-        tickRotation: -45,
-        tickPadding: 15
-      }}
-      theme={theme}
-      colors={{ scheme: "accent" }}
-      lineWidth={20}
-      pointSize={20}
-      enableGridX={true}
-      enableGridY={true}
-      tooltip={CustomTooltip}
-      useMesh={true}
-      onClick={handleGraphClick}
-      enableCrosshair={false}
-    />
+    <Container fluid="lg" style={{ height: window.innerHeight - 125 < 600 ? window.innerHeight - 125 : 600 }}>
+      <ResponsiveLine className="graph" style={{ cursor: "crosshair" }}
+        data={data}
+        margin={{ top: 70, right: 20, bottom: 70, left: 150 }}
+        xScale={{
+          type: "time",
+          format: "%Y-%m-%d"
+        }}
+        xFormat="time:%Y-%m-%d"
+        yScale={{
+          type: "point"
+        }}
+        axisTop={null}
+        axisRight={null}
+        axisLeft={{
+          renderTick: HorizontalTick
+        }}
+        axisBottom={{
+          format: "%b %d",
+          tickRotation: -45,
+          tickPadding: 15
+        }}
+        theme={theme}
+        colors={{ scheme: "accent" }}
+        lineWidth={20}
+        pointSize={20}
+        enableGridX={true}
+        enableGridY={true}
+        tooltip={CustomTooltip}
+        useMesh={true}
+        onClick={handleGraphClick}
+        enableCrosshair={false}
+      />
+    </Container>
   );
 }
 
