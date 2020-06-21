@@ -10,6 +10,7 @@ function TaskHeader(props) {
   function handleHeaderClick() {
     props.openTaskCard(props.taskID);
   }
+  
   return (
     <Card.Header
       className="h4"
@@ -18,9 +19,8 @@ function TaskHeader(props) {
     >
       <Row>
         <Col xs={8}
-          style={{ textDecoration: props.completed ? 'line-through' : '' }}
+          style={{ textDecoration: props.completed ? 'line-through' : '' ,cursor: "pointer"}}
           tabIndex="0"
-          style={{cursor: "pointer"}}
           onClick={handleHeaderClick}
           onKeyPress={(target) => target.charCode === 13 ? props.openTaskCard(props.taskID) : null}>
           {props.repeats === 1 && <RepeatIcon squareHeight="1.2em" />} {props.name}
