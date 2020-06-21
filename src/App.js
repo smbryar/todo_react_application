@@ -102,6 +102,7 @@ function App() {
     else if (updatedTask.repeatType === "repeatsAfterCompletion") {
       updatedTask.endDate = moment().add(updatedTask.repeatAfterCompletionFrequency, updatedTask.repeatAfterCompletionFrequencyType).format("YYYY-MM-DD");
       updatedTask.startDate = moment().format("YYYY-MM-DD");
+      updatedTask.percentageCompletion = calculatePercentageCompletion(updatedTask.startDate,updatedTask.endDate);
     }
 
     axios
