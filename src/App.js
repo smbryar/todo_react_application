@@ -102,7 +102,7 @@ function App() {
     else if (updatedTask.repeatType === "repeatsAfterCompletion") {
       updatedTask.endDate = moment().add(updatedTask.repeatAfterCompletionFrequency, updatedTask.repeatAfterCompletionFrequencyType).format("YYYY-MM-DD");
       updatedTask.startDate = moment().format("YYYY-MM-DD");
-      updatedTask.percentageCompletion = calculatePercentageCompletion(updatedTask.startDate,updatedTask.endDate);
+      updatedTask.percentageCompletion = calculatePercentageCompletion(updatedTask.startDate, updatedTask.endDate);
     }
 
     axios
@@ -124,9 +124,9 @@ function App() {
     setTasks(updatedTasks)
   }
 
-  function openFromGraphId(taskID) {
+  function openFromGraphId(id) {
     const updatedTasks = tasks.map(task => {
-      if (task.taskID === taskID) { task.cardOpen = true }
+      if (task.taskID.toString() === id) { task.cardOpen = true }
       else { task.cardOpen = false }
       return task
     })
@@ -139,12 +139,10 @@ function App() {
         <Header />
         <Switch>
           <Route path="/graph">
-            {tasks ? <TaskGraph tasks={tasks} openFromGraphId={openFromGraphId}/> : <NoTasksGraph/>}
+            {tasks ? <TaskGraph tasks={tasks} openFromGraphId={openFromGraphId} /> : <NoTasksGraph />}
           </Route>
           <Route path="/">
-            <Container fluid="lg">
-              <TaskList addTask={addTask} completeTask={completeTask} deleteTask={deleteTask} tasks={tasks} openFromGraphId={openFromGraphId} openTaskCard={openTaskCard} />
-            </Container>
+            <TaskList addTask={addTask} completeTask={completeTask} deleteTask={deleteTask} tasks={tasks} openFromGraphId={openFromGraphId} openTaskCard={openTaskCard} />
           </Route>
         </Switch>
       </div>
