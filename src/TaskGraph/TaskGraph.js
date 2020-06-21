@@ -1,30 +1,34 @@
 import React from 'react';
 import { ResponsiveLine } from '@nivo/line';
 import { withRouter } from 'react-router-dom';
+import moment from 'moment';
 
 import CustomTooltip from './CustomTooltip';
 
 import './TaskGraph.css';
 
 function TaskGraph(props) {
+  console.log(props.tasks)
 
   const theme = {
     fontSize: 14,
     fontFamily: "Verdana, Arial, sans-serif"
   };
 
-  const data = props.tasks.filter(task => task.completed === false).map(task => {
+  const data = props.tasks.filter(task => !task.completed).map(task => {
     let newTask = {};
     newTask.id = task.taskID;
     let startData = {};
-    startData.x = task.startDate;
+    startData.x = moment(task.startDate).format("YYYY-MM-DD");
     startData.y = task.name;
     let endData = {};
-    endData.x = task.endDate;
+    endData.x = moment(task.endDate).format("YYYY-MM-DD");
     endData.y = task.name;
     newTask.data = [startData, endData];
     return newTask;
   })
+
+  console.log(data)
 
   function handleGraphClick(Point) {
     const id = Point.id.slice(0, -2);

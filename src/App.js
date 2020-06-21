@@ -7,19 +7,20 @@ import axios from 'axios';
 import Header from './Header/Header';
 import TaskList from './TaskList/TaskList';
 import TaskGraph from './TaskGraph/TaskGraph';
+import NoTasksGraph from './TaskGraph/NoTasksGraph';
 
 import './App.css';
 
 function App() {
   // listen for use of mouse
-  document.body.addEventListener('mousedown', function() {
+  document.body.addEventListener('mousedown', function () {
     document.body.classList.add('using-mouse');
   });
 
   // listen for use of tab
-  document.body.addEventListener('keydown', function(event) {
+  document.body.addEventListener('keydown', function (event) {
     if (event.keyCode === 9) {
-      document.body.classList.remove('using-mouse');   
+      document.body.classList.remove('using-mouse');
     }
   });
 
@@ -34,12 +35,13 @@ function App() {
           task.cardOpen = false;
           return task;
         })
+        console.log("Setting tasks")
         setTasks(updatedTasks);
       })
       .catch(error => {
         console.log("Error fetching data", error);
       })
-  },[]);
+  }, []);
 
   function deleteTask(taskID) {
     axios
@@ -88,7 +90,7 @@ function App() {
       })
       .catch(error => {
         console.log("Error fetching data", error);
-      })    
+      })
   };
 
   function completeTask(taskID) {
@@ -116,7 +118,7 @@ function App() {
 
   function openTaskCard(taskID) {
     const updatedTasks = tasks.map(task => {
-      if (task.taskID === taskID) {task.cardOpen = !task.cardOpen}
+      if (task.taskID === taskID) { task.cardOpen = !task.cardOpen }
       return task
     })
     setTasks(updatedTasks)
@@ -124,11 +126,26 @@ function App() {
 
   function openFromGraphId(taskID) {
     const updatedTasks = tasks.map(task => {
-      if (task.taskID === taskID) {task.cardOpen = true}
-      else {task.cardOpen = false}
+      if (task.taskID === taskID) { task.cardOpen = true }
+      else { task.cardOpen = false }
       return task
     })
     setTasks(updatedTasks);
+  }
+
+  function TaskGraphShower() {
+    if (tasks) {
+      console.log("Seeing tasks")
+      return (
+        <Container fluid="lg" style={{ height: window.innerHeight - 125 < 600 ? window.innerHeight - 125 : 600 }}>
+          <TaskGraph tasks={tasks} openFromGraphId={openFromGraphId}></TaskGraph>
+        </Container>
+      )
+    }
+    else {
+      console.log("Not seeing tasks")
+      return(<NoTasksGraph/>)
+    }
   }
 
   return (
@@ -137,13 +154,11 @@ function App() {
         <Header />
         <Switch>
           <Route path="/graph">
-            <Container fluid="lg" style={{ height: window.innerHeight - 125 < 600 ? window.innerHeight - 125 : 600 }}>
-              <TaskGraph tasks={tasks} openFromGraphId={openFromGraphId}></TaskGraph>
-            </Container>
+            <TaskGraphShower/>
           </Route>
           <Route path="/">
             <Container fluid="lg">
-              <TaskList addTask={addTask} completeTask={completeTask} deleteTask={deleteTask} tasks={tasks} openFromGraphId={openFromGraphId} openTaskCard={openTaskCard}/>
+              <TaskList addTask={addTask} completeTask={completeTask} deleteTask={deleteTask} tasks={tasks} openFromGraphId={openFromGraphId} openTaskCard={openTaskCard} />
             </Container>
           </Route>
         </Switch>
