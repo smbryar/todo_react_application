@@ -35,7 +35,6 @@ function App() {
           task.cardOpen = false;
           return task;
         })
-        console.log("Setting tasks")
         setTasks(updatedTasks);
       })
       .catch(error => {

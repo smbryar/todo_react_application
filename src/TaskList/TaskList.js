@@ -13,6 +13,7 @@ function TaskList(props) {
 
     function compare(a, b) {
         if (a.completed)  return 1; // completed tasks come at bottom of list
+        if (!a.completed)  return -1;
         if (a.endDate > b.endDate) return 1; // items ordered by proximity of end date
         if (a.startDate < b.startDate) return -1;
         return 0;
