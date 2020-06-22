@@ -18,7 +18,6 @@ function Login(props) {
                 }
                 else {
                     props.setUserID(user.userID);
-                    props.history.push("/");
                 }
             })
             .catch(error => {

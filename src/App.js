@@ -25,8 +25,7 @@ function App() {
   });
 
   const [tasks, setTasks] = useState();
-  const [userID, setUserID] = useState(1);
-  console.log(userID);
+  const [userID, setUserID] = useState();
 
   useEffect(() => {
     axios
@@ -68,7 +67,7 @@ function App() {
   function addTask(name, taskDetails, startDate, endDate, repeats, repeatType, repeatAfterCompletionFrequency,
     repeatAfterCompletionFrequencyType) {
     const newTask = {
-      userID: 1,
+      userID,
       name,
       taskDetails,
       startDate,
@@ -140,15 +139,14 @@ function App() {
       <div className="App">
         <Header />
         <Switch>
-          <Route path="/login">
-            <Login setUserID = {setUserID}/>
-          </Route>
-          <Route path="/graph">
-            {tasks ? <TaskGraph tasks={tasks} openFromGraphId={openFromGraphId} /> : <NoTasksGraph />}
-          </Route>
-          <Route path="/">
-            <TaskList userID = {userID} addTask={addTask} completeTask={completeTask} deleteTask={deleteTask} tasks={tasks} openFromGraphId={openFromGraphId} openTaskCard={openTaskCard} />
-          </Route>
+          {!!userID ?
+            <><Route path="/graph">
+              {tasks ? <TaskGraph tasks={tasks} openFromGraphId={openFromGraphId} /> : <NoTasksGraph />}
+            </Route>
+            <Route path="/tasks">
+              <TaskList userID={userID} addTask={addTask} completeTask={completeTask} deleteTask={deleteTask} tasks={tasks} openFromGraphId={openFromGraphId} openTaskCard={openTaskCard} />
+            </Route> </>:
+              <Login setUserID={setUserID} />}
         </Switch>
       </div>
     </Router>
