@@ -53,6 +53,14 @@ function Login(props) {
 
     }
 
+    function validateSignIn() {
+        return username.length > 0;
+    }
+
+    function validateNewUser() {
+        return newUsername.length > 0;
+    }
+
     return (
         <Container className="authentication">
             <Row>
@@ -62,7 +70,7 @@ function Login(props) {
                         <Form.Group controlId="username">
                             <Form.Control autoFocus type="text" placeholder="Username" value={username} onChange={e => setUsername(e.target.value)} />
                         </Form.Group>
-                        <SimpleButton variant="add-task" type="submit" onClick={handleSignInSubmit}>Go</SimpleButton>
+                        <SimpleButton disabled={!validateSignIn()} variant="add-task" type="submit" onClick={handleSignInSubmit}>Go</SimpleButton>
                     </Form>
                 </Col>
                 <Col>
@@ -71,7 +79,7 @@ function Login(props) {
                         <Form.Group controlId="new-username">
                             <Form.Control autoFocus type="text" placeholder="New Username" value={newUsername} onChange={e => setNewUsername(e.target.value)} />
                         </Form.Group>
-                        <SimpleButton variant="add-task" type="submit" onClick={handleNewUserSubmit}>Go</SimpleButton>
+                        <SimpleButton disabled={!validateNewUser()} variant="add-task" type="submit" onClick={handleNewUserSubmit}>Go</SimpleButton>
                     </Form>
                 </Col>
             </Row>

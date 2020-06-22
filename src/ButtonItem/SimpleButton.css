@@ -16,10 +16,6 @@
     border: 2px solid rgb(117, 107, 126);
 }
 
-.simple-button-login {
-    border: 2px solid black;
-}
-
  
 .simple-button-complete:hover {
 background-color: rgb(90, 131, 102);
@@ -34,4 +30,8 @@ color: white;
 .simple-button-add-task:hover {
     background-color: rgb(117, 107, 126);
     color: white;
+}
+
+.disabled {
+    pointer-events: none;
 }
