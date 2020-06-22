@@ -3,6 +3,7 @@ import moment from 'moment';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import axios from 'axios';
 
+import Login from './Login/Login';
 import Header from './Header/Header';
 import TaskList from './TaskList/TaskList';
 import TaskGraph from './TaskGraph/TaskGraph';
@@ -24,10 +25,12 @@ function App() {
   });
 
   const [tasks, setTasks] = useState();
+  const [userID, setUserID] = useState(1);
+  console.log(userID);
 
   useEffect(() => {
     axios
-      .get("https://3f77y34kad.execute-api.eu-west-2.amazonaws.com/dev/tasks")
+      .get(`https://3f77y34kad.execute-api.eu-west-2.amazonaws.com/dev/tasks?userID=${userID}`)
       .then(response => {
         let updatedTasks = response.data.tasks.map(task => {
           task.percentageCompletion = calculatePercentageCompletion(task.startDate, task.endDate);
@@ -39,7 +42,7 @@ function App() {
       .catch(error => {
         console.log("Error fetching data", error);
       })
-  }, []);
+  }, [userID]);
 
   function deleteTask(taskID) {
     axios
@@ -137,11 +140,14 @@ function App() {
       <div className="App">
         <Header />
         <Switch>
+          <Route path="/login">
+            <Login setUserID = {setUserID}/>
+          </Route>
           <Route path="/graph">
             {tasks ? <TaskGraph tasks={tasks} openFromGraphId={openFromGraphId} /> : <NoTasksGraph />}
           </Route>
           <Route path="/">
-            <TaskList addTask={addTask} completeTask={completeTask} deleteTask={deleteTask} tasks={tasks} openFromGraphId={openFromGraphId} openTaskCard={openTaskCard} />
+            <TaskList userID = {userID} addTask={addTask} completeTask={completeTask} deleteTask={deleteTask} tasks={tasks} openFromGraphId={openFromGraphId} openTaskCard={openTaskCard} />
           </Route>
         </Switch>
       </div>
