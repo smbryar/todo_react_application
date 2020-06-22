@@ -15,9 +15,9 @@ function Header(props) {
                     <Link className="px-3 navlink--my-tasks-app" to="/" >Tasks</Link>
                     <Link className="px-3 navlink--my-tasks-app" to="/graph" >Graph</Link>
                 </Nav>
-                <Nav className="ml-auto">                    
+                {props.userID && <Nav className="ml-auto">                    
                 <SimpleButton variant="logout" onClick={props.handleLogOut}>Log Out</SimpleButton>
-                </Nav>
+                </Nav>}
             </Navbar.Collapse>
         </Navbar>
     );

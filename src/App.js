@@ -141,7 +141,7 @@ function App() {
   return (
     <Router>
       <div className="App">
-        <Header handleLogOut={handleLogOut}/>
+        <Header handleLogOut={handleLogOut} userID={userID}/>
         <Switch>
           {!!userID ?
             <><Route path="/graph">
