@@ -25,7 +25,7 @@ function App() {
   });
 
   const [tasks, setTasks] = useState();
-  const [userID, setUserID] = useState();
+  const [userID, setUserID] = useState(null);
 
   useEffect(() => {
     axios
@@ -134,10 +134,14 @@ function App() {
     setTasks(updatedTasks);
   }
 
+  function handleLogOut() {
+    setUserID(null);
+  }
+
   return (
     <Router>
       <div className="App">
-        <Header />
+        <Header handleLogOut={handleLogOut}/>
         <Switch>
           {!!userID ?
             <><Route path="/graph">

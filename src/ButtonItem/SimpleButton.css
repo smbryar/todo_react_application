@@ -24,6 +24,10 @@
     border: 2px solid #c3aaca;
 }
 
+.simple-button-logout {
+    border: 2px solid #7eac8d;
+}
+
  
 .simple-button-complete:hover {
 background-color: rgb(90, 131, 102);
@@ -46,6 +50,11 @@ color: white;
 
 .simple-button-new-user:hover {
     background-color: #c3aaca;
+}
+
+.simple-button-logout:hover {
+    background-color: #5a866a;
+    color: white;
 }
 
 .disabled {
