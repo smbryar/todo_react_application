@@ -63,23 +63,23 @@ function Login(props) {
 
     return (
         <Container className="authentication">
-            <Row>
-                <Col>
-                    <Form className="login">
+            <Row className="authentication-row px-2">
+                <Col xs={12} lg={6} className="m-auto py-2">
+                    <Form className="login p-3 pb-4 rounded">
                         <h1 class="h3 mb-3 font-weight-normal">Sign in</h1>
                         <Form.Group controlId="username">
                             <Form.Control autoFocus type="text" placeholder="Username" value={username} onChange={e => setUsername(e.target.value)} />
                         </Form.Group>
-                        <SimpleButton disabled={!validateSignIn()} variant="add-task" type="submit" onClick={handleSignInSubmit}>Go</SimpleButton>
+                        <SimpleButton disabled={!validateSignIn()} variant="login" type="submit" onClick={handleSignInSubmit}>Go</SimpleButton>
                     </Form>
                 </Col>
-                <Col>
-                    <Form className="new-user">
+                <Col xs={12} lg={6} className="m-auto py-2">
+                    <Form className="new-user p-3 pb-4 rounded">
                         <h1 class="h3 mb-3 font-weight-normal">Create new user</h1>
                         <Form.Group controlId="new-username">
                             <Form.Control autoFocus type="text" placeholder="New Username" value={newUsername} onChange={e => setNewUsername(e.target.value)} />
                         </Form.Group>
-                        <SimpleButton disabled={!validateNewUser()} variant="add-task" type="submit" onClick={handleNewUserSubmit}>Go</SimpleButton>
+                        <SimpleButton disabled={!validateNewUser()} variant="new-user" type="submit" onClick={handleNewUserSubmit}>Go</SimpleButton>
                     </Form>
                 </Col>
             </Row>

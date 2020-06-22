@@ -1,10 +1,20 @@
-@media all and (min-width: 480px) {
-    .authentication {
-      padding: 60px 0;
-    }
-  
-    .authentication form {
-      margin: 0 auto;
-      max-width: 320px;
-    }
-  }
+.authentication {
+    padding: 20px 0;
+}
+
+.authentication form {
+    margin: 0 auto;
+    max-width: 380px;
+}
+
+.authentication-row {
+    min-height: 60vh;
+}
+
+.login {
+    border: 2px solid #BADEC6;
+}
+
+.new-user {
+    border: 2px solid #c3aaca;
+}
