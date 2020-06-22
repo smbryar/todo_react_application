@@ -143,7 +143,7 @@ function App() {
             <><Route path="/graph">
               {tasks ? <TaskGraph tasks={tasks} openFromGraphId={openFromGraphId} /> : <NoTasksGraph />}
             </Route>
-            <Route path="/tasks">
+            <Route exact path="/">
               <TaskList userID={userID} addTask={addTask} completeTask={completeTask} deleteTask={deleteTask} tasks={tasks} openFromGraphId={openFromGraphId} openTaskCard={openTaskCard} />
             </Route> </>:
               <Login setUserID={setUserID} />}

@@ -11,7 +11,7 @@ function Header(props) {
             <Navbar.Toggle aria-controls="basic-navbar-nav" onClick={() => setExpanded(expanded ? false : "expanded")}/>
             <Navbar.Collapse id="basic-navbar-nav">
                 <Nav onClick={() => setExpanded(false)}>
-                    <Link className="px-3 navlink--my-tasks-app" to="/tasks" >Tasks</Link>
+                    <Link className="px-3 navlink--my-tasks-app" to="/" >Tasks</Link>
                     <Link className="px-3 navlink--my-tasks-app" to="/graph" >Graph</Link>
                 </Nav>
             </Navbar.Collapse>

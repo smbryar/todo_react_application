@@ -1,0 +1,10 @@
+@media all and (min-width: 480px) {
+    .authentication {
+      padding: 60px 0;
+    }
+  
+    .authentication form {
+      margin: 0 auto;
+      max-width: 320px;
+    }
+  }
