@@ -31,12 +31,17 @@ function App() {
     axios
       .get(`https://3f77y34kad.execute-api.eu-west-2.amazonaws.com/dev/tasks?userID=${user.userID}`)
       .then(response => {
-        let updatedTasks = response.data.tasks.map(task => {
-          task.percentageCompletion = calculatePercentageCompletion(task.startDate, task.endDate);
-          task.cardOpen = false;
-          return task;
-        })
-        setTasks(updatedTasks);
+        let updatedTasks = 
+          response
+            .data
+            .tasks
+            .map(task => {
+              task.percentageCompletion = calculatePercentageCompletion(task.startDate, task.endDate);
+              task.cardOpen = false;
+              return task;
+            });
+        let sortedTasks = sortTasks(updatedTasks);
+        setTasks(sortedTasks);
       })
       .catch(error => {
         console.log("Error fetching data", error);
@@ -54,6 +59,17 @@ function App() {
         console.log("Error fetching data", error);
       })
   };
+
+  function sortTasks(tasks) {
+    function comparer(a, b) {
+      if (a.completed && !b.completed) return 1; // completed tasks come at bottom of list
+      if (!a.completed && b.completed) return -1;
+      if (moment(a.endDate).isAfter(b.endDate)) return 1; // items ordered by proximity of end date
+      if (moment(b.endDate).isAfter(a.endDate)) return -1;
+      return 0;
+    }
+    return tasks.sort(comparer);
+  }
 
   function calculatePercentageCompletion(startDate, endDate) {
     const now = moment().valueOf();
@@ -86,7 +102,8 @@ function App() {
       .then(response => {
         newTask.taskID = response.data.newTask[0].taskID;
         const updatedTasks = [...tasks, newTask];
-        setTasks(updatedTasks);
+        let sortedTasks = sortTasks(updatedTasks);
+        setTasks(sortedTasks);
       })
       .catch(error => {
         console.log("Error fetching data", error);
@@ -110,7 +127,8 @@ function App() {
       .put(`https://3f77y34kad.execute-api.eu-west-2.amazonaws.com/dev/tasks/${taskID}`, updatedTask)
       .then(response => {
         const updatedTasks = [...tasks].map(task => task.taskID === taskID ? updatedTask : task);
-        setTasks(updatedTasks);
+        let sortedTasks = sortTasks(updatedTasks);
+        setTasks(sortedTasks);
       })
       .catch(error => {
         console.log("Error fetching data", error);
