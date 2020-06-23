@@ -9,77 +9,126 @@ import './Login.css';
 function Login(props) {
     const [username, setUsername] = useState("");
     const [newUsername, setNewUsername] = useState("");
+    const [usernameError, setUsernameError] = useState(false);
+    const [newUsernameError, setNewUsernameError] = useState(false);
+
+    function handleUsernameChange(e) {
+        setUsername(e.target.value);
+        if (e.target.value.length === 0) {
+            setUsernameError(true)
+        }
+        else { setUsernameError(false) }
+    }
+
+    function handleNewUsernameChange(e) {
+        setNewUsername(e.target.value);
+        if (e.target.value.length === 0) {
+            setNewUsernameError(true)
+        }
+        else { setNewUsernameError(false) }
+    }
 
     function handleSignInSubmit(e) {
         e.preventDefault();
-        axios
-            .get(`https://3f77y34kad.execute-api.eu-west-2.amazonaws.com/dev/users?username=${username}`)
-            .then(response => {
-                const userDetails = response.data.user;
-                if (userDetails.length === 1) {
-                    props.setUserID(response.data.user[0].userID);
+        if (username.length === 0) {
+            setUsernameError(true);
+        }
+        else {
+            axios
+                .get(`https://3f77y34kad.execute-api.eu-west-2.amazonaws.com/dev/users?username=${username}`)
+                .then(response => {
+                    const userDetails = response.data.user;
+                    if (userDetails.length === 1) {
+                        props.setUserID(response.data.user[0].userID);
+                    }
+                    else {
+                        setUsernameError(true);
+                    }
                 }
-                else {
-                    console.log("User not found")
-                }
-            }
-            )
-            .catch(error => {
-                console.log("Error fetching data", error);
-            })
+                )
+                .catch(error => {
+                    console.log("Error fetching data", error);
+                })
+        }
     }
 
     function handleNewUserSubmit(e) {
         e.preventDefault();
-        const newUser = { username: newUsername };
-
-        axios
-            .get(`https://3f77y34kad.execute-api.eu-west-2.amazonaws.com/dev/users?username=${newUsername}`)
-            .then(response => {
-                if (response.data.user.length > 0) {
-                    throw new Error("User already exists in database, usernames must be unique.")
-                }
-                else {
-                    return axios.post("https://3f77y34kad.execute-api.eu-west-2.amazonaws.com/dev/users", newUser);
-                }
-            })
-            .then(response => {
-                const newUserID = response.data.newUser[0].userID;
-                props.setUserID(newUserID);
-            })
-            .catch(error => {
-                console.log("Error fetching data", error);
-            })
-
-    }
-
-    function validateSignIn() {
-        return username.length > 0;
-    }
-
-    function validateNewUser() {
-        return newUsername.length > 0;
+        if (newUsername.length === 0) {
+            setNewUsernameError(true);
+        }
+        else {
+            const newUser = { username: newUsername };
+            axios
+                .get(`https://3f77y34kad.execute-api.eu-west-2.amazonaws.com/dev/users?username=${newUsername}`)
+                .then(response => {
+                    if (response.data.user.length > 0) {
+                        setNewUsernameError(true);
+                        throw new Error("User already exists in database, usernames must be unique.")
+                    }
+                    else {
+                        return axios.post("https://3f77y34kad.execute-api.eu-west-2.amazonaws.com/dev/users", newUser);
+                    }
+                })
+                .then(response => {
+                    const newUserID = response.data.newUser[0].userID;
+                    props.setUserID(newUserID);
+                })
+                .catch(error => {
+                    console.log("Error fetching data", error);
+                })
+        }
     }
 
     return (
         <Container className="authentication">
             <Row className="authentication-row px-2">
                 <Col xs={12} lg={6} className="m-auto py-2">
-                    <Form className="login p-3 pb-4 rounded">
+                    <Form
+                        className="login p-3 pb-4 rounded"
+                    >
                         <h1 class="h3 mb-3 font-weight-normal">Sign in</h1>
                         <Form.Group controlId="username">
-                            <Form.Control autoFocus type="text" placeholder="Username" value={username} onChange={e => setUsername(e.target.value)} />
+                            <Form.Control
+                                autoFocus
+                                required
+                                type="text"
+                                placeholder="Username"
+                                value={username}
+                                onChange={handleUsernameChange}
+                            />
+                            {usernameError &&
+                                <Form.Text style={{ color: "red" }}>
+                                    Please enter a valid username.
+                            </Form.Text>}
                         </Form.Group>
-                        <SimpleButton disabled={!validateSignIn()} variant="login" type="submit" onClick={handleSignInSubmit}>Go</SimpleButton>
+                        <SimpleButton
+                            variant="login"
+                            type="submit"
+                            onClick={handleSignInSubmit}
+                        >Go</SimpleButton>
                     </Form>
                 </Col>
                 <Col xs={12} lg={6} className="m-auto py-2">
-                    <Form className="new-user p-3 pb-4 rounded">
+                    <Form
+                        className="new-user p-3 pb-4 rounded"
+                    >
                         <h1 class="h3 mb-3 font-weight-normal">Create new user</h1>
                         <Form.Group controlId="new-username">
-                            <Form.Control autoFocus type="text" placeholder="New Username" value={newUsername} onChange={e => setNewUsername(e.target.value)} />
+                            <Form.Control
+                                autoFocus
+                                required
+                                type="text"
+                                placeholder="New Username"
+                                value={newUsername}
+                                onChange={handleNewUsernameChange}
+                            />
+                            {newUsernameError &&
+                                <Form.Text style={{ color: "red" }}>
+                                    Please enter a valid and unique username.
+                            </Form.Text>}
                         </Form.Group>
-                        <SimpleButton disabled={!validateNewUser()} variant="new-user" type="submit" onClick={handleNewUserSubmit}>Go</SimpleButton>
+                        <SimpleButton variant="new-user" type="submit" onClick={handleNewUserSubmit}>Go</SimpleButton>
                     </Form>
                 </Col>
             </Row>
