@@ -1,14 +1,13 @@
-import React, { useState } from 'react';
+import React from 'react';
 import moment from 'moment';
 import { Container, Row, Col, Form } from 'react-bootstrap';
 import TaskItem from '../TaskItem/TaskItem';
 
 function DayPlan(props) {
-    const [tasksSelected, setTasksSelected] = useState([]);
     const taskOptions = props.tasks 
                         && 
                         props.tasks
-                            .filter(task => !task.completed && !tasksSelected.find(selectedTask => selectedTask.taskID === task.taskID))
+                            .filter(task => !task.completed && !props.dayPlanTasks.find(selectedTask => selectedTask.taskID === task.taskID))
                             .sort(compare);
 
     function compare(a, b) {
@@ -20,10 +19,10 @@ function DayPlan(props) {
 
 
     function handleSelectTask(e) {
-        const updatedTasksSelected = [...tasksSelected];
+        const updatedTasksSelected = [...props.dayPlanTasks];
         const selectedTask = taskOptions.find(task => task.taskID.toString() === e.target.value);
         updatedTasksSelected.push(selectedTask);
-        setTasksSelected(updatedTasksSelected);
+        props.setDayPlanTasks(updatedTasksSelected);
     }
 
     return (
@@ -46,9 +45,9 @@ function DayPlan(props) {
                 </Col>
                 <Col xs={12} lg={6} className="py-2">
                 <h1 class="h3 mb-3 font-weight-normal">Today's Task Plan</h1>
-                {tasksSelected.map(task => (
+                {props.dayPlanTasks.map(task => (
                     <Row key={task.taskID} id={task.taskID} className="my-2">
-                        <TaskItem completeTask={props.completeTask} deleteTask={props.deleteTask} openTaskCard={props.openTaskCard} {...task} />
+                        <TaskItem dayPlan ={true} deleteDayPlanTask = {props.deleteDayPlanTask} completeTask={props.completeTask} deleteTask={props.deleteTask} openTaskCard={props.openTaskCard} {...task} />
                     </Row>
                 ))}
                 </Col>

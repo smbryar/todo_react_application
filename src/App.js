@@ -27,6 +27,7 @@ function App() {
 
   const [tasks, setTasks] = useState();
   const [userID, setUserID] = useState(1);
+  const [dayPlanTasks, setDayPlanTasks] = useState([]);
 
   useEffect(() => {
     axios
@@ -44,7 +45,10 @@ function App() {
       })
   }, [userID]);
 
-  function deleteTask(taskID) {
+  function deleteTask(taskID) {   
+    const updatedDayPlanTasks = dayPlanTasks.filter(task => task.taskID !== taskID);
+    setDayPlanTasks(updatedDayPlanTasks);
+
     axios
       .delete(`https://3f77y34kad.execute-api.eu-west-2.amazonaws.com/dev/tasks/${taskID}`)
       .then(response => {
@@ -139,6 +143,11 @@ function App() {
     setUserID(null);
   }
 
+  function deleteDayPlanTask(taskID) {
+    const updatedDayPlanTasks = dayPlanTasks.filter(task => task.taskID !== taskID);
+    setDayPlanTasks(updatedDayPlanTasks);
+  }
+
   return (
     <Router>
       <div className="App">
@@ -149,7 +158,7 @@ function App() {
               {(tasks && tasks.length > 0) ? <TaskGraph tasks={tasks} openFromGraphId={openFromGraphId} /> : <NoTasksGraph />}
             </Route>
               <Route exact path="/todo_react_application/day-plan">
-                <DayPlan tasks = {tasks} completeTask={completeTask} deleteTask={deleteTask} openTaskCard={openTaskCard}/>            
+                <DayPlan tasks = {tasks} deleteDayPlanTask = {deleteDayPlanTask} dayPlanTasks={dayPlanTasks} setDayPlanTasks={setDayPlanTasks} completeTask={completeTask} deleteTask={deleteTask} openTaskCard={openTaskCard}/>            
               </Route>
             <Route exact path="/todo_react_application/">
               <TaskList userID={userID} addTask={addTask} completeTask={completeTask} deleteTask={deleteTask} tasks={tasks} openFromGraphId={openFromGraphId} openTaskCard={openTaskCard} />

@@ -1,12 +1,12 @@
 import React from 'react';
 import { Card, Row, Col, ButtonGroup } from 'react-bootstrap';
 
-import ButtonItem, { CheckboxIcon, DeleteIcon, RepeatIcon } from '../../ButtonItem/ButtonItem';
+import ButtonItem, { CheckboxIcon, DeleteIcon, RepeatIcon, ListDeleteIcon } from '../../ButtonItem/ButtonItem';
 import TaskProgressBar from './TaskProgressBar';
 
 
 function TaskHeader(props) {
-
+  
   function handleHeaderClick() {
     props.openTaskCard(props.taskID);
   }
@@ -35,6 +35,10 @@ function TaskHeader(props) {
             <ButtonItem onClick={props.handleDeleteClick} aria-label="Delete">
               <DeleteIcon squareHeight="1.3em" />
             </ButtonItem>
+          {props.dayPlan &&
+              <ButtonItem onClick={props.handleListDeleteClick} aria-label="Remove from day plan">
+                <ListDeleteIcon squareHeight="1.5em" />
+              </ButtonItem>}
           </ButtonGroup>
         </Col>
       </Row>
