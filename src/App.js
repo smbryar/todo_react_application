@@ -43,8 +43,6 @@ function App() {
       })
   }, [userID]);
 
-  console.log(tasks)
-
   function deleteTask(taskID) {
     axios
       .delete(`https://3f77y34kad.execute-api.eu-west-2.amazonaws.com/dev/tasks/${taskID}`)
