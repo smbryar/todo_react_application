@@ -39,7 +39,7 @@ function Login(props) {
                 .then(response => {
                     const userDetails = response.data.user;
                     if (userDetails.length === 1) {
-                        props.setUserID(response.data.user[0].userID);
+                        props.setUser({userID:response.data.user[0].userID, username});
                     }
                     else {
                         setUsernameError(true);
@@ -72,7 +72,7 @@ function Login(props) {
                 })
                 .then(response => {
                     const newUserID = response.data.newUser[0].userID;
-                    props.setUserID(newUserID);
+                    props.setUser({userID:newUserID, username:newUsername});
                 })
                 .catch(error => {
                     console.log("Error fetching data", error);
@@ -87,7 +87,7 @@ function Login(props) {
                     <Form
                         className="login p-3 pb-4 rounded"
                     >
-                        <h1 class="h3 mb-3 font-weight-normal">Sign in</h1>
+                        <h1 className="h3 mb-3 font-weight-normal">Sign in</h1>
                         <Form.Group controlId="username">
                             <Form.Control
                                 autoFocus
@@ -113,7 +113,7 @@ function Login(props) {
                     <Form
                         className="new-user p-3 pb-4 rounded"
                     >
-                        <h1 class="h3 mb-3 font-weight-normal">Create new user</h1>
+                        <h1 className="h3 mb-3 font-weight-normal">Create new user</h1>
                         <Form.Group controlId="new-username">
                             <Form.Control
                                 autoFocus

@@ -25,11 +25,11 @@ function App() {
   });
 
   const [tasks, setTasks] = useState();
-  const [userID, setUserID] = useState(null);
+  const [user, setUser] = useState({userID:null, username:null});
 
   useEffect(() => {
     axios
-      .get(`https://3f77y34kad.execute-api.eu-west-2.amazonaws.com/dev/tasks?userID=${userID}`)
+      .get(`https://3f77y34kad.execute-api.eu-west-2.amazonaws.com/dev/tasks?userID=${user.userID}`)
       .then(response => {
         let updatedTasks = response.data.tasks.map(task => {
           task.percentageCompletion = calculatePercentageCompletion(task.startDate, task.endDate);
@@ -41,7 +41,7 @@ function App() {
       .catch(error => {
         console.log("Error fetching data", error);
       })
-  }, [userID]);
+  }, [user]);
 
   function deleteTask(taskID) {
     axios
@@ -67,7 +67,7 @@ function App() {
   function addTask(name, taskDetails, startDate, endDate, repeats, repeatType, repeatAfterCompletionFrequency,
     repeatAfterCompletionFrequencyType) {
     const newTask = {
-      userID,
+      userID: user.userID,
       name,
       taskDetails,
       startDate,
@@ -135,22 +135,22 @@ function App() {
   }
 
   function handleLogOut() {
-    setUserID(null);
+    setUser({userID:null, username:null});
   }
 
   return (
     <Router>
       <div className="App">
-        <Header handleLogOut={handleLogOut} userID={userID}/>
+        <Header handleLogOut={handleLogOut} userID={user.userID}/>
         <Switch>
-          {!!userID ?
+          {!!user.userID ?
             <><Route path="/todo_react_application/graph">
               {(tasks && tasks.length > 0) ? <TaskGraph tasks={tasks} openFromGraphId={openFromGraphId} /> : <NoTasksGraph />}
             </Route>
             <Route exact path="/todo_react_application/">
-              <TaskList userID={userID} addTask={addTask} completeTask={completeTask} deleteTask={deleteTask} tasks={tasks} openFromGraphId={openFromGraphId} openTaskCard={openTaskCard} />
+              <TaskList userID={user.userID} username = {user.username} addTask={addTask} completeTask={completeTask} deleteTask={deleteTask} tasks={tasks} openFromGraphId={openFromGraphId} openTaskCard={openTaskCard} />
             </Route> </>:
-              <Login setUserID={setUserID} />}
+              <Login setUser={setUser} />}
         </Switch>
       </div>
     </Router>

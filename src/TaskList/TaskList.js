@@ -32,7 +32,7 @@ function TaskList(props) {
         <Container fluid="lg">
             <Col>
                 <Row className="my-2">
-                    <Intro tasks={props.tasks} />
+                    <Intro tasks={props.tasks} username={props.username}/>
                 </Row>
 
                 <Row className="my-2">
