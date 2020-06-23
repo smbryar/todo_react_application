@@ -8,6 +8,7 @@ import Header from './Header/Header';
 import TaskList from './TaskList/TaskList';
 import TaskGraph from './TaskGraph/TaskGraph';
 import NoTasksGraph from './TaskGraph/NoTasksGraph';
+import DayPlan from './DayPlan/DayPlan';
 
 import './App.css';
 
@@ -25,7 +26,7 @@ function App() {
   });
 
   const [tasks, setTasks] = useState();
-  const [userID, setUserID] = useState(null);
+  const [userID, setUserID] = useState(1);
 
   useEffect(() => {
     axios
@@ -141,19 +142,22 @@ function App() {
   return (
     <Router>
       <div className="App">
-        <Header handleLogOut={handleLogOut} userID={userID}/>
+        <Header handleLogOut={handleLogOut} userID={userID} />
         <Switch>
           {!!userID ?
             <><Route path="/todo_react_application/graph">
               {(tasks && tasks.length > 0) ? <TaskGraph tasks={tasks} openFromGraphId={openFromGraphId} /> : <NoTasksGraph />}
             </Route>
+              <Route exact path="/todo_react_application/day-plan">
+                <DayPlan tasks = {tasks} completeTask={completeTask} deleteTask={deleteTask} openTaskCard={openTaskCard}/>            
+              </Route>
             <Route exact path="/todo_react_application/">
               <TaskList userID={userID} addTask={addTask} completeTask={completeTask} deleteTask={deleteTask} tasks={tasks} openFromGraphId={openFromGraphId} openTaskCard={openTaskCard} />
             </Route> </>:
               <Login setUserID={setUserID} />}
         </Switch>
       </div>
-    </Router>
+    </Router >
   );
 }
 

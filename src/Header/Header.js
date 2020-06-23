@@ -14,6 +14,7 @@ function Header(props) {
                 <Nav onClick={() => setExpanded(false)}>
                     <Link className="px-3 navlink--my-tasks-app" to="/todo_react_application/" >Tasks</Link>
                     <Link className="px-3 navlink--my-tasks-app" to="/todo_react_application/graph" >Graph</Link>
+                    <Link className="px-3 navlink--my-tasks-app" to="/todo_react_application/day-plan" >Day Plan</Link>
                 </Nav>
                 {props.userID && <Nav className="ml-auto">                    
                 <SimpleButton variant="logout" onClick={props.handleLogOut}>Log Out</SimpleButton>
