@@ -31,7 +31,7 @@ function TaskGraph(props) {
   function handleGraphClick(Point) {
     const id = Point.id.slice(0, -2);
     props.openFromGraphId(id);
-    props.history.push("/");
+    props.history.push("/todo_react_application/");
   }
 
   // Using code from tylercrosse https://github.com/plouc/nivo/issues/353
