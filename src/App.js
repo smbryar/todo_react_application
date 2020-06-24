@@ -26,24 +26,29 @@ function App() {
   });
 
   const [tasks, setTasks] = useState();
-  const [userID, setUserID] = useState(1);
   const [dayPlanTasks, setDayPlanTasks] = useState([]);
+  const [user, setUser] = useState({userID:null, username:null});
 
   useEffect(() => {
     axios
-      .get(`https://3f77y34kad.execute-api.eu-west-2.amazonaws.com/dev/tasks?userID=${userID}`)
+      .get(`https://3f77y34kad.execute-api.eu-west-2.amazonaws.com/dev/tasks?userID=${user.userID}`)
       .then(response => {
-        let updatedTasks = response.data.tasks.map(task => {
-          task.percentageCompletion = calculatePercentageCompletion(task.startDate, task.endDate);
-          task.cardOpen = false;
-          return task;
-        })
-        setTasks(updatedTasks);
+        let updatedTasks = 
+          response
+            .data
+            .tasks
+            .map(task => {
+              task.percentageCompletion = calculatePercentageCompletion(task.startDate, task.endDate);
+              task.cardOpen = false;
+              return task;
+            });
+        let sortedTasks = sortTasks(updatedTasks);
+        setTasks(sortedTasks);
       })
       .catch(error => {
         console.log("Error fetching data", error);
       })
-  }, [userID]);
+  }, [user]);
 
   function deleteTask(taskID) {   
     const updatedDayPlanTasks = dayPlanTasks.filter(task => task.taskID !== taskID);
@@ -60,6 +65,17 @@ function App() {
       })
   };
 
+  function sortTasks(tasks) {
+    function comparer(a, b) {
+      if (a.completed && !b.completed) return 1; // completed tasks come at bottom of list
+      if (!a.completed && b.completed) return -1;
+      if (moment(a.endDate).isAfter(b.endDate)) return 1; // items ordered by proximity of end date
+      if (moment(b.endDate).isAfter(a.endDate)) return -1;
+      return 0;
+    }
+    return tasks.sort(comparer);
+  }
+
   function calculatePercentageCompletion(startDate, endDate) {
     const now = moment().valueOf();
     const start = moment(startDate, "YYYY-MM-DD").valueOf();
@@ -72,7 +88,7 @@ function App() {
   function addTask(name, taskDetails, startDate, endDate, repeats, repeatType, repeatAfterCompletionFrequency,
     repeatAfterCompletionFrequencyType) {
     const newTask = {
-      userID,
+      userID: user.userID,
       name,
       taskDetails,
       startDate,
@@ -91,7 +107,8 @@ function App() {
       .then(response => {
         newTask.taskID = response.data.newTask[0].taskID;
         const updatedTasks = [...tasks, newTask];
-        setTasks(updatedTasks);
+        let sortedTasks = sortTasks(updatedTasks);
+        setTasks(sortedTasks);
       })
       .catch(error => {
         console.log("Error fetching data", error);
@@ -115,7 +132,8 @@ function App() {
       .put(`https://3f77y34kad.execute-api.eu-west-2.amazonaws.com/dev/tasks/${taskID}`, updatedTask)
       .then(response => {
         const updatedTasks = [...tasks].map(task => task.taskID === taskID ? updatedTask : task);
-        setTasks(updatedTasks);
+        let sortedTasks = sortTasks(updatedTasks);
+        setTasks(sortedTasks);
       })
       .catch(error => {
         console.log("Error fetching data", error);
@@ -140,7 +158,7 @@ function App() {
   }
 
   function handleLogOut() {
-    setUserID(null);
+    setUser({userID:null, username:null});
   }
 
   function deleteDayPlanTask(taskID) {
@@ -151,9 +169,9 @@ function App() {
   return (
     <Router>
       <div className="App">
-        <Header handleLogOut={handleLogOut} userID={userID} />
+        <Header handleLogOut={handleLogOut} userID={user.userID}/>
         <Switch>
-          {!!userID ?
+          {!!user.userID ?
             <><Route path="/todo_react_application/graph">
               {(tasks && tasks.length > 0) ? <TaskGraph tasks={tasks} openFromGraphId={openFromGraphId} /> : <NoTasksGraph />}
             </Route>
@@ -161,9 +179,9 @@ function App() {
                 <DayPlan tasks = {tasks} deleteDayPlanTask = {deleteDayPlanTask} dayPlanTasks={dayPlanTasks} setDayPlanTasks={setDayPlanTasks} completeTask={completeTask} deleteTask={deleteTask} openTaskCard={openTaskCard}/>            
               </Route>
             <Route exact path="/todo_react_application/">
-              <TaskList userID={userID} addTask={addTask} completeTask={completeTask} deleteTask={deleteTask} tasks={tasks} openFromGraphId={openFromGraphId} openTaskCard={openTaskCard} />
+              <TaskList userID={user.userID} username = {user.username} addTask={addTask} completeTask={completeTask} deleteTask={deleteTask} tasks={tasks} openFromGraphId={openFromGraphId} openTaskCard={openTaskCard} />
             </Route> </>:
-              <Login setUserID={setUserID} />}
+              <Login setUser={setUser} />}
         </Switch>
       </div>
     </Router >

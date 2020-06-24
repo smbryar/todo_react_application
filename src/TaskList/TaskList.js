@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import { v4 as uuidv4 } from 'uuid';
-import moment from 'moment';
 
 import TaskItem from '../TaskItem/TaskItem';
 import AddTask from '../AddTask/AddTask';
@@ -11,14 +10,7 @@ import './TaskList.css';
 
 function TaskList(props) {
     const [addTaskKey, setAddTaskKey] = useState(uuidv4());
-
-    function compare(a, b) {
-        if (a.completed) return 1; // completed tasks come at bottom of list
-        if (moment(a.endDate).isAfter(b.endDate)) return 1; // items ordered by proximity of end date
-        if (moment(b.endDate).isAfter(a.endDate)) return -1;
-        return 0;
-    }
-
+    
     function addTask(name, taskDetails, startDate, endDate, repeats, repeatType, repeatAfterCompletionFrequency,
         repeatAfterCompletionFrequencyType, repeatRegularDaysFrequency, repeatRegularDaysArrayDays) {
 
@@ -32,14 +24,14 @@ function TaskList(props) {
         <Container fluid="lg">
             <Col>
                 <Row className="my-2">
-                    <Intro tasks={props.tasks} />
+                    <Intro tasks={props.tasks} username={props.username}/>
                 </Row>
 
                 <Row className="my-2">
                     <AddTask key={addTaskKey} addTask={addTask} tasks={props.tasks} />
                 </Row>
 
-                {props.tasks && props.tasks.sort(compare).map(task => (
+                {props.tasks && props.tasks.map(task => (
                     <Row key={task.taskID} id={task.taskID} className="my-2">
                         <TaskItem completeTask={props.completeTask} deleteTask={props.deleteTask} openTaskCard={props.openTaskCard} {...task} />
                     </Row>
