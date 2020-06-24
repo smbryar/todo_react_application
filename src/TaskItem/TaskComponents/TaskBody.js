@@ -31,12 +31,16 @@ function TaskBody(props) {
                     </Row>
                 }
                 <Row>
-                    {!props.completed && <Col xs={6}>
+                    {!props.completed && <Col>
                         <SimpleButton onClick={props.handleCompleteClick} variant="complete">Complete task</SimpleButton>
                     </Col>}
                     <Col>
                         <SimpleButton onClick={props.handleDeleteClick} variant="delete">Delete task</SimpleButton>
                     </Col>
+                    {props.dayPlan &&
+                    <Col>
+                        <SimpleButton onClick={props.handleListDeleteClick} variant="remove-from-plan">Remove from plan</SimpleButton>
+                    </Col>}
                 </Row>
             </Card.Body>
         </Collapse>

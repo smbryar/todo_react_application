@@ -28,6 +28,10 @@
     border: 2px solid #7eac8d;
 }
 
+.simple-button-remove-from-plan {
+    border: 2px solid #215e86;
+}
+
  
 .simple-button-complete:hover {
 background-color: rgb(90, 131, 102);
@@ -56,6 +60,12 @@ color: white;
     background-color: #5a866a;
     color: white;
 }
+
+.simple-button-remove-from-plan:hover {
+    background-color: #215e86;
+    color: white;
+}
+
 
 .disabled {
     pointer-events: none;

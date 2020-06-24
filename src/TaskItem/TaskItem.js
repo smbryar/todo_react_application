@@ -22,8 +22,8 @@ function TaskItem(props) {
 
   return (
     <Card className="task-item" style={{ backgroundColor: props.completed ? 'rgba(130, 138, 146, 0.74)' : '#BADEC6' }}>
-      <TaskHeader {...props} dayPlan = {props.dayPlan} handleListDeleteClick = {handleListDeleteClick} open={props.open} setOpen={props.setOpen} handleCompleteClick={handleCompleteClick} handleDeleteClick={handleDeleteClick} openTaskCard={props.openTaskCard}/>
-      <TaskBody {...props} open={props.open} handleDeleteClick={handleDeleteClick} handleCompleteClick={handleCompleteClick} />
+      <TaskHeader {...props} handleListDeleteClick = {handleListDeleteClick} handleCompleteClick={handleCompleteClick} handleDeleteClick={handleDeleteClick}/>
+      <TaskBody {...props} handleListDeleteClick = {handleListDeleteClick} handleDeleteClick={handleDeleteClick} handleCompleteClick={handleCompleteClick} />
     </Card >
   );
 }
