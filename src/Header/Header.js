@@ -15,7 +15,7 @@ function Header(props) {
                     <Link className="px-3 navlink--my-tasks-app" to="/todo_react_application/" >Tasks</Link>
                     <Link className="px-3 navlink--my-tasks-app" to="/todo_react_application/graph" >Graph</Link>
                 </Nav>
-                {props.userID && <Nav className="ml-auto">                    
+                {props.loggedIn && <Nav className="ml-auto">                    
                 <SimpleButton variant="logout" onClick={props.handleLogOut}>Log Out</SimpleButton>
                 </Nav>}
             </Navbar.Collapse>

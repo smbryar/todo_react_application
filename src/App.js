@@ -8,6 +8,7 @@ import Header from './Header/Header';
 import TaskList from './TaskList/TaskList';
 import TaskGraph from './TaskGraph/TaskGraph';
 import NoTasksGraph from './TaskGraph/NoTasksGraph';
+import Cookies from 'js-cookie';
 
 import './App.css';
 
@@ -25,13 +26,16 @@ function App() {
   });
 
   const [tasks, setTasks] = useState();
-  const [user, setUser] = useState({userID:null, username:null});
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [userGreeting, setUserGreeting] = useState("");
+
 
   useEffect(() => {
+    setLoggedIn(!!Cookies.get("userID"));
     axios
-      .get(`https://3f77y34kad.execute-api.eu-west-2.amazonaws.com/dev/tasks?userID=${user.userID}`)
+      .get(`https://3f77y34kad.execute-api.eu-west-2.amazonaws.com/dev/tasks?userID=${Cookies.get("userID")}`)
       .then(response => {
-        let updatedTasks = 
+        let updatedTasks =
           response
             .data
             .tasks
@@ -46,7 +50,16 @@ function App() {
       .catch(error => {
         console.log("Error fetching data", error);
       })
-  }, [user]);
+    axios
+      .get(`https://3f77y34kad.execute-api.eu-west-2.amazonaws.com/dev/users?userID=${Cookies.get("userID")}`)
+      .then(response => {
+        const username = response.data.user[0].username;
+        setUserGreeting(username);
+      })
+      .catch(error => {
+        console.log("Error fetching data", error);
+      })
+  }, []);
 
   function deleteTask(taskID) {
     axios
@@ -83,7 +96,7 @@ function App() {
   function addTask(name, taskDetails, startDate, endDate, repeats, repeatType, repeatAfterCompletionFrequency,
     repeatAfterCompletionFrequencyType) {
     const newTask = {
-      userID: user.userID,
+      userID: Cookies.get("userID"),
       name,
       taskDetails,
       startDate,
@@ -153,22 +166,23 @@ function App() {
   }
 
   function handleLogOut() {
-    setUser({userID:null, username:null});
+    Cookies.remove("userID");
+    setLoggedIn(false);
   }
 
   return (
     <Router>
       <div className="App">
-        <Header handleLogOut={handleLogOut} userID={user.userID}/>
+        <Header loggedIn={loggedIn} handleLogOut={handleLogOut} />
         <Switch>
-          {!!user.userID ?
+          {loggedIn ?
             <><Route path="/todo_react_application/graph">
               {(tasks && tasks.length > 0) ? <TaskGraph tasks={tasks} openFromGraphId={openFromGraphId} /> : <NoTasksGraph />}
             </Route>
-            <Route exact path="/todo_react_application/">
-              <TaskList userID={user.userID} username = {user.username} addTask={addTask} completeTask={completeTask} deleteTask={deleteTask} tasks={tasks} openFromGraphId={openFromGraphId} openTaskCard={openTaskCard} />
-            </Route> </>:
-              <Login setUser={setUser} />}
+              <Route exact path="/todo_react_application/">
+                <TaskList userGreeting={userGreeting} addTask={addTask} completeTask={completeTask} deleteTask={deleteTask} tasks={tasks} openFromGraphId={openFromGraphId} openTaskCard={openTaskCard} />
+              </Route> </> :
+            <Login setLoggedIn={setLoggedIn} />}
         </Switch>
       </div>
     </Router>

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Row, Col, Container, Form } from 'react-bootstrap';
 import SimpleButton from '../ButtonItem/SimpleButton';
 import axios from 'axios';
+import Cookies from 'js-cookie';
 
 import './Login.css';
 
@@ -39,7 +40,9 @@ function Login(props) {
                 .then(response => {
                     const userDetails = response.data.user;
                     if (userDetails.length === 1) {
-                        props.setUser({userID:response.data.user[0].userID, username});
+                        const userID = response.data.user[0].userID;
+                        Cookies.set("userID",userID, { expires: 7 });
+                        props.setLoggedIn(true);
                     }
                     else {
                         setUsernameError(true);
@@ -72,7 +75,8 @@ function Login(props) {
                 })
                 .then(response => {
                     const newUserID = response.data.newUser[0].userID;
-                    props.setUser({userID:newUserID, username:newUsername});
+                    Cookies.set("userID",newUserID, { expires: 7 });
+                    props.setLoggedIn(true);
                 })
                 .catch(error => {
                     console.log("Error fetching data", error);

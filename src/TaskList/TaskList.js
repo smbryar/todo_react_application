@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import { v4 as uuidv4 } from 'uuid';
-import moment from 'moment';
 
 import TaskItem from '../TaskItem/TaskItem';
 import AddTask from '../AddTask/AddTask';
@@ -22,10 +21,11 @@ function TaskList(props) {
     }
 
     return (
+        props.userGreeting &&
         <Container fluid="lg">
             <Col>
                 <Row className="my-2">
-                    <Intro tasks={props.tasks} username={props.username}/>
+                    <Intro tasks={props.tasks} userGreeting={props.userGreeting} />
                 </Row>
 
                 <Row className="my-2">
