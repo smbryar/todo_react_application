@@ -9,7 +9,7 @@ import Header from 'components/Header/Header';
 import TaskList from 'components/TaskList/TaskList';
 import TaskGraph from 'components/TaskGraph/TaskGraph';
 import NoTasksGraph from 'components/TaskGraph/NoTasksGraph';
-import DayPlan from 'DayPlan/DayPlan';
+import DayPlan from 'components/DayPlan/DayPlan';
 
 import './App.css';
 

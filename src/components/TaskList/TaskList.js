@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Container, Col } from 'react-bootstrap';
+import { Container, Col, Row } from 'react-bootstrap';
 import { v4 as uuidv4 } from 'uuid';
 
 import TaskItem from '../TaskItem/TaskItem';
@@ -27,7 +27,9 @@ function TaskList(props) {
                 <Intro tasks={props.tasks} userGreeting={props.userGreeting} />
                 <AddTask key={addTaskKey} addTask={addTask} tasks={props.tasks} />
                 {props.tasks && props.tasks.map(task => (
-                    <TaskItem key={task.taskID} id={task.taskID} completeTask={props.completeTask} deleteTask={props.deleteTask} openTaskCard={props.openTaskCard} {...task} />
+                    <Row className="my-2">
+                        <TaskItem key={task.taskID} id={task.taskID} completeTask={props.completeTask} deleteTask={props.deleteTask} openTaskCard={props.openTaskCard} {...task} />
+                    </Row>
                 ))}
             </Col>
         </Container>
