@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { withRouter } from 'react-router-dom';
 import { Row, Col, Container, Form } from 'react-bootstrap';
 import SimpleButton from '../ButtonItem/SimpleButton';
 import axios from 'axios';
@@ -52,6 +53,7 @@ function Login(props) {
                 .catch(error => {
                     console.log("Error fetching data", error);
                 })
+            props.history.push("/todo_react_application/");
         }
     }
 
@@ -81,6 +83,7 @@ function Login(props) {
                 .catch(error => {
                     console.log("Error fetching data", error);
                 })
+            props.history.push("/todo_react_application/");
         }
     }
 
@@ -139,4 +142,4 @@ function Login(props) {
     );
 }
 
-export default Login;
+export default withRouter(Login);
