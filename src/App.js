@@ -2,13 +2,13 @@ import React, { useState, useEffect } from 'react';
 import moment from 'moment';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import axios from 'axios';
-
-import Login from './Login/Login';
-import Header from './Header/Header';
-import TaskList from './TaskList/TaskList';
-import TaskGraph from './TaskGraph/TaskGraph';
-import NoTasksGraph from './TaskGraph/NoTasksGraph';
 import Cookies from 'js-cookie';
+
+import Login from 'components/Login/Login';
+import Header from 'components/Header/Header';
+import TaskList from 'components/TaskList/TaskList';
+import TaskGraph from 'components/TaskGraph/TaskGraph';
+import NoTasksGraph from 'components/TaskGraph/NoTasksGraph';
 
 import './App.css';
 
