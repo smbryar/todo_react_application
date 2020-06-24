@@ -1,8 +1,6 @@
 import React from 'react';
-import moment from 'moment';
 import { Container, Row, Col, Form } from 'react-bootstrap';
 import TaskItem from 'components/TaskItem/TaskItem.js';
-import axios from 'axios';
 
 function DayPlan(props) {
     const taskOptions = props.tasks && props.tasks.filter(task => !task.completed && !task.dayPlan);

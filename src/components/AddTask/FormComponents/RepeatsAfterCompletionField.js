@@ -6,7 +6,7 @@ import '../AddTask.css';
 function RepeatsAfterCompletionField(props) {
   return (
     <Form.Row className="customRow">
-      <Form.Check type="radio" name="repeatChoice" className="align-self-center" value="repeatsAfterCompletion" onChange={props.handleRadioButton} />
+      <Form.Check type="radio" name="repeatChoice" className="align-self-center" id="repeatsAfterCompletion" value="repeatsAfterCompletion" onChange={props.handleRadioButton} />
       <div className="col-4 col-md-2 align-self-center">
         <Form.Label className="noBottonMargin">Repeats every</Form.Label>
       </div>
@@ -14,7 +14,10 @@ function RepeatsAfterCompletionField(props) {
       <div className="col-3 col-md-1">
         <Form.Control 
           type="number" 
-          onChange={e => props.setRepeatAfterCompletionFrequency(e.target.value)} 
+          onChange={e => {
+            e.target.value === "" ? document.getElementById('doesNotRepeat').checked = true : document.getElementById('repeatsAfterCompletion').checked = true;
+            props.setRepeatAfterCompletionFrequency(e.target.value)
+          }} 
           placeholder={props.errors.repeatAfterCompletionFrequency ? "?": null}
           style={props.errors.repeatAfterCompletionFrequency ? {backgroundColor:"yellow"} : null}
         />

@@ -27,8 +27,8 @@ function TaskList(props) {
                 <Intro tasks={props.tasks} userGreeting={props.userGreeting} />
                 <AddTask key={addTaskKey} addTask={addTask} tasks={props.tasks} />
                 {props.tasks && props.tasks.map(task => (
-                    <Row className="my-2">
-                        <TaskItem key={task.taskID} id={task.taskID} completeTask={props.completeTask} deleteTask={props.deleteTask} openTaskCard={props.openTaskCard} {...task} />
+                    <Row key={task.taskID} id={task.taskID} className="my-2">
+                        <TaskItem completeTask={props.completeTask} deleteTask={props.deleteTask} openTaskCard={props.openTaskCard} {...task} />
                     </Row>
                 ))}
             </Col>
