@@ -2,27 +2,14 @@ import React from 'react';
 import moment from 'moment';
 import { Container, Row, Col, Form } from 'react-bootstrap';
 import TaskItem from 'components/TaskItem/TaskItem.js';
+import axios from 'axios';
 
 function DayPlan(props) {
-    const taskOptions = props.tasks 
-                        && 
-                        props.tasks
-                            .filter(task => !task.completed && !props.dayPlanTasks.find(selectedTask => selectedTask.taskID === task.taskID))
-                            .sort(compare);
-
-    function compare(a, b) {
-        if (a.completed) return 1; // completed tasks come at bottom of list
-        if (moment(a.endDate).isAfter(b.endDate)) return 1; // items ordered by proximity of end date
-        if (moment(b.endDate).isAfter(a.endDate)) return -1;
-        return 0;
-    }
-
+    const taskOptions = props.tasks && props.tasks.filter(task => !task.completed && !task.dayPlan);
 
     function handleSelectTask(e) {
-        const updatedTasksSelected = [...props.dayPlanTasks];
-        const selectedTask = taskOptions.find(task => task.taskID.toString() === e.target.value);
-        updatedTasksSelected.push(selectedTask);
-        props.setDayPlanTasks(updatedTasksSelected);
+        const taskID = e.target.value;
+        props.addToDayPlan(taskID);        
     }
 
     return (
@@ -46,7 +33,7 @@ function DayPlan(props) {
                 </Col>
                 <Col xs={12} lg={8} className="py-2">
                 <h1 className="h3 mb-3 font-weight-normal">Today's Task Plan</h1>
-                {props.dayPlanTasks.map(task => (
+                {props.tasks && props.tasks.filter(task => !!task.dayPlan).map(task => (
                     <Row key={task.taskID} id={task.taskID} className="my-2">
                         <TaskItem dayPlan ={true} deleteDayPlanTask = {props.deleteDayPlanTask} completeTask={props.completeTask} deleteTask={props.deleteTask} openTaskCard={props.openTaskCard} {...task} />
                     </Row>

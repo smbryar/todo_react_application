@@ -12,7 +12,7 @@ function Intro(props) {
     return (
         <Row className="my-2">
             <Card.Header className="intro" tabIndex="0">
-                <h4>Hello {props.userGreeting}, you have {tasksDueToday} task{tasksDueToday === 1 ? "" : "s"} to complete today out of {tasksNotCompleted} unfinished task{tasksNotCompleted === 1 ? "" : "s"}</h4>
+                <h4>Hello {props.userGreeting}, you have {tasksDueToday} task{tasksDueToday === 1 ? "" : "s"} due today out of {tasksNotCompleted} incomplete task{tasksNotCompleted === 1 ? "" : "s"}</h4>
             </Card.Header>
         </Row>
     );

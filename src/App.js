@@ -27,7 +27,6 @@ function App() {
   });
 
   const [tasks, setTasks] = useState();
-  const [dayPlanTasks, setDayPlanTasks] = useState([]);
   const [loggedIn, setLoggedIn] = useState(false);
   const [userGreeting, setUserGreeting] = useState("");
 
@@ -67,10 +66,7 @@ function App() {
     }
   }, [loggedIn]);
 
-  function deleteTask(taskID) {   
-    const updatedDayPlanTasks = dayPlanTasks.filter(task => task.taskID !== taskID);
-    setDayPlanTasks(updatedDayPlanTasks);
-
+  function deleteTask(taskID) {
     axios
       .delete(`https://3f77y34kad.execute-api.eu-west-2.amazonaws.com/dev/tasks/${taskID}`)
       .then(response => {
@@ -115,6 +111,7 @@ function App() {
       repeatAfterCompletionFrequency,
       repeatAfterCompletionFrequencyType,
       completed: false,
+      dayPlan: 0,
       percentageCompletion: calculatePercentageCompletion(startDate, endDate),
       cardOpen: false
     };
@@ -140,9 +137,9 @@ function App() {
       updatedTask.completeDate = moment().format("YYYY-MM-DD");
     }
     else if (updatedTask.repeatType === "repeatsAfterCompletion") {
-      const taskDays = moment(updatedTask.endDate).diff(moment(updatedTask.startDate),"days");
+      const taskDays = moment(updatedTask.endDate).diff(moment(updatedTask.startDate), "days");
       updatedTask.startDate = moment().add(updatedTask.repeatAfterCompletionFrequency, updatedTask.repeatAfterCompletionFrequencyType).format("YYYY-MM-DD");
-      updatedTask.endDate = moment(updatedTask.startDate).add(taskDays,"days").format("YYYY-MM-DD");
+      updatedTask.endDate = moment(updatedTask.startDate).add(taskDays, "days").format("YYYY-MM-DD");
       updatedTask.percentageCompletion = calculatePercentageCompletion(updatedTask.startDate, updatedTask.endDate);
     }
 
@@ -181,8 +178,35 @@ function App() {
   }
 
   function deleteDayPlanTask(taskID) {
-    const updatedDayPlanTasks = dayPlanTasks.filter(task => task.taskID !== taskID);
-    setDayPlanTasks(updatedDayPlanTasks);
+    const updatedTask = tasks.find(task => task.taskID === taskID);
+    updatedTask.dayPlan = 0;
+
+    axios
+      .put(`https://3f77y34kad.execute-api.eu-west-2.amazonaws.com/dev/tasks/${taskID}`, updatedTask)
+      .then(response => {
+        const updatedTasks = [...tasks].map(task => task.taskID === taskID ? updatedTask : task);
+        let sortedTasks = sortTasks(updatedTasks);
+        setTasks(sortedTasks);
+      })
+      .catch(error => {
+        console.log("Error fetching data", error);
+      })
+  }
+
+  function addToDayPlan(taskID) {
+    const updatedTask = tasks.find(task => task.taskID.toString() === taskID);
+    updatedTask.dayPlan = 1;
+
+    axios
+      .put(`https://3f77y34kad.execute-api.eu-west-2.amazonaws.com/dev/tasks/${taskID}`, updatedTask)
+      .then(response => {
+        const updatedTasks = [...tasks].map(task => task.taskID === taskID ? updatedTask : task);
+        let sortedTasks = sortTasks(updatedTasks);
+        setTasks(sortedTasks);
+      })
+      .catch(error => {
+        console.log("Error fetching data", error);
+      })
   }
 
   return (
@@ -195,12 +219,12 @@ function App() {
               {(tasks && tasks.length > 0) ? <TaskGraph tasks={tasks} openFromGraphId={openFromGraphId} /> : <NoTasksGraph />}
             </Route>
               <Route exact path="/todo_react_application/day-plan">
-                <DayPlan tasks = {tasks} deleteDayPlanTask = {deleteDayPlanTask} dayPlanTasks={dayPlanTasks} setDayPlanTasks={setDayPlanTasks} completeTask={completeTask} deleteTask={deleteTask} openTaskCard={openTaskCard}/>            
+                <DayPlan tasks={tasks} addToDayPlan={addToDayPlan} deleteDayPlanTask={deleteDayPlanTask} completeTask={completeTask} deleteTask={deleteTask} openTaskCard={openTaskCard} />
               </Route>
-            <Route exact path="/todo_react_application/">
-              <TaskList userGreeting={userGreeting} addTask={addTask} completeTask={completeTask} deleteTask={deleteTask} tasks={tasks} openFromGraphId={openFromGraphId} openTaskCard={openTaskCard} />
-            </Route> </>:
-              <Login setLoggedIn={setLoggedIn} />}
+              <Route exact path="/todo_react_application/">
+                <TaskList userGreeting={userGreeting} addTask={addTask} completeTask={completeTask} deleteTask={deleteTask} tasks={tasks} openFromGraphId={openFromGraphId} openTaskCard={openTaskCard} />
+              </Route> </> :
+            <Login setLoggedIn={setLoggedIn} />}
         </Switch>
       </div>
     </Router >
