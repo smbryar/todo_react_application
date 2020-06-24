@@ -32,34 +32,38 @@ function App() {
 
   useEffect(() => {
     setLoggedIn(!!Cookies.get("userID"));
-    axios
-      .get(`https://3f77y34kad.execute-api.eu-west-2.amazonaws.com/dev/tasks?userID=${Cookies.get("userID")}`)
-      .then(response => {
-        let updatedTasks =
-          response
-            .data
-            .tasks
-            .map(task => {
-              task.percentageCompletion = calculatePercentageCompletion(task.startDate, task.endDate);
-              task.cardOpen = false;
-              return task;
-            });
-        let sortedTasks = sortTasks(updatedTasks);
-        setTasks(sortedTasks);
-      })
-      .catch(error => {
-        console.log("Error fetching data", error);
-      })
-    axios
-      .get(`https://3f77y34kad.execute-api.eu-west-2.amazonaws.com/dev/users?userID=${Cookies.get("userID")}`)
-      .then(response => {
-        const username = response.data.user[0].username;
-        setUserGreeting(username);
-      })
-      .catch(error => {
-        console.log("Error fetching data", error);
-      })
-  }, []);
+
+    if (loggedIn) {
+      axios
+        .get(`https://3f77y34kad.execute-api.eu-west-2.amazonaws.com/dev/tasks?userID=${Cookies.get("userID")}`)
+        .then(response => {
+          let updatedTasks =
+            response
+              .data
+              .tasks
+              .map(task => {
+                task.percentageCompletion = calculatePercentageCompletion(task.startDate, task.endDate);
+                task.cardOpen = false;
+                return task;
+              });
+          let sortedTasks = sortTasks(updatedTasks);
+          setTasks(sortedTasks);
+        })
+        .catch(error => {
+          console.log("Error fetching data", error);
+        })
+
+      axios
+        .get(`https://3f77y34kad.execute-api.eu-west-2.amazonaws.com/dev/users?userID=${Cookies.get("userID")}`)
+        .then(response => {
+          const username = response.data.user[0].username;
+          setUserGreeting(username);
+        })
+        .catch(error => {
+          console.log("Error fetching data", error);
+        })
+    }
+  }, [loggedIn]);
 
   function deleteTask(taskID) {
     axios
