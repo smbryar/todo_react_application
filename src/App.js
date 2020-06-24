@@ -135,8 +135,9 @@ function App() {
       updatedTask.completeDate = moment().format("YYYY-MM-DD");
     }
     else if (updatedTask.repeatType === "repeatsAfterCompletion") {
-      updatedTask.endDate = moment().add(updatedTask.repeatAfterCompletionFrequency, updatedTask.repeatAfterCompletionFrequencyType).format("YYYY-MM-DD");
-      updatedTask.startDate = moment().format("YYYY-MM-DD");
+      const taskDays = moment(updatedTask.endDate).diff(moment(updatedTask.startDate),"days");
+      updatedTask.startDate = moment().add(updatedTask.repeatAfterCompletionFrequency, updatedTask.repeatAfterCompletionFrequencyType).format("YYYY-MM-DD");
+      updatedTask.endDate = moment(updatedTask.startDate).add(taskDays,"days").format("YYYY-MM-DD");
       updatedTask.percentageCompletion = calculatePercentageCompletion(updatedTask.startDate, updatedTask.endDate);
     }
 
@@ -184,7 +185,7 @@ function App() {
               {(tasks && tasks.length > 0) ? <TaskGraph tasks={tasks} openFromGraphId={openFromGraphId} /> : <NoTasksGraph />}
             </Route>
               <Route exact path="/todo_react_application/">
-                <TaskList userGreeting={userGreeting} addTask={addTask} completeTask={completeTask} deleteTask={deleteTask} tasks={tasks} openFromGraphId={openFromGraphId} openTaskCard={openTaskCard} />
+                <TaskList tasks={tasks} userGreeting={userGreeting} addTask={addTask} completeTask={completeTask} deleteTask={deleteTask} openFromGraphId={openFromGraphId} openTaskCard={openTaskCard} />
               </Route> </> :
             <Login setLoggedIn={setLoggedIn} />}
         </Switch>
