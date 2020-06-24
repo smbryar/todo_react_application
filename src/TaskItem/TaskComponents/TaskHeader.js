@@ -29,10 +29,10 @@ function TaskHeader(props) {
         <Col xs={4}>
           <ButtonGroup className="float-right">
             {!props.completed &&
-              <ButtonItem onClick={props.handleCompleteClick} aria-label="Mark as complete">
+              <ButtonItem onClick={props.handleCompleteClick} aria-label="Mark as complete" tooltip="Mark as complete">
                 <CheckboxIcon squareHeight="1.5em" />
               </ButtonItem>}
-            <ButtonItem onClick={props.handleDeleteClick} aria-label="Delete">
+            <ButtonItem onClick={props.handleDeleteClick} aria-label="Delete" tooltip="Delete">
               <DeleteIcon squareHeight="1.3em" />
             </ButtonItem>
           </ButtonGroup>
