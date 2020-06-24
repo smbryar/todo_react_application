@@ -91,7 +91,6 @@ function Login(props) {
                         <Form.Group controlId="username">
                             <Form.Control
                                 autoFocus
-                                required
                                 type="text"
                                 placeholder="Username"
                                 value={username}
@@ -116,8 +115,6 @@ function Login(props) {
                         <h1 className="h3 mb-3 font-weight-normal">Create new user</h1>
                         <Form.Group controlId="new-username">
                             <Form.Control
-                                autoFocus
-                                required
                                 type="text"
                                 placeholder="New Username"
                                 value={newUsername}
