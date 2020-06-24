@@ -4,22 +4,37 @@ import { Form } from 'react-bootstrap';
 import '../AddTask.css';
 
 function RepeatsAfterCompletionField(props) {
+
+
+  function handleNumberFieldChange(e) {
+    if (e.target.value === "") {
+      document.getElementById('doesNotRepeat').checked = true;
+      props.handleRepeatType('doesNotRepeat');
+    }
+    else {
+      document.getElementById('repeatsAfterCompletion').checked = true;
+      props.handleRepeatType('repeatsAfterCompletion');
+    }
+    props.setRepeatAfterCompletionFrequency(e.target.value);
+  }
+
+  function handleRadioButton(e) {
+    props.handleRepeatType(e.target.value);
+  }
+
   return (
     <Form.Row className="customRow">
-      <Form.Check type="radio" name="repeatChoice" className="align-self-center" id="repeatsAfterCompletion" value="repeatsAfterCompletion" onChange={props.handleRadioButton} />
+      <Form.Check type="radio" name="repeatChoice" className="align-self-center" id="repeatsAfterCompletion" value="repeatsAfterCompletion" onChange={handleRadioButton} />
       <div className="col-4 col-md-2 align-self-center">
         <Form.Label className="noBottonMargin">Repeats every</Form.Label>
       </div>
 
       <div className="col-3 col-md-1">
-        <Form.Control 
-          type="number" 
-          onChange={e => {
-            e.target.value === "" ? document.getElementById('doesNotRepeat').checked = true : document.getElementById('repeatsAfterCompletion').checked = true;
-            props.setRepeatAfterCompletionFrequency(e.target.value)
-          }} 
-          placeholder={props.errors.repeatAfterCompletionFrequency ? "?": null}
-          style={props.errors.repeatAfterCompletionFrequency ? {backgroundColor:"yellow"} : null}
+        <Form.Control
+          type="number"
+          onChange={handleNumberFieldChange}
+          placeholder={props.errors.repeatAfterCompletionFrequency ? "?" : null}
+          style={props.errors.repeatAfterCompletionFrequency ? { backgroundColor: "yellow" } : null}
         />
       </div>
       <div className="col-4 col-md-2">

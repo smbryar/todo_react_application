@@ -42,16 +42,16 @@ function AddTask(props) {
     }
   }
 
-  function handleRadioButton(event) {
-    if (event.target.value === "repeatsAfterCompletion") {
+  function handleRepeatType(repeatType) {
+    if (repeatType === "repeatsAfterCompletion") {
       setRepeats(true);
       setRepeatType("repeatsAfterCompletion");
     }
-    else if (event.target.value === "repeatsRegularDays") {
+    else if (repeatType === "repeatsRegularDays") {
       setRepeats(true);
       setRepeatType("repeatsRegularDays");
     }
-    else if (event.target.value === "doesNotRepeat") {
+    else if (repeatType === "doesNotRepeat") {
       setRepeats(false)
     };
   }
@@ -71,8 +71,8 @@ function AddTask(props) {
               <NameField setName={setName} errors={errors} />
               <TaskDetailsField setTaskDetails={setTaskDetails} />
               <DatesField setStartDate={setStartDate} setEndDate={setEndDate} />
-              <DoesNotRepeatField errors={errors} handleRadioButton={handleRadioButton} />
-              <RepeatsAfterCompletionField errors={errors} handleRadioButton={handleRadioButton} setRepeatAfterCompletionFrequency={setRepeatAfterCompletionFrequency} setRepeatAfterCompletionFrequencyType={setRepeatAfterCompletionFrequencyType} />
+              <DoesNotRepeatField errors={errors} handleRepeatType={handleRepeatType} />
+              <RepeatsAfterCompletionField errors={errors} handleRepeatType={handleRepeatType} setRepeatAfterCompletionFrequency={setRepeatAfterCompletionFrequency} setRepeatAfterCompletionFrequencyType={setRepeatAfterCompletionFrequencyType} />
               {/* <RepeatsRegularDaysField errors={errors} handleRadioButton={handleRadioButton} setRepeatRegularDaysFrequency={setRepeatRegularDaysFrequency} handleDayCheckboxes={handleDayCheckboxes} /> */}
               <SimpleButton variant="add-task" type="submit" onClick={handleAddTaskClick}>Submit Task</SimpleButton>
             </Form>            
