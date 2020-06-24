@@ -35,7 +35,7 @@ function TaskHeader(props) {
             <ButtonItem onClick={props.handleDeleteClick} aria-label="Delete" tooltip="Delete">
               <DeleteIcon squareHeight="1.3em" />
             </ButtonItem>
-          {props.dayPlan &&
+          {!!props.dayPlan &&
               <ButtonItem onClick={props.handleListDeleteClick} aria-label="Remove from day plan" tooltip="Remove from day plan">
                 <ListDeleteIcon squareHeight="1.5em" />
               </ButtonItem>}
