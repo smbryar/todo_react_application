@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import moment from 'moment';
-import { Card, Collapse, Form } from 'react-bootstrap';
+import { Card, Collapse, Form, Row } from 'react-bootstrap';
 
 import AddTaskHeader from './FormComponents/AddTaskHeader';
 import NameField from './FormComponents/NameField';
@@ -27,7 +27,8 @@ function AddTask(props) {
   // const [repeatRegularDaysArrayDays, setRepeatRegularDaysArrayDays] = useState([false, false, false, false, false, false, false]);
   const [errors, setErrors] = useState({ name: false, repeatAfterCompletionFrequency: false });
 
-  function handleAddTaskClick() {
+  function handleAddTaskClick(e) {
+    e.preventDefault();
     if (name === "" || repeats === null || (repeatType === "repeatsAfterCompletion" && repeatAfterCompletionFrequency === null)) {
       const updatedErrors = Object.assign({}, errors);
       name === "" ? updatedErrors.name = true : updatedErrors.name = false;
@@ -38,7 +39,7 @@ function AddTask(props) {
       props.addTask(name, taskDetails, startDate, endDate, repeats, repeatType,
         repeatAfterCompletionFrequency,
         repeatAfterCompletionFrequencyType);
-      }
+    }
   }
 
   function handleRadioButton(event) {
@@ -61,22 +62,24 @@ function AddTask(props) {
   // }
 
   return (
-    <Card className="add-task">
-      <AddTaskHeader open={open} setOpen={setOpen} />
-      <Collapse in={open}>
-        <Card.Body>
-          <Form>
-            <NameField setName={setName} errors={errors} />
-            <TaskDetailsField setTaskDetails={setTaskDetails} />
-            <DatesField setStartDate={setStartDate} setEndDate={setEndDate} />
-            <DoesNotRepeatField errors={errors} handleRadioButton={handleRadioButton} />
-            <RepeatsAfterCompletionField errors={errors} handleRadioButton={handleRadioButton} setRepeatAfterCompletionFrequency={setRepeatAfterCompletionFrequency} setRepeatAfterCompletionFrequencyType={setRepeatAfterCompletionFrequencyType} />
-            {/* <RepeatsRegularDaysField errors={errors} handleRadioButton={handleRadioButton} setRepeatRegularDaysFrequency={setRepeatRegularDaysFrequency} handleDayCheckboxes={handleDayCheckboxes} /> */}
-          </Form>
-          <SimpleButton variant="add-task" onClick={handleAddTaskClick}>Submit Task</SimpleButton> 
+    <Row className="my-2">
+      <Card className="add-task">
+        <AddTaskHeader open={open} setOpen={setOpen} />
+        <Collapse in={open}>
+          <Card.Body>
+            <Form>
+              <NameField setName={setName} errors={errors} />
+              <TaskDetailsField setTaskDetails={setTaskDetails} />
+              <DatesField setStartDate={setStartDate} setEndDate={setEndDate} />
+              <DoesNotRepeatField errors={errors} handleRadioButton={handleRadioButton} />
+              <RepeatsAfterCompletionField errors={errors} handleRadioButton={handleRadioButton} setRepeatAfterCompletionFrequency={setRepeatAfterCompletionFrequency} setRepeatAfterCompletionFrequencyType={setRepeatAfterCompletionFrequencyType} />
+              {/* <RepeatsRegularDaysField errors={errors} handleRadioButton={handleRadioButton} setRepeatRegularDaysFrequency={setRepeatRegularDaysFrequency} handleDayCheckboxes={handleDayCheckboxes} /> */}
+              <SimpleButton variant="add-task" type="submit" onClick={handleAddTaskClick}>Submit Task</SimpleButton>
+            </Form>            
           </Card.Body>
-      </Collapse>
-    </Card >
+        </Collapse>
+      </Card >
+    </Row>
   );
 }
 

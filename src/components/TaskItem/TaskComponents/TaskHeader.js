@@ -23,7 +23,7 @@ function TaskHeader(props) {
           tabIndex="0"
           onClick={handleHeaderClick}
           onKeyPress={(target) => target.charCode === 13 ? props.openTaskCard(props.taskID) : null}>
-          {props.repeats === 1 && <RepeatIcon squareHeight="1.2em" />} {props.name}
+          {!!props.repeats && <RepeatIcon squareHeight="1.2em" />} {props.name}
         </Col>
 
         <Col xs={4}>
