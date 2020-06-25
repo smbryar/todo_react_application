@@ -13,9 +13,11 @@ function TaskGraph(props) {
   const theme = {
     fontSize: 14,
     fontFamily: "Verdana, Arial, sans-serif"
-  };
+  };  
 
-  const data = props.tasks.filter(task => !task.completed).map(task => {
+  const data = [{id:"Today", data:[{x:moment().format("YYYY-MM-DD"),y:"Today"}, {x:moment().format("YYYY-MM-DD"),y:"Today"}]}];
+
+  data.push(...props.tasks.filter(task => !task.completed).map(task => {
     let newTask = {};
     newTask.id = task.taskID;
     let startData = {};
@@ -26,12 +28,17 @@ function TaskGraph(props) {
     endData.y = task.name;
     newTask.data = [startData, endData];
     return newTask;
-  })
+  }));
 
   function handleGraphClick(Point) {
     const id = Point.id.slice(0, -2);
-    props.openFromGraphId(id);
-    props.history.push("/todo_react_application/");
+    if (id==="Today") {
+      props.history.push("/todo_react_application/day-plan")
+    }
+    else {
+      props.openFromGraphId(id);
+      props.history.push("/todo_react_application/");
+    }
   }
 
   // Using code from tylercrosse https://github.com/plouc/nivo/issues/353
