@@ -8,7 +8,7 @@ function DayPlanList(props) {
             <h1 className="h3 mb-3 font-weight-normal">Today's Task Plan</h1>
             {props.tasks && props.tasks.filter(task => !!task.dayPlan).map(task => (
                 <Row key={task.taskID} id={task.taskID} className="my-2">
-                    <TaskItem dayPlan={true} deleteDayPlanTask={props.deleteDayPlanTask} completeTask={props.completeTask} deleteTask={props.deleteTask} openTaskCard={props.openTaskCard} {...task} />
+                    <TaskItem dayPlanListPage={true} deleteDayPlanTask={props.deleteDayPlanTask} completeTask={props.completeTask} deleteTask={props.deleteTask} openTaskCard={props.openTaskCard} {...task} />
                 </Row>
             ))}
         </Col>

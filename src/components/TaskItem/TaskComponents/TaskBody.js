@@ -37,7 +37,7 @@ function TaskBody(props) {
                     <Col>
                         <SimpleButton onClick={props.handleDeleteClick} variant="delete">Delete task</SimpleButton>
                     </Col>
-                    {props.dayPlan &&
+                    {props.dayPlanListPage &&
                     <Col>
                         <SimpleButton onClick={props.handleListDeleteClick} variant="remove-from-plan">Remove from plan</SimpleButton>
                     </Col>}

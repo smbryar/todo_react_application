@@ -3,7 +3,7 @@ import ReactTooltip from 'react-tooltip';
 
 import './ButtonItem.css';
 
-function ButtonItem(props) {
+function IconButton(props) {
   return (
     <>
     <button {...props} className="btn" data-tip data-for={props.tooltip}>{props.children}</button>
@@ -80,4 +80,4 @@ export function ListDeleteIcon(props) {
   )
 }
 
-export default ButtonItem;
+export default IconButton;

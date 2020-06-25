@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card, Row, Col, ButtonGroup } from 'react-bootstrap';
 
-import ButtonItem, { CheckboxIcon, DeleteIcon, RepeatIcon, ListDeleteIcon } from '../../ButtonItem/ButtonItem';
+import IconButton, { CheckboxIcon, DeleteIcon, RepeatIcon, ListDeleteIcon } from '../../ButtonItem/IconButton';
 import TaskProgressBar from './TaskProgressBar';
 
 
@@ -29,16 +29,16 @@ function TaskHeader(props) {
         <Col xs={4}>
           <ButtonGroup className="float-right">
             {!props.completed &&
-              <ButtonItem onClick={props.handleCompleteClick} aria-label="Mark as complete" tooltip="Mark as complete">
+              <IconButton onClick={props.handleCompleteClick} aria-label="Mark as complete" tooltip="Mark as complete">
                 <CheckboxIcon squareHeight="1.5em" />
-              </ButtonItem>}
-            <ButtonItem onClick={props.handleDeleteClick} aria-label="Delete" tooltip="Delete">
+              </IconButton>}
+            <IconButton onClick={props.handleDeleteClick} aria-label="Delete" tooltip="Delete">
               <DeleteIcon squareHeight="1.3em" />
-            </ButtonItem>
-          {!!props.dayPlan &&
-              <ButtonItem onClick={props.handleListDeleteClick} aria-label="Remove from day plan" tooltip="Remove from day plan">
+            </IconButton>
+          {props.dayPlanListPage &&
+              <IconButton onClick={props.handleListDeleteClick} aria-label="Remove from day plan" tooltip="Remove from day plan">
                 <ListDeleteIcon squareHeight="1.5em" />
-              </ButtonItem>}
+              </IconButton>}
           </ButtonGroup>
         </Col>
       </Row>

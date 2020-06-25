@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { AddIcon } from '../../ButtonItem/ButtonItem';
+import { AddIcon } from '../../ButtonItem/IconButton';
 import { Card} from 'react-bootstrap';
 
 import '../AddTask.css';
