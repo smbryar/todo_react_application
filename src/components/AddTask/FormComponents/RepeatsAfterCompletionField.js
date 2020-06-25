@@ -9,17 +9,20 @@ function RepeatsAfterCompletionField(props) {
   function handleNumberFieldChange(e) {
     if (e.target.value === "") {
       document.getElementById('doesNotRepeat').checked = true;
-      props.handleRepeatType('doesNotRepeat');
+      props.setRepeats(false);
     }
     else {
       document.getElementById('repeatsAfterCompletion').checked = true;
-      props.handleRepeatType('repeatsAfterCompletion');
+      props.setRepeats(true);
     }
     props.setRepeatAfterCompletionFrequency(e.target.value);
   }
 
   function handleRadioButton(e) {
-    props.handleRepeatType(e.target.value);
+    if (e.target.value === 'doesNotRepeat') {
+      props.setRepeats(false);
+    }
+    else props.setRepeats(true);
   }
 
   return (

@@ -83,7 +83,7 @@ function App() {
       })
   };
 
-  function addTask(name, taskDetails, startDate, endDate, repeats, repeatType, repeatAfterCompletionFrequency,
+  function addTask(name, taskDetails, startDate, endDate, repeats, repeatAfterCompletionFrequency,
     repeatAfterCompletionFrequencyType) {
     const newTask = {
       userID: Cookies.get("userID"),
@@ -92,7 +92,6 @@ function App() {
       startDate,
       endDate,
       repeats,
-      repeatType,
       repeatAfterCompletionFrequency,
       repeatAfterCompletionFrequencyType,
       completed: false,
@@ -121,7 +120,7 @@ function App() {
       updatedTask.completed = true;
       updatedTask.completeDate = moment().format("YYYY-MM-DD");
     }
-    else if (updatedTask.repeatType === "repeatsAfterCompletion") {
+    else {
       const taskDays = moment(updatedTask.endDate).diff(moment(updatedTask.startDate), "days");
       updatedTask.startDate = moment().add(updatedTask.repeatAfterCompletionFrequency, updatedTask.repeatAfterCompletionFrequencyType).format("YYYY-MM-DD");
       updatedTask.endDate = moment(updatedTask.startDate).add(taskDays, "days").format("YYYY-MM-DD");

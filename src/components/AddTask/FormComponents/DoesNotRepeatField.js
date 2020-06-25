@@ -6,7 +6,10 @@ import '../AddTask.css';
 function DoesNotRepeatField(props) {
 
   function handleRadioButton(e) {
-    props.handleRepeatType(e.target.value);
+    if (e.target.value === 'doesNotRepeat') {
+      props.setRepeats(false);
+    }
+    else props.setRepeats(true);
   }
 
 

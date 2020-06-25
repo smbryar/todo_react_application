@@ -19,34 +19,23 @@ function AddTask(props) {
   const [startDate, setStartDate] = useState(moment().format("YYYY-MM-DD"));
   const [endDate, setEndDate] = useState(moment().format("YYYY-MM-DD"));
   const [repeats, setRepeats] = useState(false);
-  const [repeatType, setRepeatType] = useState(null);
   const [repeatAfterCompletionFrequency, setRepeatAfterCompletionFrequency] = useState(null);
   const [repeatAfterCompletionFrequencyType, setRepeatAfterCompletionFrequencyType] = useState("days");
   const [errors, setErrors] = useState({ name: false, repeatAfterCompletionFrequency: false });
 
   function handleAddTaskClick(e) {
     e.preventDefault();
-    if (name === "" || repeats === null || (repeatType === "repeatsAfterCompletion" && repeatAfterCompletionFrequency === null)) {
+    if (name === "" || repeats === null || (repeats && repeatAfterCompletionFrequency === null)) {
       const updatedErrors = Object.assign({}, errors);
       name === "" ? updatedErrors.name = true : updatedErrors.name = false;
-      repeatType === "repeatsAfterCompletion" && repeatAfterCompletionFrequency === null ? updatedErrors.repeatAfterCompletionFrequency = true : updatedErrors.repeatAfterCompletionFrequency = false;
+      repeats && repeatAfterCompletionFrequency === null ? updatedErrors.repeatAfterCompletionFrequency = true : updatedErrors.repeatAfterCompletionFrequency = false;
       setErrors(updatedErrors);
     }
     else {
-      props.addTask(name, taskDetails, startDate, endDate, repeats, repeatType,
+      props.addTask(name, taskDetails, startDate, endDate, repeats,
         repeatAfterCompletionFrequency,
         repeatAfterCompletionFrequencyType);
     }
-  }
-
-  function handleRepeatType(repeatType) {
-    if (repeatType === "repeatsAfterCompletion") {
-      setRepeats(true);
-      setRepeatType("repeatsAfterCompletion");
-    }
-    else {
-      setRepeats(false)
-    };
   }
 
   return (
@@ -59,8 +48,8 @@ function AddTask(props) {
               <NameField setName={setName} errors={errors} />
               <TaskDetailsField setTaskDetails={setTaskDetails} />
               <DatesField setStartDate={setStartDate} setEndDate={setEndDate} />
-              <DoesNotRepeatField errors={errors} handleRepeatType={handleRepeatType} />
-              <RepeatsAfterCompletionField errors={errors} handleRepeatType={handleRepeatType} setRepeatAfterCompletionFrequency={setRepeatAfterCompletionFrequency} setRepeatAfterCompletionFrequencyType={setRepeatAfterCompletionFrequencyType} />
+              <DoesNotRepeatField errors={errors} setRepeats={setRepeats} />
+              <RepeatsAfterCompletionField errors={errors} setRepeats={setRepeats} setRepeatAfterCompletionFrequency={setRepeatAfterCompletionFrequency} setRepeatAfterCompletionFrequencyType={setRepeatAfterCompletionFrequencyType} />
               <SimpleButton variant="add-task" type="submit" onClick={handleAddTaskClick}>Submit Task</SimpleButton>
             </Form>            
           </Card.Body>
