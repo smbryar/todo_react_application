@@ -9,7 +9,6 @@ import DatesField from './FormComponents/DatesField';
 import DoesNotRepeatField from './FormComponents/DoesNotRepeatField';
 import RepeatsAfterCompletionField from './FormComponents/RepeatsAfterCompletionField';
 import SimpleButton from '../ButtonItem/SimpleButton';
-// import RepeatsRegularDaysField from './FormComponents/RepeatsRegularDaysField';
 
 import './AddTask.css';
 
@@ -23,8 +22,6 @@ function AddTask(props) {
   const [repeatType, setRepeatType] = useState(null);
   const [repeatAfterCompletionFrequency, setRepeatAfterCompletionFrequency] = useState(null);
   const [repeatAfterCompletionFrequencyType, setRepeatAfterCompletionFrequencyType] = useState("days");
-  // const [repeatRegularDaysFrequency, setRepeatRegularDaysFrequency] = useState(null);
-  // const [repeatRegularDaysArrayDays, setRepeatRegularDaysArrayDays] = useState([false, false, false, false, false, false, false]);
   const [errors, setErrors] = useState({ name: false, repeatAfterCompletionFrequency: false });
 
   function handleAddTaskClick(e) {
@@ -47,19 +44,10 @@ function AddTask(props) {
       setRepeats(true);
       setRepeatType("repeatsAfterCompletion");
     }
-    else if (repeatType === "repeatsRegularDays") {
-      setRepeats(true);
-      setRepeatType("repeatsRegularDays");
-    }
-    else if (repeatType === "doesNotRepeat") {
+    else {
       setRepeats(false)
     };
   }
-
-  // function handleDayCheckboxes(e) {
-  //   repeatRegularDaysArrayDays[e.target.value] = !repeatRegularDaysArrayDays[e.target.value];
-  //   setRepeatRegularDaysArrayDays(repeatRegularDaysArrayDays);
-  // }
 
   return (
     <Row className="my-2">
@@ -73,7 +61,6 @@ function AddTask(props) {
               <DatesField setStartDate={setStartDate} setEndDate={setEndDate} />
               <DoesNotRepeatField errors={errors} handleRepeatType={handleRepeatType} />
               <RepeatsAfterCompletionField errors={errors} handleRepeatType={handleRepeatType} setRepeatAfterCompletionFrequency={setRepeatAfterCompletionFrequency} setRepeatAfterCompletionFrequencyType={setRepeatAfterCompletionFrequencyType} />
-              {/* <RepeatsRegularDaysField errors={errors} handleRadioButton={handleRadioButton} setRepeatRegularDaysFrequency={setRepeatRegularDaysFrequency} handleDayCheckboxes={handleDayCheckboxes} /> */}
               <SimpleButton variant="add-task" type="submit" onClick={handleAddTaskClick}>Submit Task</SimpleButton>
             </Form>            
           </Card.Body>
