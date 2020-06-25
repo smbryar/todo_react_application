@@ -1,7 +1,8 @@
 import React from 'react';
 import { Card, Row, Col, ButtonGroup } from 'react-bootstrap';
 
-import IconButton, { CheckboxIcon, DeleteIcon, RepeatIcon, ListDeleteIcon } from '../../ButtonItem/IconButton';
+import IconButton from '../../ButtonItem/IconButton';
+import { CheckboxIcon, DeleteIcon, RepeatIcon, ListDeleteIcon } from 'components/ButtonItem/Icons';
 import TaskProgressBar from './TaskProgressBar';
 
 
