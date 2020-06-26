@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import moment from 'moment';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import axios from 'axios';
-import Cookies from 'js-cookie';
 import {Auth} from 'aws-amplify';
 
 import { AppContext } from "./libs/contextLib";
@@ -64,39 +63,28 @@ function App() {
 
   // when user logs in
 
-  // useEffect(() => {
-  //   setLoggedIn(!!Cookies.get("userID"));
-  //   if (loggedIn) {
-  //     axios
-  //       .get(`https://3f77y34kad.execute-api.eu-west-2.amazonaws.com/dev/tasks?userID=${Cookies.get("userID")}`)
-  //       .then(response => {
-  //         let updatedTasks =
-  //           response
-  //             .data
-  //             .tasks
-  //             .map(task => {
-  //               task.percentageCompletion = calculatePercentageCompletion(task.startDate, task.endDate);
-  //               task.cardOpen = false;
-  //               return task;
-  //             });
-  //         let sortedTasks = sortTasks(updatedTasks);
-  //         setTasks(sortedTasks);
-  //       })
-  //       .catch(error => {
-  //         console.log("Error fetching data", error);
-  //       })
-
-  //     axios
-  //       .get(`https://3f77y34kad.execute-api.eu-west-2.amazonaws.com/dev/users?userID=${Cookies.get("userID")}`)
-  //       .then(response => {
-  //         const username = response.data.user[0].username;
-  //         setUserGreeting(username);
-  //       })
-  //       .catch(error => {
-  //         console.log("Error fetching data", error);
-  //       })
-  //   }
-  // }, [loggedIn]);
+  useEffect(() => {
+    if (loggedIn) {
+      axios
+        .get(`https://3f77y34kad.execute-api.eu-west-2.amazonaws.com/dev/tasks?userID=${userID}`)
+        .then(response => {
+          let updatedTasks =
+            response
+              .data
+              .tasks
+              .map(task => {
+                task.percentageCompletion = calculatePercentageCompletion(task.startDate, task.endDate);
+                task.cardOpen = false;
+                return task;
+              });
+          let sortedTasks = sortTasks(updatedTasks);
+          setTasks(sortedTasks);
+        })
+        .catch(error => {
+          console.log("Error fetching data", error);
+        })
+    }
+  }, [loggedIn,userID]);
 
   // updating tasks
   function deleteTask(taskID) {
@@ -114,7 +102,7 @@ function App() {
   function addTask(name, taskDetails, startDate, endDate, repeats, repeatAfterCompletionFrequency,
     repeatAfterCompletionFrequencyType) {
     const newTask = {
-      userID: Cookies.get("userID"),
+      userID: userID,
       name,
       taskDetails,
       startDate,
