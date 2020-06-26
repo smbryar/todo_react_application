@@ -3,11 +3,14 @@ import moment from 'moment';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import axios from 'axios';
 import Cookies from 'js-cookie';
+import {Auth} from 'aws-amplify';
 
+import { AppContext } from "./libs/contextLib";
+import { onError } from "./libs/errorLib";
 import sortTasks from 'utilities/sortTasks';
 import calculatePercentageCompletion from 'utilities/calculatePercentageCompletion';
 
-import Login from 'components/Login/Login';
+import LoginPage from 'components/Login/LoginPage';
 import Header from 'components/Header/Header';
 import Footer from 'components/Footer/Footer';
 import TaskList from 'components/TaskList/TaskList';
@@ -33,42 +36,62 @@ function App() {
   // set state
   const [tasks, setTasks] = useState();
   const [loggedIn, setLoggedIn] = useState(false);
+  const [isAuthenticating, setIsAuthenticating] = useState(true);
   const [userGreeting, setUserGreeting] = useState("");
 
-  // when user logs in
+  // on load
   useEffect(() => {
-    setLoggedIn(!!Cookies.get("userID"));
-    if (loggedIn) {
-      axios
-        .get(`https://3f77y34kad.execute-api.eu-west-2.amazonaws.com/dev/tasks?userID=${Cookies.get("userID")}`)
-        .then(response => {
-          let updatedTasks =
-            response
-              .data
-              .tasks
-              .map(task => {
-                task.percentageCompletion = calculatePercentageCompletion(task.startDate, task.endDate);
-                task.cardOpen = false;
-                return task;
-              });
-          let sortedTasks = sortTasks(updatedTasks);
-          setTasks(sortedTasks);
-        })
-        .catch(error => {
-          console.log("Error fetching data", error);
-        })
-
-      axios
-        .get(`https://3f77y34kad.execute-api.eu-west-2.amazonaws.com/dev/users?userID=${Cookies.get("userID")}`)
-        .then(response => {
-          const username = response.data.user[0].username;
-          setUserGreeting(username);
-        })
-        .catch(error => {
-          console.log("Error fetching data", error);
-        })
+    onLoad();
+  }, []);
+  
+  async function onLoad() {
+    try {
+      await Auth.currentSession();
+      setLoggedIn(true);
     }
-  }, [loggedIn]);
+    catch(e) {
+      if (e !== 'No current user') {
+        onError(e);
+      }
+    }
+  
+    setIsAuthenticating(false);
+  }
+
+  // when user logs in
+  // useEffect(() => {
+  //   setLoggedIn(!!Cookies.get("userID"));
+  //   if (loggedIn) {
+  //     axios
+  //       .get(`https://3f77y34kad.execute-api.eu-west-2.amazonaws.com/dev/tasks?userID=${Cookies.get("userID")}`)
+  //       .then(response => {
+  //         let updatedTasks =
+  //           response
+  //             .data
+  //             .tasks
+  //             .map(task => {
+  //               task.percentageCompletion = calculatePercentageCompletion(task.startDate, task.endDate);
+  //               task.cardOpen = false;
+  //               return task;
+  //             });
+  //         let sortedTasks = sortTasks(updatedTasks);
+  //         setTasks(sortedTasks);
+  //       })
+  //       .catch(error => {
+  //         console.log("Error fetching data", error);
+  //       })
+
+  //     axios
+  //       .get(`https://3f77y34kad.execute-api.eu-west-2.amazonaws.com/dev/users?userID=${Cookies.get("userID")}`)
+  //       .then(response => {
+  //         const username = response.data.user[0].username;
+  //         setUserGreeting(username);
+  //       })
+  //       .catch(error => {
+  //         console.log("Error fetching data", error);
+  //       })
+  //   }
+  // }, [loggedIn]);
 
   // updating tasks
   function deleteTask(taskID) {
@@ -192,17 +215,20 @@ function App() {
   }
 
   // logging out
-  function handleLogOut() {
-    Cookies.remove("userID");
+  async function handleLogOut() {
+    await Auth.signOut()
     setLoggedIn(false);
   }
   
+  console.log(loggedIn);
 
   return (
+    !isAuthenticating &&
     <Router>
       <div className="App">
         <Header loggedIn={loggedIn} handleLogOut={handleLogOut} />
-        <Switch>
+        <AppContext.Provider value={{loggedIn, setLoggedIn}}>
+          <Switch>
           {loggedIn ?
             <><Route path="/todo_react_application/graph">
               {(tasks && tasks.length > 0) ? <TaskGraph tasks={tasks} openFromGraphId={openFromGraphId} /> : <NoTasksGraph />}
@@ -213,8 +239,9 @@ function App() {
               <Route exact path="/todo_react_application/">
                 <TaskList userGreeting={userGreeting} addTask={addTask} completeTask={completeTask} deleteTask={deleteTask} tasks={tasks} openFromGraphId={openFromGraphId} openTaskCard={openTaskCard} />
               </Route> </> :
-            <Login setLoggedIn={setLoggedIn} />}
+            <LoginPage setLoggedIn={setLoggedIn} />}
         </Switch>
+        </AppContext.Provider>        
         <Footer/>
       </div>
     </Router >
