@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import moment from 'moment';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import axios from 'axios';
-import {Auth} from 'aws-amplify';
+import { Auth } from 'aws-amplify';
 
 import { AppContext } from "./libs/contextLib";
 import { onError } from "./libs/errorLib";
@@ -43,7 +43,7 @@ function App() {
   useEffect(() => {
     onLoad();
   }, []);
-  
+
   async function onLoad() {
     try {
       await Auth.currentSession();
@@ -52,12 +52,12 @@ function App() {
       setUserID(userInfo.username);
       setUserGreeting(userInfo.attributes.name);
     }
-    catch(e) {
+    catch (e) {
       if (e !== 'No current user') {
         onError(e);
       }
     }
-  
+
     setIsAuthenticating(false);
   }
 
@@ -84,7 +84,7 @@ function App() {
           console.log("Error fetching data", error);
         })
     }
-  }, [loggedIn,userID]);
+  }, [loggedIn, userID]);
 
   // updating tasks
   function deleteTask(taskID) {
@@ -126,7 +126,7 @@ function App() {
       })
       .catch(error => {
         console.log("Error fetching data", error);
-    })
+      })
   };
 
   function completeTask(taskID) {
@@ -152,7 +152,7 @@ function App() {
       })
       .catch(error => {
         console.log("Error fetching data", error);
-    })
+      })
   }
 
   // updating dayPlan tasks
@@ -218,22 +218,22 @@ function App() {
     <Router>
       <div className="App">
         <Header loggedIn={loggedIn} handleLogOut={handleLogOut} />
-        <AppContext.Provider value={{loggedIn, setLoggedIn}}>
+        <AppContext.Provider value={{ loggedIn, setLoggedIn, userID, setUserID, userGreeting, setUserGreeting }}>
           <Switch>
-          {loggedIn ?
-            <><Route path="/todo_react_application/graph">
-              {(tasks && tasks.length > 0) ? <TaskGraph tasks={tasks} openFromGraphId={openFromGraphId} /> : <NoTasksGraph />}
-            </Route>
-              <Route exact path="/todo_react_application/day-plan">
-                <DayPlan tasks={tasks} addToDayPlan={addToDayPlan} deleteDayPlanTask={deleteDayPlanTask} completeTask={completeTask} deleteTask={deleteTask} openTaskCard={openTaskCard} />
+            {loggedIn ?
+              <><Route path="/todo_react_application/graph">
+                {(tasks && tasks.length > 0) ? <TaskGraph tasks={tasks} openFromGraphId={openFromGraphId} /> : <NoTasksGraph />}
               </Route>
-              <Route exact path="/todo_react_application/">
-                <TaskList userGreeting={userGreeting} addTask={addTask} completeTask={completeTask} deleteTask={deleteTask} tasks={tasks} openFromGraphId={openFromGraphId} openTaskCard={openTaskCard} />
-              </Route> </> :
-            <LoginPage setLoggedIn={setLoggedIn} />}
-        </Switch>
-        </AppContext.Provider>        
-        <Footer/>
+                <Route exact path="/todo_react_application/day-plan">
+                  <DayPlan tasks={tasks} addToDayPlan={addToDayPlan} deleteDayPlanTask={deleteDayPlanTask} completeTask={completeTask} deleteTask={deleteTask} openTaskCard={openTaskCard} />
+                </Route>
+                <Route exact path="/todo_react_application/">
+                  <TaskList userGreeting={userGreeting} addTask={addTask} completeTask={completeTask} deleteTask={deleteTask} tasks={tasks} openFromGraphId={openFromGraphId} openTaskCard={openTaskCard} />
+                </Route> </> :
+              <LoginPage setLoggedIn={setLoggedIn} />}
+          </Switch>
+        </AppContext.Provider>
+        <Footer />
       </div>
     </Router >
   );

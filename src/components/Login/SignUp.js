@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { withRouter } from 'react-router-dom';
 import { Col, Form } from 'react-bootstrap';
 import { Auth } from 'aws-amplify';
+import axios from 'axios';
 
 import { useAppContext } from 'libs/contextLib';
 import { onError } from "libs/errorLib";
@@ -13,46 +14,60 @@ import './Login.css';
 
 function SignUp(props) {
     const { setLoggedIn } = useAppContext();
+    const { setUserID } = useAppContext();
+    const { setUserGreeting } = useAppContext();
     const [newUser, setNewUser] = useState(null);
     const [newUsernameError, setNewUsernameError] = useState(false);
     const [fields, handleFieldChange] = useFormFields({
-        name:"",
-        email: "",
-        password: "",
+        name: "",
+        newEmail: "",
+        newPassword: "",
         confirmPassword: "",
         confirmationCode: ""
     })
 
     async function handleNewUserSubmit(e) {
         e.preventDefault();
-        if (fields.email.length === 0 || fields.password.length === 0 || fields.confirmPassword === 0 || fields.password !== fields.confirmPassword) {
+        if (fields.newEmail.length === 0 || fields.newPassword.length === 0 || fields.confirmPassword === 0 || fields.newPassword !== fields.confirmPassword) {
             setNewUsernameError(true);
         }
         else {
             try {
                 const newUser = await Auth.signUp({
-                  username: fields.email,
-                  password: fields.password,
-                  attributes: {name: fields.name}
+                    username: fields.newEmail,
+                    password: fields.newPassword,
+                    attributes: { name: fields.name }
                 });
                 setNewUser(newUser);
-              } catch (e) {
+            } catch (e) {
                 onError(e);
-              }
+            }
         }
     }
 
     async function handleConfirmationSubmit(e) {
         e.preventDefault();
         try {
-            await Auth.confirmSignUp(fields.email, fields.confirmationCode);
-            await Auth.signIn(fields.email, fields.password);
-        
-            setLoggedIn(true);
-            props.history.push("/todo_react_application/");
-          } catch (e) {
+            await Auth.confirmSignUp(fields.newEmail, fields.confirmationCode);
+            await Auth.signIn(fields.newEmail, fields.newPassword);
+            const userInfo = await Auth.currentUserInfo();
+            const newUser = {userID: userInfo.username, username: userInfo.attributes.name};
+            setUserID(userInfo.username);
+            setUserGreeting(userInfo.attributes.name);
+
+            axios
+                .post("https://3f77y34kad.execute-api.eu-west-2.amazonaws.com/dev/users", newUser)
+                .then(response =>{
+                    setLoggedIn(true);
+                    props.history.push("/todo_react_application/");
+                })
+                .catch(error => {
+                    console.log("Error fetching data", error);
+                })
+
+        } catch (e) {
             onError(e);
-          }
+        }
     }
 
     function renderForm() {
@@ -72,11 +87,11 @@ function SignUp(props) {
                                 Please enter a name.
                             </Form.Text>}
                     </Form.Group>
-                    <Form.Group controlId="new-email">
+                    <Form.Group controlId="newEmail">
                         <Form.Control
                             type="email"
                             placeholder="Email"
-                            value={fields.email}
+                            value={fields.newEmail}
                             onChange={handleFieldChange}
                         />
                         {newUsernameError &&
@@ -84,11 +99,11 @@ function SignUp(props) {
                                 Please enter a valid email.
                             </Form.Text>}
                     </Form.Group>
-                    <Form.Group controlId="new-password">
+                    <Form.Group controlId="newPassword">
                         <Form.Control
-                            type="new-password"
+                            type="password"
                             placeholder="Password"
-                            value={fields.password}
+                            value={fields.newPassword}
                             onChange={handleFieldChange}
                         />
                         {newUsernameError &&
@@ -98,7 +113,7 @@ function SignUp(props) {
                     </Form.Group>
                     <Form.Group controlId="confirmPassword">
                         <Form.Control
-                            type="new-password"
+                            type="password"
                             placeholder="Confirm Password"
                             value={fields.confirmPassword}
                             onChange={handleFieldChange}
