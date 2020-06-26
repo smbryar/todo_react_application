@@ -72,7 +72,7 @@ function SignUp(props) {
                                 Please enter a name.
                             </Form.Text>}
                     </Form.Group>
-                    <Form.Group controlId="email">
+                    <Form.Group controlId="newEmail">
                         <Form.Control
                             type="email"
                             placeholder="Email"
@@ -84,7 +84,7 @@ function SignUp(props) {
                                 Please enter a valid email.
                             </Form.Text>}
                     </Form.Group>
-                    <Form.Group controlId="password">
+                    <Form.Group controlId="newPassword">
                         <Form.Control
                             type="password"
                             placeholder="Password"

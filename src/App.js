@@ -48,6 +48,7 @@ function App() {
     try {
       await Auth.currentSession();
       setLoggedIn(true);
+      console.log(Auth.currentUserInfo());
     }
     catch(e) {
       if (e !== 'No current user') {
