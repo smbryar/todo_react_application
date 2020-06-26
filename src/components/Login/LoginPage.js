@@ -1,23 +1,14 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { withRouter } from 'react-router-dom';
-import { Row, Col, Container, Form } from 'react-bootstrap';
-import {Auth} from 'aws-amplify';
-import axios from 'axios';
-import Cookies from 'js-cookie';
+import { Row, Container } from 'react-bootstrap';
 
-import {useAppContext} from 'libs/contextLib';
-import { onError } from "libs/errorLib";
-import {useFormFields} from 'libs/hooksLib';
-import SimpleButton from '../ButtonItem/SimpleButton';
 import Login from 'components/Login/Login';
 import SignUp from 'components/Login/SignUp';
 
 import './Login.css';
 
 
-function LoginPage(props) {
-    const {setLoggedIn} = useAppContext();
-    
+function LoginPage(props) {   
 
     return (
         <Container className="authentication">
