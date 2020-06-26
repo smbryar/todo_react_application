@@ -37,6 +37,7 @@ function App() {
   const [tasks, setTasks] = useState();
   const [loggedIn, setLoggedIn] = useState(false);
   const [isAuthenticating, setIsAuthenticating] = useState(true);
+  const [userID, setUserID] = useState(null);
   const [userGreeting, setUserGreeting] = useState("");
 
   // on load
@@ -48,7 +49,9 @@ function App() {
     try {
       await Auth.currentSession();
       setLoggedIn(true);
-      console.log(Auth.currentUserInfo());
+      const userInfo = await Auth.currentUserInfo();
+      setUserID(userInfo.username);
+      setUserGreeting(userInfo.attributes.name);
     }
     catch(e) {
       if (e !== 'No current user') {
@@ -60,6 +63,7 @@ function App() {
   }
 
   // when user logs in
+
   // useEffect(() => {
   //   setLoggedIn(!!Cookies.get("userID"));
   //   if (loggedIn) {
@@ -220,8 +224,6 @@ function App() {
     await Auth.signOut()
     setLoggedIn(false);
   }
-  
-  console.log(loggedIn);
 
   return (
     !isAuthenticating &&
